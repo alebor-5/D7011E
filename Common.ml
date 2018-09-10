@@ -20,7 +20,6 @@ let ecit  = "\'"
 
 
 (* Error handling *)
-exception TypeError of string
 exception CompilerError of string
 exception UnMatched
 

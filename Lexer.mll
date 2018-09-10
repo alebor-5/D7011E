@@ -22,11 +22,11 @@ let white   = [' ' '\t']+
 let newline = '\r' | '\n' | "\r\n"
 let id      = ['A'-'Z' 'a'-'z' '_']['0'-'9' 'A'-'Z' 'a'-'z' '_']*
 let digits  = ['0'-'9']+
+let strings = '"'[^'"']*'"'
 
 
 (* lexing rules *)
 rule lex = parse
-
   | "IF"                 { IF }
   | "THEN"               { THEN }
   | "ELSE"               { ELSE }
@@ -41,19 +41,18 @@ rule lex = parse
   | "NOT"                { NOT }
   | "="                  { BEQ }
   | "<="                 { BLE }
-
-  | "SINT"               { SINT }
-  | "UINT32"             { UINT32 }
+  | ">="                 { BGE }
+  | ">"                  { BG }
+  | "<"                  { BL }
 
   | ';'                  { SC }
-  | ':'                  { C }
   | ":="                 { ASSIGN }
-  
   | '+'                  { PLUS }
   | "+u"                 { PLUSU }
   | '-'                  { MINUS }
 
   | digits as i          { INTVAL (int_of_string i) }           (* literals/values *)
+  | strings as t         { STRINGVAL ( t) }
 
   | id as s              { ID (add_id s) }
   | white                { lex lexbuf }                         (* white space *)
@@ -62,7 +61,6 @@ rule lex = parse
   | "(*"                 { set_info lexbuf; comments 0 lexbuf } (* nested comment *)
   | '('                  { LP }                                 (* must come after comment *)
   | ')'                  { RP }
-  
   | eof                  { EOF }
   | _                    { raise (SyntaxError("Unknown Symbol.")) }
 
