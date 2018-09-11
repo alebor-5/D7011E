@@ -1,0 +1,67 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "ocamlbuild -clean",
+            "type": "shell",
+            "command": "ocamlbuild -clean",
+            "problemMatcher": [
+                "$ocamlc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Hello",
+            "type": "shell",
+            "command": "ocamlbuild examples/Hello.native --",
+            "problemMatcher": [
+                "$ocamlc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Imp_AST_test",
+            "type": "shell",
+            "command": "ocamlbuild -r -I extract -pkg zarith examples/Imp_AST_test.native --",
+            "problemMatcher": [
+                "$ocamlc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "BV32_Test",
+            "type": "shell",
+            "command": "ocamlbuild -r -I extract -pkg zarith examples/BV32_Test.native --",
+            "problemMatcher": [
+                "$ocamlc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Cimp",
+            "type": "shell",
+            "command": "ocamlbuild -r -use-menhir -I extract -pkg zarith Cimp.native",
+            "problemMatcher": [
+                "$ocamlc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

@@ -15,8 +15,6 @@ module Vm_Ex = Vm_ex__Vm_Ex
 module Imp_Ex = Imp_ex__Imp_Ex
 module State = State__State
 
-module Imp = Imp__Imp
-
 let () =
 
   cmd; (* parse command line options and put into opt *)
@@ -34,17 +32,13 @@ let () =
       let lexbuf = Lexing.from_channel inBuffer in
       lexbuf.lex_curr_p <- { lexbuf.lex_curr_p with pos_fname = opt.infile };
       try
-        let p = Parser.prog Lexer.lex lexbuf in
-        (* p_stdout ("Decl:" ^ nl ^ T_Dump.of_prog p); *)
-
-        let com = T_Check.tc_prog inBuffer p in
-
+        let prog = Parser.prog Lexer.lex lexbuf in
         if opt.d_ast then
-          p_stderr ("Raw AST:" ^ nl ^ Dump.of_com com ^ nl);
+          p_stderr ("Raw AST : \n" ^ of_com prog ^ nl);
         if opt.d_past then
-          p_stderr ("Pretty AST:" ^ nl ^ Dump.pretty_of_com 0 com ^ nl);
+          p_stderr ("Pretty AST: \n" ^ pretty_of_com 0 prog ^ nl);
 
-        let code = Compile.compile_program com in
+        let code = Compile.compile_program prog in
         if opt.d_code then
           p_stderr ("Raw Code : \n" ^ of_code false code ^ nl);
         if opt.d_pcode then
@@ -56,7 +50,7 @@ let () =
         if opt.imp_ex then (
           try
             p_stdout ("Execute : imp_ex" );
-            let st_end = Imp_Ex.ceval_ex st_0 com in
+            let st_end = Imp_Ex.ceval_ex st_0 prog in
             p_stdout ("ceval_ex" ^ nl ^ Env.to_string st_end ^ nl);
           with
           | _ -> p_stdout "ceval : Exited with an error\n";
@@ -73,15 +67,13 @@ let () =
             p_stdout ("execution halted");
             p_stdout ("instr_iter_ex" ^ nl ^ Env.to_string st_halt ^ nl);
             ()
-        ); 
+        );
 
         p_stdout ("Done!");
 
       with
       | Lexer.SyntaxError msg -> raise (CompilerError ("Syntax error. " ^ msg ^ parse_err_msg lexbuf));
-      | Parser.Error -> 
-        raise (CompilerError ("Parser error." ^ parse_err_msg lexbuf)); 
-        (* raise (CompilerError ("Parser error.")); *)
+      | Parser.Error -> raise (CompilerError ("Parser error." ^ parse_err_msg lexbuf));
   with
   | CompilerError msg -> p_stderr msg;
   | Failure msg -> p_stderr ("Failure (internal error): " ^ msg);

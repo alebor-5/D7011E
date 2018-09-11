@@ -1,0 +1,8 @@
+a := 1;
+b := 1;
+d := (-4)
+//IF a>=b THEN c:=1 END
+//IF a<=b THEN c:=2 END
+//IF a>b THEN c:=3 END
+//IF a<b THEN c:=4 END
+//IF a=b THEN c:=5 END
