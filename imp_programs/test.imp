@@ -1,2 +1,3 @@
 (* comment *)
-"fiiirst"
+a : SINT;
+a := 3+2

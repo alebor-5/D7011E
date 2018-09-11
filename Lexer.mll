@@ -45,7 +45,12 @@ rule lex = parse
   | ">"                  { BG }
   | "<"                  { BL }
 
+
+  | "SINT"               { SINT }
+  | "UINT32"             { UINT32 }
+
   | ';'                  { SC }
+  | ':'                  { C }
   | ":="                 { ASSIGN }
   | '+'                  { PLUS }
   | "+u"                 { PLUSU }
