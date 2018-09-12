@@ -129,15 +129,25 @@ let rec tc_bexpr ch itl (b, span) =
 let rec tc_com ch itl span com = 
   try 
     match com with
-    | Cseq (c1, c2) -> Imp.Cseq(tc_com_span ch itl c1, tc_com_span ch itl c2)
+    | Cseq (c1, c2) -> 
+      let left_com = tc_com_span ch itl c1 in
+      let right_com = tc_com_span ch itl c2 in 
+     Imp.Cseq(left_com, right_com)
     | Cassign (id, a) ->
       let (_, a_span) = a in
       let (a, ta) = tc_aexpr ch itl a in
       let (tid, tid_span) = get_id_type itl id in
       let _ = tc_unify2 ch ta a_span tid tid_span in 
       Imp.Cassign (id, a)
-    | Cif (b, c1, c2)  -> Imp.Cif(tc_bexpr ch itl b, tc_com_span ch itl c1, tc_com_span ch itl c2)
-    | Cwhile (b, c) -> Imp.Cwhile(tc_bexpr ch itl b, tc_com_span ch itl c)
+    | Cif (b, c1, c2)  -> 
+    let left_bexpr = tc_bexpr ch itl b in
+    let mid_com = tc_com_span ch itl c1 in
+    let right_com = tc_com_span ch itl c2 in
+    Imp.Cif(left_bexpr, mid_com, right_com)
+    | Cwhile (b, c) -> 
+    let left_bexpr = tc_bexpr ch itl b in
+    let right_com = tc_com_span ch itl c in
+    Imp.Cwhile(left_bexpr,right_com)
     | Cskip -> Imp.Cskip
   with
   | TypeError msg -> raise (CompilerError (msg ^ nl ^ "in command: " ^ of_span ch span ))
