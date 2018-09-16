@@ -1,18 +1,6 @@
 (* comment *)
-(*a : SINT ;
-b : SINT ;
-c : UINT32 ;
-d : UINT32 ;
-e : UINT32 ;
-a := 1;
-b := 2;
-c := 3;
-d := 4;*)
-(*IF c <= 5 THEN d := a + b ELSE d := b + a END *)
-(*IF c <= 5 THEN d := a + b END;*)
-a : UINT32;
-sum : SINT;
-WHILE a  <= 5 DO
-a := a + 1;
-sum := sum +u a
-DONE
+a : SINT;
+b : SINT;
+c : SINT;
+
+b := 123;
