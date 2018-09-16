@@ -1,9 +1,8 @@
 
-a : UINT32;
-sum : SINT;
-WHILE
-a  <= 5
-DO
-a := a + 1;
-sum := sum +u a
-DONE
+a : SINT;
+b :UINT32;
+b := 2;
+a := b + 4;
+
+
+

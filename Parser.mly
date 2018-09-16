@@ -45,6 +45,8 @@ decl:
   | decl_span SC decl_span            { Dseq ($1, $3) } 
   | ID C primtype                     { Ddecl ($1, $3) }
 
+ 
+
 primtype:
   | SINT                              { Tsint }
   | UINT32                            { Tuint32 }
@@ -84,8 +86,10 @@ aexpr:
   | ID                             { Avar $1 }
   | aexpr_span PLUS aexpr_span     { Aadd ($1, $3) }
   | aexpr_span PLUSU aexpr_span    { Aaddu ($1, $3) }
-  | aexpr_span MINUS aexpr_span     { Asub ($1, $3) }
+  | aexpr_span MINUS aexpr_span    { Asub ($1, $3) }
   | LP MINUS aexpr_span RP         {Asub((Anum(Z.zero),($startofs, $endofs)),$3)}
+  | LP primtype RP ID              { Acast($4,$2)}
+ 
 
 
 

@@ -73,6 +73,8 @@ let get_id_type itl (id : id) : types * span =
 let rec tc_aexpr ch itl (a, span) : Imp.aexpr * types =  
   (* try *)
   match a with
+  | Acast (id,t) ->
+    (Imp.Avar id, t)
   | Anum n -> (Imp.Anum n, Tint)
   | Avar id -> 
     let (t, _ ) = get_id_type itl id in
@@ -159,6 +161,7 @@ let rec tc_com ch itl span com =
     let right_com = tc_com_span ch itl c in
     Imp.Cwhile(left_bexpr,right_com)
     | Cskip -> Imp.Cskip
+
   with
   | TypeError msg -> raise (CompilerError (msg ^ nl ^ "in command: " ^ of_span ch span ))
 and
