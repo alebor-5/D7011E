@@ -20,14 +20,27 @@ let ci = {
 
 let next_line lexbuf = Lexing.new_line lexbuf
 
-let parse_err_msg lexbuf =
-  let pos = lexbuf.lex_curr_p in
-  let index = pos.pos_cnum - pos.pos_bol -1 in
-  " File " ^ pos.pos_fname ^
-  " : Line " ^ string_of_int pos.pos_lnum ^
-  " : Position " ^ string_of_int index ^ nl ^
-  submatch (Bytes.to_string lexbuf.lex_buffer) pos.pos_bol '\n' ^ nl ^
-  (String.make index ' ' ) ^ "^" ^ nl
+let parse_err_msg ch lexbuf =
+  try
+    let pos = lexbuf.lex_curr_p in
+    let index = pos.pos_cnum - pos.pos_bol -1 in
+    let info =
+      " File " ^ pos.pos_fname ^
+      " : Line " ^ string_of_int pos.pos_lnum ^
+      " : Position " ^ string_of_int index ^ nl in
+    let _ = seek_in ch pos.pos_bol in
+    let line = input_line ch in (* might raise End_of_file *)
+    info ^ line ^ nl ^
+    (String.make index ' ' ) ^ "^" ^ nl
+  with
+    End_of_file -> 
+    let pos = lexbuf.lex_curr_p in
+    let index = pos.pos_cnum - pos.pos_bol -1 in
+
+    " File " ^ pos.pos_fname ^
+    " : Line " ^ string_of_int pos.pos_lnum ^
+    " : Position " ^ string_of_int index ^ nl ^
+    " Error at EOF" ^ nl
 
 let set_info lexbuf =
   let pos = lexbuf.lex_curr_p in

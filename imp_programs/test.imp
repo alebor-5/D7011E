@@ -1,6 +1,9 @@
-(* comment *)
-a : SINT;
-b : SINT;
-c : SINT;
 
-b := 123;
+a : UINT32;
+sum : SINT;
+WHILE
+a  <= 5
+DO
+a := a + 1;
+sum := sum +u a
+DONE
