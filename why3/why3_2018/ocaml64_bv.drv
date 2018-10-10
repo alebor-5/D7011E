@@ -1,0 +1,72 @@
+
+(** OCaml bv, driver for 64-bit architecture *)
+
+printer "ocaml"
+
+
+
+module bv.BV32
+  syntax type     t     "int32"
+
+  syntax val zeros      "SHOULD_NOT_BE_HERE"
+  syntax val one      "SHOULD_NOT_BE_HERE"
+  syntax val ones      "SHOULD_NOT_BE_HERE"
+  syntax val bw_and      "SHOULD_NOT_BE_HERE"
+  syntax val bw_or      "SHOULD_NOT_BE_HERE"
+  syntax val bw_xor      "SHOULD_NOT_BE_HERE"
+  syntax val bw_not      "SHOULD_NOT_BE_HERE"
+  syntax val lsr      "SHOULD_NOT_BE_HERE"
+  syntax val asr      "SHOULD_NOT_BE_HERE"
+  syntax val lsl      "SHOULD_NOT_BE_HERE"
+  syntax val to_uint      "SHOULD_NOT_BE_HERE"
+  syntax val to_int      "Z.of_int (Int32.to_int %1)"
+  syntax val of_int      "Int32.of_int(Z.to_int %1)"
+  syntax val add      "Int32.add %1 %2"
+  syntax val sub      "SHOULD_NOT_BE_HERE"
+  syntax val neg      "SHOULD_NOT_BE_HERE"
+  syntax val mul      "SHOULD_NOT_BE_HERE"
+  syntax val udiv      "SHOULD_NOT_BE_HERE"
+  syntax val urem      "SHOULD_NOT_BE_HERE"
+ syntax val nth      "SHOULD_NOT_BE_HERE"
+ syntax val lsr_bv      "SHOULD_NOT_BE_HERE"
+ syntax val asr_bv      "SHOULD_NOT_BE_HERE"
+  syntax val lsl_bv      "SHOULD_NOT_BE_HERE"
+  syntax val rotate_right_bv      "SHOULD_NOT_BE_HERE"
+ syntax val rotate_left_bv      "SHOULD_NOT_BE_HERE"
+ syntax val nth_bv      "SHOULD_NOT_BE_HERE"
+syntax val eq      "SHOULD_NOT_BE_HERE"
+syntax val nth_bv      "SHOULD_NOT_BE_HERE"
+syntax val nth_bv      "SHOULD_NOT_BE_HERE"
+
+(*
+  syntax literal   int63    "%1"
+  syntax converter of_int   "%1"
+
+  syntax val of_int "Z.to_int %1"
+  syntax val to_int "Z.of_int %1"
+
+  syntax constant min_int63 "Z.of_int min_int"
+  syntax constant max_int63 "Z.of_int max_int"
+  syntax constant min_int   "min_int"
+  syntax constant max_int   "max_int"
+  syntax constant zero      "0"
+  syntax constant one       "1"
+  syntax val      ( + )     "%1 + %2"
+  syntax val      ( - )     "%1 - %2"
+  syntax val      (-_)      "- %1"
+  syntax val      ( * )     "%1 * %2"
+  syntax val      ( / )     "%1 / %2"
+  syntax val      ( % )     "%1 mod %2"
+  syntax val      (=)       "%1 = %2"
+  syntax val      (<=)      "%1 <= %2"
+  syntax val      (<)       "%1 < %2"
+  syntax val      (>=)      "%1 >= %2"
+  syntax val      (>)       "%1 > %2"
+*)
+
+(*
+  syntax val      to_bv     "(fun x -> x)"
+  syntax val      of_bv     "(fun x -> x)"
+  *)
+end
+

@@ -1,0 +1,110 @@
+module ReflTransClosure
+
+  type parameter
+  type state
+  predicate transition parameter state state
+
+  inductive transition_star parameter (x y : state) =
+    | Refl_ : forall p x. transition_star p x x
+    | Step: forall p x y z.
+        transition p x y -> transition_star p y z -> transition_star p x z
+
+  lemma transition_star_one: forall p s1 s2.
+    transition p s1 s2 -> transition_star p s1 s2
+
+  lemma transition_star_transitive: forall p s1 s2 s3.
+    transition_star p s1 s2 -> transition_star p s2 s3 ->
+      transition_star p s1 s3
+
+end
+
+
+theory VM_ind
+
+  use export int.Int
+  use export list.List
+  use export list.NthNoOpt
+  use export state.State
+  
+  type stack = list int
+  type pos = int
+  type machine_state = (pos, stack, state)
+  
+  type instr =
+    | Iconst int   (*   push n on stack                               *)
+    | Ivar id      (*   push the value of variable                    *)
+    | Iadd         (*   pop two values, push their sum                *)
+    | Isub         (*   pop two values, push their difference         *)
+    | Ihalt        (*   end of program                                *)
+    
+  type code = list instr
+  
+  function pop (st : stack) : (int, stack) =
+  match st with
+  | Nil        -> (0, st)
+  | Cons c st' -> (c, st')
+  end
+
+  function push (v : int) (st : stack) : stack = Cons v st
+
+  inductive transition code machine_state machine_state =
+  | trans_const:  forall c p n. nth p c = (Iconst n) ->
+    forall s m. transition c (p, s, m) (p + 1, push n s, m)
+
+  | trans_var:  forall c p id. nth p c = (Ivar id) ->
+    forall s m. transition c (p, s, m) (p + 1, push m[id] s, m)
+
+  | trans_add:  forall c p. nth p c = (Iadd) ->
+    forall n1 n2 s m. transition c (p, push n2 (push n1 s), m) (p + 1, push (n1 + n2) s, m)
+
+  | trans_sub:  forall c p. nth p c = (Isub) ->
+    forall n1 n2 s m. transition c (p, push n2 (push n1 s), m) (p + 1, push (n1 - n2) s, m)
+
+
+   clone export ReflTransClosure with type parameter = code,
+     type state = machine_state, predicate transition = transition
+
+   predicate vm_terminates (c:code) (mi mf:state) =
+     exists p. nth p c = Ihalt /\
+       transition_star c (0, Nil, mi) (p, Nil, mf)
+
+   predicate vm_terminates_non_empty (c:code) (mi mf:state) =
+     exists p s. nth p c = Ihalt /\
+       transition_star c (0, Nil, mi) (p, s, mf)
+
+end
+
+theory VM_ind_test
+
+  use VM_ind
+  use map.Const
+  
+  function (::) (i : 'a) (l : list 'a) : list 'a = Cons i l
+
+  constant m0 : state = (const 0)[Id 1 <- 2]
+  constant c : code = (Ivar (Id 1) :: (Iconst 1 :: (Iadd :: (Ihalt :: Nil))))
+
+  lemma c0 : nth 0 c = Ivar (Id 1)
+  lemma c1 : nth 1 c = Iconst 1
+  lemma c2 : nth 2 c = Iadd
+  lemma c3 : nth 3 c = Ihalt
+
+  lemma g1 : (* 2 + 1 = 3, step one *)
+    transition c (0, Nil, m0) (1, 2 :: Nil, m0)
+
+  lemma g2 : (* 2 + 1 = 3, step two *)
+    transition c (1, 2 :: Nil, m0) (2, 1 :: (2 :: Nil), m0)
+
+  lemma g3 : (* 2 + 1 = 3, step three *)
+    transition c (2, 1 :: (2 :: Nil), m0) (3, 3 :: Nil, m0)
+
+  lemma g3_trans : (* 2 + 1 = 3, multiple steps *)
+    transition_star c (0, Nil, m0) (3, 3 :: Nil, m0)
+
+  goal g_term : (* 2 + 1 = 3, terminates with non-empty stack *)
+    vm_terminates_non_empty  c m0 m0
+
+end
+
+
+  

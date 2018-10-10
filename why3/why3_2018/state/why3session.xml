@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.0.0" timelimit="10" steplimit="0" memlimit="2000"/>
+<file name="../state.mlw" proved="true">
+<theory name="State" proved="true">
+ <goal name="VC get" expl="VC for get" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC set" expl="VC for set" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix []" expl="VC for mixfix []" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix [&lt;-]" expl="VC for mixfix [<-]" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+<theory name="Reg" proved="true">
+ <goal name="VC read" expl="VC for read" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC write" expl="VC for write" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

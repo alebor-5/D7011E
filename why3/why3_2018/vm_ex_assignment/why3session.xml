@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Z3" version="4.7.1" alternative="counterexamples" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Eprover" version="2.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Alt-Ergo" version="2.0.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<file name="../vm_ex_assignment.mlw" proved="true">
+<theory name="Vm_Ex" proved="true">
+ <goal name="codeseq_at_zero" proved="true">
+ <proof prover="1"><result status="valid" time="0.19"/></proof>
+ </goal>
+ <goal name="VC split_at" expl="VC for split_at" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC split_at.0" expl="exceptional postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="76"/></proof>
+  </goal>
+  <goal name="VC split_at.1" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.04" steps="86"/></proof>
+  </goal>
+  <goal name="VC split_at.2" expl="exceptional postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  </goal>
+  <goal name="VC split_at.3" expl="variant decrease" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  </goal>
+  <goal name="VC split_at.4" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  </goal>
+  <goal name="VC split_at.5" expl="postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.14" steps="348"/></proof>
+  </goal>
+  <goal name="VC split_at.6" expl="exceptional postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="82"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC pop" expl="VC for pop" proved="true">
+ <proof prover="2"><result status="valid" time="0.04" steps="74"/></proof>
+ </goal>
+ <goal name="VC instr_ex" expl="VC for instr_ex" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC instr_ex.0" expl="precondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.03" steps="76"/></proof>
+  </goal>
+  <goal name="VC instr_ex.1" expl="assertion" proved="true">
+  <proof prover="0"><result status="valid" time="0.07"/></proof>
+  </goal>
+  <goal name="VC instr_ex.2" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.04"/></proof>
+  <proof prover="2"><result status="timeout" time="10.00"/></proof>
+  </goal>
+  <goal name="VC instr_ex.3" expl="exceptional postcondition" proved="true">
+  <proof prover="2"><result status="valid" time="0.04" steps="82"/></proof>
+  </goal>
+  <goal name="VC instr_ex.4" expl="unreachable point" proved="true">
+  <proof prover="2"><result status="valid" time="0.04" steps="79"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC instr_iter_ex" expl="VC for instr_iter_ex" proved="true">
+ <proof prover="2"><result status="valid" time="0.06" steps="114"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

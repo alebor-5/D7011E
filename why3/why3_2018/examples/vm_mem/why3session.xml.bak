@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.0.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<prover id="1" name="CVC4" version="1.4" timelimit="1" steplimit="0" memlimit="1000"/>
+<file name="../vm_mem.mlw">
+<theory name="VM_mem_test">
+ <goal name="g1">
+ <proof prover="0"><result status="unknown" time="0.06"/></proof>
+ <proof prover="1"><result status="timeout" time="1.00"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="32"/></proof>
+ </goal>
+</theory>
+<theory name="VM_mem_list_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="138"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="137"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

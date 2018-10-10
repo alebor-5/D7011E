@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.0.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Z3" version="4.7.1" alternative="counterexamples" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="2" name="Eprover" version="2.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<file name="../vm_ind.mlw" proved="true">
+<theory name="ReflTransClosure" proved="true">
+ <goal name="transition_star_one" proved="true">
+ <proof prover="2"><result status="valid" time="0.01"/></proof>
+ </goal>
+ <goal name="transition_star_transitive" proved="true">
+ <transf name="induction_pr" proved="true" >
+  <goal name="transition_star_transitive.0" proved="true">
+  <proof prover="0"><result status="valid" time="0.00" steps="5"/></proof>
+  </goal>
+  <goal name="transition_star_transitive.1" proved="true">
+  <proof prover="0"><result status="valid" time="0.00" steps="11"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="VM_ind_test" proved="true">
+ <goal name="c0" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="5"/></proof>
+ </goal>
+ <goal name="c1" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="10"/></proof>
+ </goal>
+ <goal name="c2" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="31"/></proof>
+ </goal>
+ <goal name="c3" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="41"/></proof>
+ </goal>
+ <goal name="g1" proved="true">
+ <proof prover="1"><result status="valid" time="0.02"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="55"/></proof>
+ </goal>
+ <goal name="g3" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="64"/></proof>
+ </goal>
+ <goal name="g3_trans" proved="true">
+ <proof prover="0"><result status="valid" time="0.07" steps="185"/></proof>
+ </goal>
+ <goal name="g_term" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="46"/></proof>
+ </goal>
+</theory>
+</file>
+<file name="../state.mlw" proved="true">
+<theory name="State" proved="true">
+ <goal name="VC get" expl="VC for get" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC set" expl="VC for set" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix []" expl="VC for mixfix []" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix [&lt;-]" expl="VC for mixfix [<-]" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+<theory name="Reg" proved="true">
+ <goal name="VC read" expl="VC for read" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC write" expl="VC for write" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="0"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+</file>
+<file name="../vm_mem.mlw" proved="true">
+<theory name="VM_mem_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="29"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="32"/></proof>
+ </goal>
+</theory>
+<theory name="VM_mem_list_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0"><result status="valid" time="0.04" steps="138"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.03" steps="137"/></proof>
+ </goal>
+</theory>
+</file>
+<file name="../vm_simple.mlw" proved="true">
+<theory name="VM_simple_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.01" steps="21"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.01" steps="21"/></proof>
+ </goal>
+ <goal name="g3" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.02" steps="44"/></proof>
+ </goal>
+ <goal name="g4" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.01" steps="31"/></proof>
+ </goal>
+</theory>
+<theory name="VM_simple_list_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.03" steps="113"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.03" steps="113"/></proof>
+ </goal>
+ <goal name="g3" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.07" steps="224"/></proof>
+ </goal>
+ <goal name="g4" proved="true">
+ <proof prover="0" timelimit="1"><result status="valid" time="0.07" steps="227"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

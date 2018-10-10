@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="CVC3" version="2.4.1" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="1" name="Alt-Ergo" version="2.0.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<file name="../state.mlw" proved="true">
+<theory name="State" proved="true">
+ <goal name="VC get" expl="VC for get" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC set" expl="VC for set" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix []" expl="VC for mixfix []" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix [&lt;-]" expl="VC for mixfix [<-]" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+<theory name="Reg" proved="true">
+ <goal name="VC read" expl="VC for read" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC write" expl="VC for write" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC const" expl="VC for const" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+</file>
+<file name="../hoare_logic.mlw">
+<theory name="Sum" proved="true">
+ <goal name="s0" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+ <goal name="s1" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="3"/></proof>
+ </goal>
+ <goal name="s2" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="4"/></proof>
+ </goal>
+ <goal name="s3" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="8"/></proof>
+ </goal>
+ <goal name="sumf_lem" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="5"/></proof>
+ </goal>
+ <goal name="f0" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="4"/></proof>
+ </goal>
+ <goal name="f1" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="6"/></proof>
+ </goal>
+ <goal name="f2" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="11"/></proof>
+ </goal>
+ <goal name="f3" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="18"/></proof>
+ </goal>
+ <goal name="VC sum_whyML_rec" expl="VC for sum_whyML_rec" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="29"/></proof>
+ </goal>
+ <goal name="VC sum_whyML" expl="VC for sum_whyML" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="25"/></proof>
+ </goal>
+ <goal name="VC ml0" expl="VC for ml0" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="11"/></proof>
+ </goal>
+ <goal name="VC ml1" expl="VC for ml1" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="11"/></proof>
+ </goal>
+ <goal name="VC ml2" expl="VC for ml2" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="22"/></proof>
+ </goal>
+ <goal name="VC ml3" expl="VC for ml3" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="22"/></proof>
+ </goal>
+</theory>
+<theory name="Assignment">
+ <goal name="VC f" expl="VC for f" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC g" expl="VC for g">
+ </goal>
+</theory>
+<theory name="AssignmentRef">
+ <goal name="VC f" expl="VC for f" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC g" expl="VC for g">
+ </goal>
+</theory>
+<theory name="SequenceRef">
+ <goal name="VC seq" expl="VC for seq">
+ </goal>
+</theory>
+<theory name="WhileRef">
+ <goal name="VC loop" expl="VC for loop">
+ </goal>
+</theory>
+<theory name="WeakenStrenghtenRef" proved="true">
+ <goal name="VC weaken_post" expl="VC for weaken_post" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+ <goal name="VC strenghten_pre" expl="VC for strenghten_pre" proved="true">
+ <proof prover="1"><result status="valid" time="0.00" steps="2"/></proof>
+ </goal>
+</theory>
+<theory name="HoareTest" proved="true">
+ <goal name="VC assignment" expl="VC for assignment" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC assignment.0" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="5"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="ass_wp" proved="true">
+ <transf name="subst_all" proved="true" >
+  <goal name="ass_wp.0" proved="true">
+  <transf name="compute_specified" proved="true" >
+   <goal name="ass_wp.0.0" proved="true">
+   <transf name="compute_in_goal" proved="true" >
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="ass_vc" proved="true">
+ <transf name="subst_all" proved="true" >
+  <goal name="ass_vc.0" proved="true">
+  <transf name="introduce_premises" proved="true" >
+   <goal name="ass_vc.0.0" proved="true">
+   <proof prover="1"><result status="valid" time="0.01" steps="5"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="ass" proved="true">
+ <transf name="compute_specified" proved="true" >
+  <goal name="ass.0" proved="true">
+  <transf name="split_goal_right" proved="true" >
+   <goal name="ass.0.0" proved="true">
+   <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+   </goal>
+   <goal name="ass.0.1" proved="true">
+   <proof prover="0" obsolete="true"><result status="valid" time="0.02"/></proof>
+   <proof prover="1"><result status="valid" time="0.01" steps="5"/></proof>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC seq_assignment" expl="VC for seq_assignment" proved="true">
+ <transf name="split_vc" proved="true" >
+  <goal name="VC seq_assignment.0" expl="postcondition" proved="true">
+  <proof prover="1"><result status="valid" time="0.01" steps="7"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="seq_ass" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="44"/></proof>
+ </goal>
+ <goal name="VC condition" expl="VC for condition" proved="true">
+ <proof prover="1"><result status="valid" time="0.01" steps="7"/></proof>
+ </goal>
+ <goal name="cond_true" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="66"/></proof>
+ </goal>
+ <goal name="cond_false" proved="true">
+ <proof prover="1"><result status="valid" time="0.02" steps="66"/></proof>
+ </goal>
+ <goal name="VC looping" expl="VC for looping" proved="true">
+ <proof prover="1"><result status="valid" time="0.01" steps="9"/></proof>
+ </goal>
+ <goal name="loo" proved="true">
+ <transf name="compute_specified" proved="true" arg1="vcg">
+  <goal name="loo.0" proved="true">
+  <transf name="split_vc" proved="true" >
+   <goal name="loo.0.0" proved="true">
+   <transf name="subst_all" proved="true" >
+    <goal name="loo.0.0.0" proved="true">
+    <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="loo.0.1" proved="true">
+   <transf name="subst_all" proved="true" >
+    <goal name="loo.0.1.0" proved="true">
+    <proof prover="1"><result status="valid" time="0.01" steps="6"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="loo.0.2" proved="true">
+   <transf name="subst_all" proved="true" >
+    <goal name="loo.0.2.0" proved="true">
+    <proof prover="1"><result status="valid" time="0.01" steps="10"/></proof>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="loo.0.3" proved="true">
+   <transf name="subst_all" proved="true" >
+    <goal name="loo.0.3.0" proved="true">
+    <proof prover="1"><result status="valid" time="0.01" steps="5"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

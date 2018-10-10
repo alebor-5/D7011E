@@ -1,0 +1,322 @@
+(* Register based compiler for arithmetic expressions *)
+
+module Compile_aexpr_reg
+
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use imp.Imp
+  use vm.Vm
+  use state.State
+  use state.Reg
+  use logic.Compiler_logic
+  use specs.VM_instr_spec
+
+  (* Compilation scheme: the generated code for arithmetic expressions
+     put the result of the expression on the stack. *)
+  function aexpr_post (a:aexpr) (len:pos) (idr:idr) : post 'a =
+    fun _ p ms ms' -> 
+      let VMS p1 r1 s1 m1 = ms in 
+      let VMS p2 r2 s2 m2 = ms' in
+      p1 = p /\
+      p2 = p + len /\ 
+      (forall r'. r' < idr -> read r1 r' = read r2 r') /\ (* preserve lower registers *)
+      read r2 idr  = aeval m1 a /\ (* result in idr *)
+      s2 = s1 /\ (* preserve stack *) 
+      m2 = m1 (* preserve memory *)
+      
+  meta rewrite_def function aexpr_post
+
+  let rec compile_aexpr (a:aexpr) (idr: idr) :  hl 'a
+    ensures { result.pre --> trivial_pre }
+    ensures { result.post --> aexpr_post a result.code.length idr}
+    variant { a }
+    = let c = match a with
+      | Anum n      -> $ iimmf idr n
+      | Avar x      -> $ iloadf idr x 
+      | Aadd a1 a2  -> $ 
+        compile_aexpr a1 idr -- $ compile_aexpr a2 (idr + 1) -- $ iaddrf (idr + 1) idr idr
+      | Aaddu a1 a2 -> $ 
+        compile_aexpr a1 idr -- $ compile_aexpr a2 (idr + 1) -- $ iaddurf (idr + 1) idr idr
+      | Asub a1 a2  -> $ 
+        compile_aexpr a2 idr -- $ compile_aexpr a1 (idr + 1) -- $ isubrf (idr + 1) idr idr
+      end in
+      hoare trivial_pre c (aexpr_post a c.wcode.length idr)
+
+  (* Check that the above specification indeed implies the
+     natural one. *)
+  
+   let compile_aexpr_natural (a:aexpr) (idr:idr) : code
+    ensures { forall c p r1 s m. codeseq_at c p result ->
+        exists r2.
+        transition_star c (VMS p r1 s m)
+                          (VMS (p + length result) r2 s m) 
+        /\
+        forall r. r < idr -> read r2 r = read r1 r  /\
+        read r2 idr = aeval m a  
+    }
+  = let res = compile_aexpr a idr : hl unit in
+    assert { res.pre = trivial_pre }; (* we have a trivial precod *)
+    assert { forall p r s m. res.pre () p (VMS p r s m) }; 
+ 
+    assert { forall p ms. res.pre () p ms ->
+      exists ms'. 
+      res.post () p ms ms' /\ contextual_irrelevance res.code p ms ms' /\
+      let VMS p1 r1 s1 m1 = ms in
+      let VMS p2 r2 s2 m2 = ms' in
+      p2 = p1 + res.code.length /\ m2 = m1 /\ s2 = s1 /\ 
+      forall r. r < idr -> read r2 r = read r1 r  /\
+      read r2 idr = aeval m1 a    
+    };
+    
+    res.code
+
+end
+
+(*
+(* Register based compiler for arithmetic expressions, k registers *)
+module Compile_aexpr_reg_k
+
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use imp.Imp
+  use vm.Vm
+  use state.State
+  use state.Reg
+  use logic.Compiler_logic
+  use specs.VM_instr_spec
+
+  (** we have k registers, namely 0,1,...,k-1,
+      and there are at least two of them, otherwise we can't add *)
+  val constant k: int
+    ensures { 2 <= result }
+    
+  (* Compilation scheme: the generated code for arithmetic expressions
+     put the result of the expression on the stack. *)
+  function aexpr_post (a:aexpr) (len:pos) (idr:idr) : post 'a =
+    fun _ p ms ms' -> 
+      let VMS p1 r1 s1 m1 = ms in 
+      let VMS p2 r2 s2 m2 = ms' in
+      p1 = p /\
+      p2 = p + len /\ 
+      (forall r'. r' < idr -> read r1 r' = read r2 r') /\ (* preserve lower registers *)
+      read r2 idr  = aeval m1 a /\ (* result in idr *)
+      s2 = s1 /\ (* preserve stack *) 
+      m2 = m1 (* preserve memory *)
+      
+  meta rewrite_def function aexpr_post
+
+  let rec compile_aexpr (a:aexpr) (idr: idr) :  hl 'a
+    requires { 0 <= idr < k }
+    ensures { result.pre --> trivial_pre }
+    ensures { result.post --> aexpr_post a result.code.length idr}
+    variant { a }
+    = let c = match a with
+      | Anum n     -> $ iimmf idr n
+      | Avar x     -> $ iloadf idr x 
+      | Aadd a1 a2 -> 
+        if idr < k - 1 then 
+          $ compile_aexpr a1 idr --  
+          $ compile_aexpr a2 (idr + 1) --  
+          $ iaddrf (idr + 1) idr idr
+        else 
+          $ ipushf (k - 2) -- 
+          $ compile_aexpr a1 (k - 2) -- 
+          $ compile_aexpr a2 (k - 1) --
+          $ iaddrf (k - 2) (k - 1) (k - 1)--
+          $ ipopf (k - 2)           
+        
+      | Asub a1 a2 -> 
+        if idr < k - 1 then 
+          $ compile_aexpr a2 idr -- 
+          $ compile_aexpr a1 (idr + 1) -- 
+          $ isubrf (idr + 1) idr idr
+        else 
+          $ ipushf (k - 2) -- 
+          $ compile_aexpr a1 (k - 2) -- 
+          $ compile_aexpr a2 (k - 1) --
+          $ isubrf (k - 2) (k - 1) (k - 1) --
+          $ ipopf (k - 2) 
+      end in
+      hoare trivial_pre c (aexpr_post a c.wcode.length idr)
+
+  (* Check that the above specification indeed implies the
+     natural one. *)
+  
+   let compile_aexpr_natural (a:aexpr) (idr:idr) : code
+    requires { 0 <= idr < k }
+    ensures { forall c p r1 s m. codeseq_at c p result ->
+        exists r2.
+        transition_star c (VMS p r1 s m)
+                          (VMS (p + length result) r2 s m) 
+        /\
+        forall r. r < idr -> read r2 r = read r1 r  /\
+        read r2 idr = aeval m a  
+    }
+  = let res = compile_aexpr a idr : hl unit in
+    assert { res.pre = trivial_pre }; (* we have a trivial precod *)
+    assert { forall p r s m. res.pre () p (VMS p r s m) }; 
+ 
+    assert { forall p ms. res.pre () p ms ->
+      exists ms'. 
+      res.post () p ms ms' /\ contextual_irrelevance res.code p ms ms' /\
+      let VMS p1 r1 s1 m1 = ms in
+      let VMS p2 r2 s2 m2 = ms' in
+      p2 = p1 + res.code.length /\ m2 = m1 /\ s2 = s1 /\ 
+      forall r. r < idr -> read r2 r = read r1 r  /\
+      read r2 idr = aeval m1 a    
+    };
+    
+    res.code
+
+end
+
+(* Register based compiler for arithmetic expressions, optimal k registers *)
+module Compile_aexpr_reg_k_optimal
+
+  use int.Int
+  use int.MinMax
+  use list.List
+  use list.Length
+  use list.Append
+  use imp.Imp
+  use vm.Vm
+  use state.State
+  use state.Reg
+  use logic.Compiler_logic
+  use specs.VM_instr_spec
+
+  (** we have k registers, namely 0,1,...,k-1,
+      and there are at least two of them, otherwise we can't add *)
+  val constant k: int
+    ensures { 2 <= result }
+    
+  (** the minimal number of registers needed to evaluate e *)
+  let rec function n (e: aexpr) : int
+  variant { e }
+  ensures { result > 0 }
+  = match e with
+    | Anum _     -> 1
+    | Avar _     -> 1
+    | Aadd e1 e2 -> let n1 = n e1 in let n2 = n e2 in
+                    if n1 = n2 then 1 + n1 else max n1 n2
+    | Asub e1 e2 -> let n1 = n e1 in let n2 = n e2 in
+                    if n1 = n2 then 1 + n1 else max n1 n2
+    end
+  meta rewrite_def function n
+  
+  
+  (** Note: This is of course inefficient to recompute function `n` many
+      times. A realistic implementation would compute `n e` once for
+      each sub-expression `e`, either with a first pass of tree decoration,
+      or with function `compile` returning the value of `n e` as well,
+      in a bottom-up way *)
+
+  function measure (e: aexpr) : int =
+    match e with
+    | Anum _      -> 0
+    | Avar _      -> 0
+    | Aadd e1 e2  -> 1 + measure e1 + measure e2 + if n e1 >= n e2 then 0 else 1 
+    | Aaddu e1 e2 -> 1 + measure e1 + measure e2 + if n e1 >= n e2 then 0 else 1 
+    | Asub e1 e2  -> 1 + measure e1 + measure e2 + if n e1 >= n e2 then 0 else 1
+    end
+
+  lemma measure_nonneg: forall e. measure e >= 0
+    
+  (* Compilation scheme: the generated code for arithmetic expressions
+     put the result of the expression on the stack. *)
+  function aexpr_post (a:aexpr) (len:pos) (idr:idr) : post 'a =
+    fun _ p ms ms' -> 
+      let VMS p1 r1 s1 m1 = ms in 
+      let VMS p2 r2 s2 m2 = ms' in
+      p1 = p /\
+      p2 = p + len /\ 
+      (forall r'. r' < idr -> read r1 r' = read r2 r') /\ (* preserve lower registers *)
+      read r2 idr  = aeval m1 a /\ (* result in idr *)
+      s2 = s1 /\ (* preserve stack *) 
+      m2 = m1 (* preserve memory *)
+      
+  meta rewrite_def function aexpr_post
+
+  let rec compile_aexpr (a:aexpr) (idr: idr) (ghost left: int) :  hl 'a
+    requires { n a <= left } 
+    requires { 0 <= idr < k }
+    variant  { measure a }
+    ensures  { result.pre --> trivial_pre }
+    ensures  { result.post --> aexpr_post a result.code.length idr }
+    = 
+      let c = match a with
+      | Anum n     -> $ iimmf idr n
+      | Avar x     -> $ iloadf idr x 
+      | Aadd a1 a2 -> 
+        if n a1 >= n a2 then (* we compile a1 first *)
+          if idr < k - 1 then 
+            $ compile_aexpr a1 idr left --  
+            $ compile_aexpr a2 (idr + 1) (left - 1) --  
+            $ iaddrf (idr + 1) idr idr
+          else 
+            (
+            assert { idr = k - 1 }; 
+            $ ipushf (idr - 1) -- 
+            $ compile_aexpr a1 (idr - 1) (left + 1) -- 
+            $ compile_aexpr a2 idr left --
+            $ iaddrf (idr - 1) idr idr --
+            $ ipopf (idr - 1)
+            )
+        else (* we compile a2 first, by swapping *)
+          $ compile_aexpr (Aadd a2 a1) idr left 
+      | Asub a1 a2 -> 
+        if idr < k - 1 then 
+          if n a1 >= n a2 then (* we compile a1 first *)
+            $ compile_aexpr a1 idr left -- 
+            $ compile_aexpr a2 (idr + 1) (left - 1) -- 
+            $ isubrf idr (idr + 1) idr
+          else
+            $ compile_aexpr a2 idr left -- 
+            $ compile_aexpr a1 (idr + 1) (left - 1) -- 
+            $ isubrf (idr + 1) idr idr
+        else 
+          $ ipushf (idr - 1) -- 
+          $ compile_aexpr a1 (idr - 1) (left + 1) -- 
+          $ compile_aexpr a2 idr left --
+          $ isubrf (idr - 1) idr idr --
+          $ ipopf (idr - 1) 
+      
+      end in
+      hoare trivial_pre c (aexpr_post a c.wcode.length idr)
+
+  (* Check that the above specification indeed implies the
+     natural one. *)
+  
+   let compile_aexpr_natural (a:aexpr) (idr:idr) : code
+    requires { 0 <= idr < k }
+    ensures { forall c p r1 s m. codeseq_at c p result ->
+        exists r2.
+        transition_star c (VMS p r1 s m)
+                          (VMS (p + length result) r2 s m) 
+        /\
+        forall r. r < idr -> read r2 r = read r1 r  /\
+        read r2 idr = aeval m a  
+    }
+  = let res = compile_aexpr a idr (ghost n a): hl unit in
+    assert { res.pre = trivial_pre }; (* we have a trivial precod *)
+    assert { forall p r s m. res.pre () p (VMS p r s m) }; 
+ 
+    assert { forall p ms. res.pre () p ms ->
+      exists ms'. 
+      res.post () p ms ms' /\ contextual_irrelevance res.code p ms ms' /\
+      let VMS p1 r1 s1 m1 = ms in
+      let VMS p2 r2 s2 m2 = ms' in
+      p2 = p1 + res.code.length /\ m2 = m1 /\ s2 = s1 /\ 
+      forall r. r < idr -> read r2 r = read r1 r  /\
+      read r2 idr = aeval m1 a    
+    };
+    
+    res.code
+   
+end
+
+*)

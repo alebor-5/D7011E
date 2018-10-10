@@ -1,0 +1,298 @@
+
+(* Utility module: reflexive transitive closure of a parameterized
+   relation. *)
+module ReflTransClosure
+
+  type parameter
+  type state
+  predicate transition parameter state state
+
+  inductive transition_star parameter (x y:state) =
+    | Refl: forall p x. transition_star p x x
+    | Step: forall p x y z.
+        transition p x y -> transition_star p y z -> transition_star p x z
+
+  lemma transition_star_one: forall p s1 s2.
+    transition p s1 s2 -> transition_star p s1 s2
+
+  lemma transition_star_transitive: forall p s1 s2 s3.
+    transition_star p s1 s2 -> transition_star p s2 s3 ->
+      transition_star p s1 s3
+
+end
+
+
+(*****************************************************************************)
+
+(* The machine operates on a code c (a fixed list of instructions)
+   and three variable components:
+    - a program counter,      denoting a position in c
+    - a register file,        containing integers
+    - an evaluation stack,    containing integers
+    - a memory state,         assigning integer values to variables
+*)
+
+theory Vm
+
+  use state.State
+  use state.Reg
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use int.EuclideanDivision
+  use bv_op.BV_OP
+
+  type pos = int                           (* code position                   *)
+  type stack = list int                    (* stack contains just integers    *)
+
+  (* virtual machine configuration *) 
+  type machine_state = VMS pos regs stack state 
+
+
+  type ofs = int
+  (* The instruction set of the machine. *)
+  type instr =
+  (* new instructions, register based                                         *)
+  | Iload idr id       (* load register with variable                         *)
+  | Iimm idr int       (* load register with value n                          *)
+  | Istore idr id      (* store a register to variable                        *)
+  | Ipushr idr         (* push register on stack                              *)
+  | Ipopr idr          (* pop register from stack                             *)
+  | Iaddr idr idr idr  (* add two registers, store result in third            *)
+  | Iaddur idr idr idr (* add two registers, store result in third (wrapping) *)
+  | Isubr idr idr idr  (* subtract two registers, store result in third       *)
+  | Ibeqr idr idr ofs  (* skip ofs forward if r1 =  r2                        *)
+  | Ibner idr idr ofs  (* skip ofs forward if r1 <> r2                        *)
+  | Ibler idr idr ofs  (* skip ofs forward if r1 <= r2                        *)
+  | Ibgtr idr idr ofs  (* skip ofs forward if r1 >  r2                        *)
+
+  (* original/old instructions for stack machine                              *)
+  | Iconst int         (* push n on stack                                     *)
+  | Ivar id            (* push the value of variable                          *)
+  | Isetvar id         (* pop an integer, assign it to variable               *)
+  | Ibranch ofs        (* skip ofs instructions                               *)
+  | Iadd               (* pop two values, push their sum                      *)
+  | Iaddu              (* pop two values, push their sum (wrapping)           *)
+  | Isub               (* pop two values, push their difference               *)
+  | Ibeq ofs           (* pop n2, pop n1, skip ofs forward if n1 =  n2        *)
+  | Ibne ofs           (* pop n2, pop n1, skip ofs forward if n1 <> n2        *)
+  | Ible ofs           (* pop n2, pop n1, skip ofs forward if n1 <= n2        *)
+  | Ibgt ofs           (* pop n2, pop n1, skip ofs forward if n1 >  n2        *)
+  | Ihalt              (* end of program                                      *)
+
+  type code = list instr
+
+  (* Read pointer to code *)
+  inductive codeseq_at code pos code =
+    | codeseq_at_intro : forall c1 c2 c3.
+        codeseq_at (c1 ++ c2 ++ c3) (length c1) c2
+
+  lemma codeseq_at_app_right: forall c c1 c2 p.
+    codeseq_at c p (c1 ++ c2) -> codeseq_at c (p + length c1) c2
+
+  lemma codeseq_at_app_left: forall c c1 c2 p.
+    codeseq_at c p (c1 ++ c2) -> codeseq_at c p c1
+
+  lemma list_app_eq_nil: forall c3 c11 c1  i i'.
+   length c11 = length c1 ->
+   (c11 ++ Cons i (Nil: list instr))
+  = ((c1 ++ Cons i' (Nil: list instr)) ++ c3) ->
+   c3 = Nil
+
+  lemma list_app_eq_left_cons:
+    forall c1 [@induction] c2, i1 i2:'a.
+    c1 ++ Cons i1 Nil = c2 ++ Cons i2 Nil ->
+    c1 = c2
+
+  lemma list_app_eq_last:
+    forall c1 [@induction] c2 i, i':'a. length c1 = length c2 ->
+    c1 ++ Cons i Nil = c2 ++ Cons i' Nil ->
+    i = i'
+
+  (* more general *)
+  lemma list_app_eq_left:
+    forall c1 [@induction] c2 d1 d2:list 'a. length c1 = length d1 ->
+    c1 ++ c2 = d1 ++ d2 ->
+    c1 = d1
+
+  lemma codeseq_at_right: forall c1 [@induction] i.
+    let c = c1 ++ (Cons i Nil) in
+    forall i'.
+    codeseq_at c (length c1) (Cons i' Nil) -> i' = i
+
+  let function push (n:int) (s:stack) : stack = Cons n s
+
+  (* new instructions *)
+  let function iimm   (x:idr) (n:int)               = Cons (Iimm x n)         Nil
+  let function iload  (x:idr) (n:id)                = Cons (Iload x n)        Nil
+  let function istore (x:idr) (n:id)                = Cons (Istore x n)       Nil
+  let function ipushr (x:idr)                       = Cons (Ipushr x)         Nil
+  let function ipopr  (x:idr)                       = Cons (Ipopr x)          Nil
+  let function iaddr  (x1 x2 x3:idr)                = Cons (Iaddr x1 x2 x3)   Nil
+  let function iaddur (x1 x2 x3:idr)                = Cons (Iaddur x1 x2 x3)  Nil
+  let function isubr  (x1 x2 x3:idr)                = Cons (Isubr x1 x2 x3)   Nil
+  let function ibeqr  (x1 x2:idr) (ofs:ofs) : code  = Cons (Ibeqr x1 x2 ofs)  Nil
+  let function ibner  (x1 x2:idr) (ofs:ofs) : code  = Cons (Ibner x1 x2 ofs)  Nil
+  let function ibler  (x1 x2:idr) (ofs:ofs) : code  = Cons (Ibler x1 x2 ofs)  Nil
+  let function ibgtr  (x1 x2:idr) (ofs:ofs) : code  = Cons (Ibgtr x1 x2 ofs)  Nil
+
+  (* original instructions *)
+  let function iconst (n:int) : code    = Cons (Iconst n)     Nil
+  let function ivar (x:id) : code       = Cons (Ivar x)       Nil
+  let function isetvar (x:id) : code    = Cons (Isetvar x)    Nil
+  let constant iadd : code              = Cons Iadd           Nil
+  let constant iaddu : code             = Cons Iaddu          Nil
+  let constant isub : code              = Cons Isub           Nil
+  let function ibeq (ofs:ofs) : code    = Cons (Ibeq ofs)     Nil
+  let function ible (ofs:ofs) : code    = Cons (Ible ofs)     Nil
+  let function ibne (ofs:ofs) : code    = Cons (Ibne ofs)     Nil
+  let function ibgt (ofs:ofs) : code    = Cons (Ibgt ofs)     Nil
+  let function ibranch (ofs:ofs) : code = Cons (Ibranch ofs)  Nil
+  let constant ihalt : code             = Cons Ihalt          Nil      
+
+  (* The semantics of the virtual machine is given in small-step style,
+    as a transition relation between machine states: tupels 
+    (program counter, evaluation stack, variable state, register state). 
+     
+    The transition relation is parameterized by the code c. There is one 
+    transition rule for each kind of instruction, except Ihalt, 
+    which has no transition. *)
+
+  inductive transition code machine_state machine_state =
+    (* new/added specifications *)
+    | trans_imm : forall c p x n. codeseq_at c p (iimm x n) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) (write r x n) s m)
+
+    | trans_load : forall c p x n. codeseq_at c p (iload x n) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) (write r x m[n]) s m)
+
+    | trans_store : forall c p x n. codeseq_at c p (istore x n) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) r s m[n <- read r x])
+
+    | trans_pushr : forall c p x. codeseq_at c p (ipushr x) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) r (push (read r x) s) m)
+
+    | trans_popr : forall c p x n. codeseq_at c p (ipopr x) ->
+        forall s m r. transition c
+          (VMS p r (push n s) m)
+          (VMS (p + 1) (write r x n) s m)
+
+    | trans_addr : forall c p x1 x2 x3. codeseq_at c p (iaddr x1 x2 x3) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) (write r x3 (read r x1 + read r x2)) s m)
+
+    | trans_addur : forall c p x1 x2 x3. codeseq_at c p (iaddur x1 x2 x3) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) (write r x3 (bv_add (read r x1) (read r x2))) s m)
+
+    | trans_subr : forall c p x1 x2 x3. codeseq_at c p (isubr x1 x2 x3) ->
+        forall s m r. transition c
+          (VMS p r s m)
+          (VMS (p + 1) (write r x3 (read r x1 - read r x2)) s m)
+
+    | trans_beqr: forall c p x1 x2 r ofs. codeseq_at c p (ibeqr x1 x2 ofs) ->
+        forall s m. transition c
+        (VMS p r s m)
+        (VMS (if read r x1 = read r x2 then p + 1 + ofs else p + 1) r s m)
+
+    | trans_bner: forall c p x1 x2 r ofs. codeseq_at c p (ibner x1 x2 ofs) ->
+        forall s m. transition c
+        (VMS p r s m)
+        (VMS (if read r x1 <> read r x2 then p + 1 + ofs else p + 1) r s m)
+
+    | trans_bler: forall c p r x1 x2 ofs. codeseq_at c p (ibler x1 x2 ofs) ->
+        forall s m. transition c
+        (VMS p r s m)
+        (VMS (if read r x1 <= read r x2 then p + 1 + ofs else p + 1) r s m)
+
+    | trans_bgtr: forall c p r x1 x2 ofs. codeseq_at c p (ibgtr x1 x2 ofs) ->
+        forall s m. transition c
+        (VMS p r s m)
+        (VMS (if read r x1 <=  read r x2 then p + 1 else p + 1 + ofs) r s m)
+
+    (* original specifications *)
+    | trans_const : forall c p r n. codeseq_at c p (iconst n) ->
+        forall s m. transition c (VMS p r s m) (VMS (p + 1) r (push n s) m)
+
+    | trans_var : forall c p r x. codeseq_at c p (ivar x) ->
+        forall s m. transition c (VMS p r s m) (VMS (p + 1) r (push m[x] s) m)
+
+    | trans_set_var: forall c p r x. codeseq_at c p (isetvar x) ->
+        forall n s m. transition c (VMS p r (push n s) m) (VMS (p + 1) r s m[x<-n])
+
+    | trans_add : forall c p r. codeseq_at c p iadd ->
+        forall n1 n2 s m. transition c
+          (VMS p r (push n2 (push n1 s)) m)
+          (VMS (p + 1) r (push (n1 + n2) s) m)
+
+    | trans_addu : forall c p r. codeseq_at c p iaddu ->
+        forall n1 n2 s m. transition c
+        (VMS p r (push n2 (push n1 s)) m)
+        (VMS (p + 1) r (push (bv_add n1 n2) s) m)
+
+    | trans_sub : forall c p r. codeseq_at c p isub ->
+        forall n1 n2 s m. transition c
+        (VMS p r (push n2 (push n1 s)) m)
+        (VMS (p + 1) r (push (n1 - n2) s) m)
+
+    | trans_beq: forall c p1 r ofs. codeseq_at c p1 (ibeq ofs) ->
+        forall s m n1 n2. transition c
+        (VMS p1 r (push n2 (push n1 s)) m)
+        (VMS (if n1 = n2 then p1 + 1 + ofs else p1 + 1) r s m)
+
+    | trans_bne: forall c p1 r ofs. codeseq_at c p1 (ibne ofs) ->
+        forall s m n1 n2. transition c
+        (VMS p1 r (push n2 (push n1 s)) m)
+        (VMS (if n1 = n2 then p1 + 1 else p1 + 1 + ofs) r s m)
+
+    | trans_ble: forall c p1 r ofs. codeseq_at c p1 (ible ofs) ->
+        forall s m n1 n2. transition c
+        (VMS p1 r (push n2 (push n1 s)) m)
+        (VMS (if n1 <= n2 then p1 + 1 + ofs else p1 + 1) r s m)
+
+    | trans_bgt: forall c p1 r ofs. codeseq_at c p1 (ibgt ofs) ->
+        forall s m n1 n2. transition c
+        (VMS p1 r (push n2 (push n1 s)) m)
+        (VMS (if n1 <= n2 then p1 + 1 else p1 + 1 + ofs) r s m)
+
+    | trans_branch: forall c p r ofs. codeseq_at c p (ibranch ofs) ->
+        forall s m. transition c (VMS p r s m) (VMS (p + 1 + ofs) r s m)
+
+  (* As usual with small-step semantics, we form sequences of machine
+     transitions to define the behavior of a code. We always start with pc
+     = 0 and an empty evaluation stack. We stop successfully if pc points
+     to an Ihalt instruction and the evaluation stack is empty. *)
+
+   clone export ReflTransClosure with type parameter = code,
+     type state = machine_state, predicate transition = transition
+
+   predicate vm_terminates (c:code) (mi mf:state) =
+     exists p r. codeseq_at c p ihalt /\
+       transition_star c (VMS 0 r Nil mi) (VMS p r Nil mf)
+
+   predicate vm_terminates_reg (c:code) (mi mf:state) =
+     forall r.
+     exists p r'. codeseq_at c p ihalt /\
+       transition_star c (VMS 0 r Nil mi) (VMS p r' Nil mf)
+
+  lemma trans_deterministic_aux : forall c mi mf1. transition c mi mf1 ->
+      forall mf2. ([@inversion] transition c mi mf2) -> mf1 = mf2
+
+  lemma trans_deterministic : forall c mi mf1 mf2.
+      transition c mi mf1 -> transition c mi mf2 -> mf1 = mf2
+
+  lemma trans_deterministic_star : forall c mi mf1 mf2.
+      transition c mi mf1 -> transition c mi mf2 -> mf1 = mf2
+
+end(* Determinstic semantics *)

@@ -1,0 +1,95 @@
+theory VM_simple
+
+  use export int.Int
+  use export list.List
+  
+  type stack = list int
+  
+  type instr =
+    | Iconst int   (*   push n on stack                               *)
+    | Iadd         (*   pop two values, push their sum                *)
+    | Isub         (*   pop two values, push their difference         *)
+
+  function pop (st : stack) : (int, stack) =
+  match st with
+  | Nil        -> (0, st)
+  | Cons c st' -> (c, st')
+  end
+
+  function push (v : int) (st : stack) : stack = Cons v st
+
+  function fconst (v : int) (st : stack) : stack = push v st
+  
+  function fadd (st : stack) : stack =
+    let (a1, st1) = pop st in
+    let (a2, st2) = pop st1 in
+    push (a1 + a2) st2
+
+  function fsub (st : stack) : stack =
+    let (a1, st1) = pop st in
+    let (a2, st2) = pop st1 in
+    push (a2 - a1) st2
+
+end
+
+theory VM_simple_test
+
+  use VM_simple
+  
+  goal g1 : (* 1 + 2 = 3 *)
+    fadd (fconst 2 (fconst 1 Nil)) = Cons 3 Nil
+
+  goal g2 : (* 2 - 1 = 1 *)
+    fsub (fconst 1 (fconst 2 Nil)) = Cons 1 Nil
+
+  goal g3 : (* 3 - (1 + 2) = 0 *)
+    fsub (fadd (fconst 2 (fconst 1 (fconst 3 Nil)))) = Cons 0 Nil
+
+  goal g4 : (* (3 - 1) + 2 = 4 *)
+    fadd (fconst 2 (fsub (fconst 1 (fconst 3 Nil)))) = Cons 4 Nil
+    
+end
+
+
+theory VM_simple_list
+
+  use export VM_simple
+
+  function vm_i (i : instr) (st : stack) : stack =
+  match i with
+  | Iconst v  -> fconst v st
+  | Iadd      -> fadd st
+  | Isub      -> fsub st
+  end
+  
+  function vm (il : list instr) (st : stack) : stack =
+  match il with
+  | Nil        -> st
+  | Cons i il' -> vm il' (vm_i i st )
+  end
+  
+end
+
+theory VM_simple_list_test
+
+  use VM_simple_list
+  function (::) (i : 'a) (l : list 'a) : list 'a = Cons i l
+
+  goal g1 : (* 1 + 2 = 3 *)
+    vm (Iconst 1 :: (Iconst 2 :: (Iadd :: Nil))) Nil = 3 :: Nil
+
+  goal g2 : (* 2 - 1 = 1 *)
+    vm (Iconst 2 :: (Iconst 1 :: (Isub :: Nil))) Nil = 1 :: Nil
+
+  goal g3 : (* 3 - (1 + 2) = 0 *)
+    vm (Iconst 3 :: (Iconst 1 :: (Iconst 2 :: (Iadd :: (Isub :: Nil))))) Nil
+    = 0 :: Nil
+
+  goal g4 : (* (3 - 1) + 2 = 4 *)
+    vm (Iconst 3 :: (Iconst 1 :: (Isub :: (Iconst 2 :: (Iadd :: Nil))))) Nil
+    = 4 :: Nil
+
+end
+
+
+  

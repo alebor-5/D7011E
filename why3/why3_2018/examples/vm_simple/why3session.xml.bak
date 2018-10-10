@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.0.0" timelimit="1" steplimit="0" memlimit="1000"/>
+<file name="../vm_simple.mlw" proved="true">
+<theory name="VM_simple_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="21"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="21"/></proof>
+ </goal>
+ <goal name="g3" proved="true">
+ <proof prover="0"><result status="valid" time="0.02" steps="44"/></proof>
+ </goal>
+ <goal name="g4" proved="true">
+ <proof prover="0"><result status="valid" time="0.01" steps="31"/></proof>
+ </goal>
+</theory>
+<theory name="VM_simple_list_test" proved="true">
+ <goal name="g1" proved="true">
+ <proof prover="0"><result status="valid" time="0.03" steps="113"/></proof>
+ </goal>
+ <goal name="g2" proved="true">
+ <proof prover="0"><result status="valid" time="0.03" steps="113"/></proof>
+ </goal>
+ <goal name="g3" proved="true">
+ <proof prover="0"><result status="valid" time="0.07" steps="224"/></proof>
+ </goal>
+ <goal name="g4" proved="true">
+ <proof prover="0"><result status="valid" time="0.07" steps="227"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>

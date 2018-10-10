@@ -1,0 +1,103 @@
+theory VM_mem
+
+  use export int.Int
+  use export list.List
+  use export state.State
+  
+  type stack = list int
+  type machine_state = (stack, state)
+  
+  type instr =
+    | Iconst int   (*   push n on stack                               *)
+    | Ivar id      (*   push the value of variable                    *)
+    | Iadd         (*   pop two values, push their sum                *)
+    | Isub         (*   pop two values, push their difference         *)
+
+  function pop (st : stack) : (int, stack) =
+  match st with
+  | Nil        -> (0, st)
+  | Cons c st' -> (c, st')
+  end
+
+
+  function push (v : int) (st : stack) : stack = Cons v st
+
+  function fconst (v : int) (m : machine_state) : machine_state =
+    let (stack, state) = m in (push v stack, state)
+   
+  function fvar (id : id) (m : machine_state) : machine_state = 
+    let (stack, state) = m in (push state[id] stack, state)
+
+
+  function fadd (m : machine_state) : machine_state =
+    let (stack, state) = m in
+    let (a1, st1) = pop stack in
+    let (a2, st2) = pop st1 in
+    (push (a1 + a2) st2, state)
+
+  function fsub (m : machine_state) : machine_state =
+    let (stack, state) = m in
+    let (a1, st1) = pop stack in
+    let (a2, st2) = pop st1 in
+    (push (a2 - a1) st2, state)
+
+end
+
+
+theory VM_mem_test
+
+  use VM_mem
+  
+  goal g1 : (* 2 + 1 = 3 *)
+    forall state.
+    fadd (fconst 1 (fconst 2 (Nil, state))) = (Cons 3 Nil, state)
+
+  constant s0 : state = (const 0)[Id 1 <- 2]
+  constant m0 : machine_state = (Nil, s0)
+  
+  goal g2 : (* a + 1 = 3, state[a] = 2 *)
+    fadd (fconst 1 (fvar (Id 1) m0)) = (Cons 3 Nil, s0)
+
+end
+
+
+theory VM_mem_list
+
+  use export VM_mem
+
+  function vm_i (i : instr) (m : machine_state) : machine_state =
+  match i with
+  | Iconst v  -> fconst v m
+  | Ivar id   -> fvar id m
+  | Iadd      -> fadd m
+  | Isub      -> fsub m
+  end
+  
+  function vm (il : list instr) (m : machine_state) : machine_state =
+  match il with
+  | Nil        -> m
+  | Cons i il' -> vm il' (vm_i i m)
+  end
+  
+end
+
+theory VM_mem_list_test
+
+  use VM_mem_list
+  
+  function (::) (i : 'a) (l : list 'a) : list 'a = Cons i l
+
+  constant s0 : state = (const 0)[Id 1 <- 2]
+  constant m0 : machine_state = (Nil, s0)
+
+  goal g1 : (* 2 + 1 = 3 *)
+    vm (Iconst 2 :: (Iconst 1 :: (Iadd :: Nil))) m0 = (3 :: Nil, s0)
+
+  goal g2 : (* a + 1 = 3 *)
+    vm (Ivar (Id 1) :: (Iconst 1 :: (Iadd :: Nil))) m0 = (3 :: Nil, s0)
+
+
+end
+
+
+  

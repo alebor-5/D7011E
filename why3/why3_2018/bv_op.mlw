@@ -1,0 +1,38 @@
+module BV_OP
+  
+  use bv.BV32  
+  
+  let function bv_add i1 i2:int 
+    ensures { 
+      result = BV32.to_int (BV32.add (BV32.of_int i1) (BV32.of_int i2))
+    }
+  =
+    let v1: BV32.t = BV32.of_int i1 in
+    let v2: BV32.t = BV32.of_int i2 in
+    let v: BV32.t = BV32.add v1 v2 in
+    BV32.to_int v 
+  
+  meta rewrite_def function bv_add
+
+  (*meta rewrite_def function bv_add
+  (* stupid test *)
+  use int.Int
+  use bv.BV32 
+  (*
+  constant bv_add : int -> int -> int = fun x y -> x + y 
+  *)
+
+  let function bv_add i1 i2:int 
+      ensures { 
+        result = i1 + i2
+      }
+    = i1 + i2
+
+  meta rewrite_def function bv_add
+  
+  (*
+  lemma bv_add_com:
+    forall v1 v2. bv_add v1 v2 = bv_add v2 v1
+  *)
+  *)
+end

@@ -1,0 +1,52 @@
+module Imp_ex
+
+  use imp.Imp
+  use state.State
+  use bool.Bool
+  use int.Int
+  use bv_op.BV_OP 
+
+  let rec aeval_ex  (st:state) (e:aexpr) : int 
+    variant { e }
+    ensures { result = aeval st e }
+  =
+    match e with
+      | Anum n      -> n
+      | Avar x      -> st[x]
+      | Aadd e1 e2  -> aeval_ex st e1 + aeval_ex st e2
+      | Aaddu e1 e2 -> bv_add (aeval_ex st e1) (aeval_ex st e2)
+      | Asub e1 e2  -> aeval_ex st e1 - aeval_ex st e2
+    end
+
+
+  let rec beval_ex (st:state) (b:bexpr) : bool 
+    variant { b }
+    ensures { result = beval st b }
+  =
+    match b with
+      | Btrue      -> true
+      | Bfalse     -> false
+      | Bnot b'    -> notb (beval_ex st b')
+      | Band b1 b2 -> andb (beval_ex st b1) (beval_ex st b2)
+      | Beq a1 a2  -> aeval_ex st a1 = aeval_ex st a2
+      | Ble a1 a2  -> aeval_ex st a1 <= aeval_ex st a2
+    end
+
+
+  let rec ceval_ex (st:state) (c:com): state
+    diverges (* uncomment when actually diverging*)   
+    ensures { ceval st c result }
+    =
+    match c with
+    | Cskip -> st
+    | Cassign id aexpr -> st[id <- aeval_ex st aexpr]
+    | Cseq c1 c2 -> let m = ceval_ex st c1 in  ceval_ex m c2
+    | Cif bexpr c1 c2 ->
+      match beval_ex st bexpr with
+      | True -> ceval_ex st c1
+      | False -> ceval_ex st c2
+      end
+     
+   (* | Cwhile bexpr com -> while beval_ex st bexpr do let m = ceval_ex st com in ceval_ex m com done *)
+    end
+end

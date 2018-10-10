@@ -1,0 +1,168 @@
+
+
+(*Imp to Vm compiler *)
+(**************************************************************************)
+
+(* Compiler for arithmetic expressions *)
+module Compile_aexpr
+
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use imp_per.Imp
+  use vm_per.Vm
+  use state.State
+
+  function compile_aexpr (a:aexpr) : code =
+  match a with
+  | Anum n     -> iconst n
+  | Avar x     -> ivar x
+  | Aadd a1 a2 -> compile_aexpr a1 ++ compile_aexpr a2 ++ iadd 
+  | Asub a1 a2 -> compile_aexpr a1 ++ compile_aexpr a2 ++ isub 
+  end
+
+  goal g_2_1 : (* 2 + 1 *)
+    let c_imp = Aadd (Anum 2) (Anum 1) in
+    let c_out = compile_aexpr c_imp in
+    c_out = iconst 2 ++ iconst 1 ++ iadd
+
+  goal g_a_1 : (* a + 1 *)
+    let c_imp = Aadd (Avar (Id 1)) (Anum 1) in
+    let c_out = compile_aexpr c_imp in
+    c_out = ivar (Id 1) ++ iconst 1 ++ iadd
+
+end
+
+
+(* Compiler for boolean expressions. *)
+module Compile_bexpr
+
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use imp_per.Imp
+  use vm_per.Vm
+  use state.State
+  use Compile_aexpr
+
+  function compile_bexpr (b:bexpr) (cond:bool) (ofs:ofs) :  code =
+  match b with
+  | Btrue      -> if cond then ibranch ofs else Nil
+  | Bfalse     -> if cond then Nil else ibranch ofs
+  | Bnot b1    -> compile_bexpr b1 (not cond) ofs
+  | Band b1 b2 ->
+    let c2  = compile_bexpr b2 cond ofs in
+    let ofs = if cond then length c2 else ofs + length c2 in
+    compile_bexpr b1 false ofs ++ c2
+
+  | Beq a1 a2  -> compile_aexpr a1 ++ compile_aexpr a2 ++
+                  if cond then ibeq ofs else ibne ofs
+  | Ble a1 a2  -> compile_aexpr a1 ++ compile_aexpr a2 ++
+                  if cond then ible ofs else ibgt ofs 
+  end 
+end
+
+module Compile_com
+
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use imp_per.Imp
+  use vm_per.Vm
+  use state.State
+  use Compile_aexpr
+  use Compile_bexpr
+
+  function compile_com (cmd: com) : code =
+  match cmd with
+  | Cskip              -> Nil
+  | Cassign x a        -> compile_aexpr a ++ isetvar x
+  | Cseq cmd1 cmd2     -> compile_com cmd1 ++ compile_com cmd2
+  | Cif bexpr cmd1 cmd2 ->
+    let code_false = compile_com cmd2 in
+    let code_true  = compile_com cmd1 ++ ibranch (length code_false) in
+    compile_bexpr bexpr false (length code_true) ++ 
+    code_true ++ 
+    code_false 
+  | Cwhile test body   ->
+    let code_body   = compile_com body in
+    let body_length = length code_body + 1 in
+    let code_test   = compile_bexpr test false body_length in
+    let ofs = length code_test + body_length in
+    code_test ++ code_body ++ ibranch (- ofs)
+  end
+
+  function compile_program (prog : com) : code =
+    compile_com prog ++ ihalt
+
+  goal g1 : (* a := 2 + 1 *)
+    let c_in  = Cassign (Id 1) (Aadd (Anum 2) (Anum 1)) in
+    let c_out =
+      iconst 2       ++
+      iconst 1       ++
+      iadd           ++
+      isetvar (Id 1) ++
+      ihalt in
+    compile_program c_in = c_out
+
+  goal g2 : (* IF TRUE THEN a := 1 ELSE a := 2 END *)
+    let c_in  = Cif Btrue (Cassign (Id 1) (Anum 1)) (Cassign (Id 1) (Anum 2)) in
+    let c_out =
+                        (* <-- condition trivial true *)
+      iconst 1       ++ (* <-- then branch *)
+      isetvar (Id 1) ++
+      ibranch 2      ++
+      iconst 2       ++ (* <-- else branch *)
+      isetvar (Id 1) ++
+      ihalt
+      in
+    compile_program c_in = c_out
+
+  goal g3 : (* IF NOT TRUE THEN a := 1 ELSE a := 2 END *)
+    let c_in  = Cif (Bnot Btrue) (Cassign (Id 1) (Anum 1)) (Cassign (Id 1) (Anum 2)) in
+    let c_out =
+      ibranch 3      ++ (* <-- condition trivial false *)
+      iconst 1       ++ (* <-- then branch *)
+      isetvar (Id 1) ++
+      ibranch 2      ++
+      iconst 2       ++ (* <-- else branch *)
+      isetvar (Id 1) ++
+      ihalt
+      in
+    compile_program c_in = c_out
+
+ goal g4 : (* IF a <= 0 THEN a := 1 ELSE a := 2 END *)
+    let c_in  = Cif (Ble (Avar (Id 1)) (Anum 0)) (Cassign (Id 1) (Anum 1)) (Cassign (Id 1) (Anum 2)) in
+    let c_out =
+      ivar (Id 1)    ++ (* <-- a <= 0 condition *)
+      iconst 0       ++
+      ibgt 3         ++ 
+      iconst 1       ++ (* <-- then branch *)
+      isetvar (Id 1) ++
+      ibranch 2      ++
+      iconst 2       ++ (* <-- else branch *)
+      isetvar (Id 1) ++
+      ihalt
+      in
+    compile_program c_in = c_out
+
+  (* simple sum program : *)
+  goal g5 : (* X := 1; WHILE NOT (Y <= 0) DO X := X + Y; Y := Y - 1 DONE *)
+    let x = Id 0 in 
+    let y = Id 1 in
+    let cond = Bnot (Ble (Avar y) (Anum 0)) in
+    let body1 = Cassign x (Aadd (Avar x) (Avar y)) in
+    let body2 = Cassign y (Asub (Avar y) (Anum 1)) in
+    let lp = Cwhile cond (Cseq body1 body2) in
+    let code = Cseq (Cassign x (Anum 1)) lp in
+        
+    let c_out =
+      (* your code here *)
+      ihalt in
+    compile_program code = c_out
+
+end
+

@@ -1,0 +1,410 @@
+module Sum
+
+  use int.Int
+  use ref.Ref
+
+  inductive sum int int =
+    | sum0 : sum 0 0
+    | sum1 : forall n m. sum n m -> sum (n + 1) (n + 1 + m)
+
+  goal s0: sum 0 0
+  goal s1: sum 1 (0 + 1)
+  goal s2: sum 2 (0 + 1 + 2)
+  goal s3: sum 3 (0 + 1 + 2 + 3)
+  
+  function sumf int : int
+  axiom sumf_ax : forall a s. 0 <= a -> sum a s <-> s = sumf a  
+  lemma sumf_lem: forall a s. 0 <= a -> s = sumf a -> sum a s
+  
+  goal f0: sumf 0 = 0
+  goal f1: sumf 1 = 0 + 1
+  goal f2: sumf 2 = 0 + 1 + 2
+  goal f3: sumf 3 = 0 + 1 + 2 + 3
+  
+  let rec sum_whyML_rec (n : int) : int
+    requires { 0 <= n }
+    variant  { n }
+    ensures  { sum n result } 
+    ensures  { result = sumf n } (* <- and/or alternatively *)
+  =  
+    match n = 0 with
+    | True -> 0
+    | _ -> sum_whyML_rec (n - 1) + n
+    end
+    
+  let sum_whyML (n : int) : int
+    requires { 0 <= n }
+    ensures  { sum n result } 
+    ensures  { result = sumf n } (* <- and/or alternatively *)
+  =  
+    let a = ref 0 in
+    let b = ref 0 in
+    while !a <= n - 1 do variant { n - !a } 
+      invariant { 0 <= !a <= n /\ sum !a !b } 
+      invariant { 0 <= !a <= n /\ !b = sumf !a } (* <- and/or alternatively *) 
+      a := !a + 1;
+      b := !b + !a;
+    done; 
+    !b
+
+  let ml0 () = let s = sum_whyML 0 in assert { s = 0 }; ()
+  let ml1 () = let s = sum_whyML 1 in assert { s = 1 }; ()
+  let ml2 () = let s = sum_whyML 2 in assert { s = 3 }; ()
+  let ml3 () = let s = sum_whyML 3 in assert { s = 6 }; ()
+  
+ 
+end
+
+module Assignment
+
+  use int.Int
+
+  let f (x : int) : int
+    requires { 10 < x < 43 }
+  = x
+  
+  let g (x : int) : int
+    (* requires { your code here } *)
+  = let x = x + 1 in
+    f x 
+end
+
+module AssignmentRef
+
+  use int.Int
+  use ref.Ref
+
+  let f (x : ref int) : ref int
+    requires { 10 < !x < 43 }
+  = x
+  
+  let g (x : ref int) : ref int
+    (* requires { your code here } *)
+  = x := !x + 1;
+    f x 
+end
+
+module SequenceRef
+
+  use int.Int
+  use ref.Ref
+
+  let seq (x : ref int) : ref int
+    (* requires {  your code here } *)
+    ensures  { !result = 43 }
+  = 
+    let y = ref 0 in
+    let z = ref 0 in
+    y := !x + 1;
+    z := !y;
+    z  
+end
+
+module WhileRef
+
+  use int.Int
+  use ref.Ref
+
+  let loop (x: ref int) : ref int
+    (* requires { your code here } *)
+    ensures  { !x = 10 }
+  = 
+    while !x < 10 do (* variant { your code here } *)
+      (* invariant { your code here } *)
+      x := !x + 1
+    done;
+    x
+end
+
+module WeakenStrenghtenRef
+
+  use int.Int
+  use ref.Ref
+
+  let weaken_post (x: ref int) : ref int
+    requires { !x < 10 }
+    ensures  { !result < 20 } (* too weak for !x < 10 *)
+  = 
+    x
+    
+  let strenghten_pre (x: ref int) : ref int
+   requires { !x < 0 } (* too strong for !x < 10 *)
+   ensures  { !result < 20 }
+  = 
+    x:= !(weaken_post x); 
+    x
+end
+
+
+
+
+theory Imp
+
+  use state.State
+  use bool.Bool
+  use int.Int
+
+  type cond = state -> bool 
+
+ (* ************************ SYNTAX ************************ *)
+  type aexpr =
+    | Anum int
+    | Avar id
+    | Aadd aexpr aexpr
+    | Asub aexpr aexpr
+
+  type bexpr =
+    | Btrue
+    | Bfalse
+    | Band bexpr bexpr
+    | Bnot bexpr
+    | Beq aexpr aexpr
+    | Ble aexpr aexpr
+
+  type com =
+    | Cskip
+    | Cassign id aexpr
+    | Cseq com com
+    | Cif bexpr com com
+    | Cwhile bexpr cond com (* <-- cond is the loop invaraint *)
+
+  (* ************************  SEMANTICS ************************ *)
+  function aeval  (st : state) (e : aexpr) : int =
+    match e with
+      | Anum n      -> n
+      | Avar x      -> st[x]
+      | Aadd e1 e2  -> aeval st e1 + aeval st e2
+      | Asub e1 e2  -> aeval st e1 - aeval st e2
+    end
+  meta "rewrite_def" function aeval
+
+  function beval (st : state) (b : bexpr) : bool =
+    match b with
+      | Btrue      -> true
+      | Bfalse     -> false
+      | Bnot b     -> notb (beval st b)
+      | Band b1 b2 -> andb (beval st b1) (beval st b2)
+      | Beq a1 a2  -> aeval st a1 = aeval st a2
+      | Ble a1 a2  -> aeval st a1 <= aeval st a2
+    end
+  meta "rewrite_def" function beval
+
+end
+
+module HoareRules
+
+  meta compute_max_steps 0x10000
+  
+  use export Imp
+  use export state.State
+  use export bool.Bool
+  use export int.Int
+  
+  constant triv_cond : cond = fun _ -> true
+
+  function wp (com : com) (q : cond) : cond =
+    match com with
+    | Cskip         -> q
+    | Cassign id a  -> fun s -> q s[id <- aeval s a]
+    | Cseq c1 c2    -> wp c1 (wp c2 q)                           
+    | Cif b ct cf   -> fun s ->
+                       (beval s b -> wp ct q s) /\
+                       (not (beval s b) -> wp cf q s)
+    | Cwhile _ i _  -> i
+    end
+  meta "rewrite_def" function wp
+
+  function vc (com:com) (q : cond) : cond =
+    match com with
+    | Cskip        -> triv_cond
+    | Cassign _ _  -> triv_cond
+    | Cseq c1 c2   -> fun s -> vc c1 (wp c2 q) s /\ vc c2 q s
+    | Cif _ ct cf  -> fun s -> vc ct q s /\ vc cf q s 
+    | Cwhile b i c -> fun s ->
+                      ((i s /\ not (beval s b)) -> q s) /\ (* <-- postcond  *)
+                      ((i s /\ beval s b) -> wp c i s)  /\ (* <-- invariant *)
+                      vc c i s                             (* <-- body      *) 
+    end
+  meta "rewrite_def" function vc 
+
+  function vcg (p : cond) (c : com) (q : cond) : cond =
+    fun s -> ((p s) -> ((wp c q) s)) /\ vc c q s 
+  meta "rewrite_def" function vcg 
+
+end
+
+module HoareTest
+
+  use HoareRules
+  use ref.Ref
+    
+  constant a_id : id = Id 1
+  constant b_id : id = Id 2
+  constant c_id : id = Id 3
+
+
+  (* assignment command *)
+  let assignment (a : int) 
+    requires { true }
+    ensures  { !result = 2 }
+  =
+    let a = ref 0 in
+    a := 2;
+    a
+     
+  (* derive weakest precondition *)  
+  goal ass_wp : (* { true } a := 2 {a = 2} *)
+    let q = fun s -> s[a_id] = 2 in     (* postcondition          *)
+    let c = Cassign a_id (Anum 2) in    (* assignment command     *)
+    wp c q = triv_cond
+    
+    (* forall s. p s -> p' s                        (* prove that p implies q *)
+    *)
+    
+  (* derive and prove verification conditions *)  
+  goal ass_vc : (* { true } a := 2 {a = 2} *)
+    let q = fun s -> s[a_id] = 2 in              (* postcondition          *)
+    let c = Cassign a_id (Anum 2) in             (* assignment command     *)
+    let vcs = vc c q in
+    forall s. vcs s                              (* prove vcs              *)
+    
+  (* both at the same time *)  
+  goal ass : (* { true } a := 2 {a = 2} *)
+    let p = triv_cond in                         (* precondition           *)
+    let q = fun s -> s[a_id] = 2 in              (* postcondition          *)
+    let c = Cassign a_id (Anum 2) in             (* assignment command     *)
+    forall s. (vcg p c q) s                      (* prove p -> q and vcs   *)
+    
+  (* sequence of assignment commands, with precondition *)
+  let seq_assignment (b : ref int) 
+    requires { !b = 2 }
+    ensures  { !result = 2 }
+  =
+    let a = ref 0 in
+    a := 4;
+    a := 2;
+    a
+      
+  (* sequence of assignment commands, with precondition *)
+  goal seq_ass : (* b = 2 } a := 3; a := 2 {a = 2} *)
+    let p = fun s -> s[b_id] = 2 in              (* precondition           *)
+    let q = fun s -> s[a_id] = 2 in              (* postcondition          *)
+                                                 (* sequence               *)
+    let c = Cseq (Cassign a_id (Anum 3)) (Cassign a_id (Avar b_id)) in
+    forall s. (vcg p c q) s                      (* prove p -> q and vcs   *)
+
+  let condition (b c : ref int) 
+    requires { !c = 3 }
+    ensures  { !result = 3 }
+  =
+    let a = ref 0 in
+    if !b = 0 then a := 3 else a := !c; 
+    a
+  
+  (* we cheat a bit, considering b = true and false separately *)  
+  goal cond_true : (* { c = 3 } if true then a := 3 else a :=  {a = 3} *)
+    let p = fun s -> s[c_id] = 3 in              (* precondition           *)
+    let q = fun s -> s[a_id] = 3 in              (* postcondition          *)
+    let c = Cif Btrue (Cassign a_id (Anum 3)) (Cassign a_id (Avar c_id)) in
+    forall s. (vcg p c q) s                      (* prove p -> q and vcs   *)
+
+  goal cond_false : (* { c = 3 } if false then a := 3 else a := b {a = 3} *)
+    let p = fun s -> s[c_id] = 3 in              (* precondition           *)
+    let q = fun s -> s[a_id] = 3 in              (* postcondition          *)
+    let c = Cif Bfalse (Cassign a_id (Anum 3)) (Cassign a_id (Avar c_id)) in
+    forall s. (vcg p c q) s                      (* prove p -> q and vcs   *)
+
+(*
+  (* finish and prove the program below *)
+  
+  goal cond : (* { c = 3 } if false then a := 3 else a := b {a = 3} *)
+    let p = fun s -> s[c_id] = 3 in              (* precondition           *)
+    let q = fun s -> s[a_id] = 3 in              (* postcondition          *)
+    let c = Cif (* your code here *) 
+            (Cassign a_id (Anum 3)) (Cassign a_id (Avar c_id)) in
+    forall s. (vcg p c q) s                      (* prove p -> q and vcs   *)
+*)
+
+  (* loop *)  
+  let looping a b
+    requires { !a = 0 /\ !b = 2 }
+    ensures  { !result = !b +  1 } 
+  =
+    while !a <= !b do variant { !b - !a } 
+      invariant { !a <= !b + 1 }
+      a := !a + 1;
+    done;
+    a
+    
+  (*
+     split the verication conditions into sepratate subgoals
+     alt-ergo should discharge all 4 
+     
+     invalidate the precondition, !a = 7,
+     what conditions are now discharged and why
+     
+     restore into orig state, and invalidate the loop invariant
+     !a <= b, what conditions are now discharged and why
+     !a <= b + 2, what conditions are now discharged and why
+      
+     restore into orig stata, and invalitade the loop body
+     a := !a + 2, what condititons are now discharged and why
+  *)  
+    
+    
+  (* 
+      similarly we can encode the problem in "imp"
+      proof context (Task) can be understood as follows
+      
+      -- transformations
+      compute_specified (computes the vcg and vc)
+      split_vc          (splits and introduces premises)
+      
+      see if you can relate the generated vcs to that of the "imp" program.
+        
+      vc [0] invariant_init
+      axiom H1 : s[a_id] = 0
+      axiom H : s[b_id] = 2
+      ------------------------------- Goal --------------------------------
+      goal loo : s[a_id] <= (s[b_id] + 1)
+      
+      vc [1] post_confition, given by the "while false" case 
+      axiom H1 : s[a_id] <= (s[b_id] + 1)
+      axiom H : not s[a_id] <= s[b_id]
+      
+      -- H not s[a_id] <= s[b_id] -> s[b_id] < s[a_id] 
+      -- H1 states s[a_id] <= s[b_id] + 1, thus H,H1 -> s[a_id] = s[b_id] + 1 
+      ------------------------------- Goal --------------------------------
+      goal loo : s[a_id] = (s[b_id] + 1)
+      
+      vc [2] invariant preservation
+      axiom H1 : s[a_id] <= (s[b_id] + 1)  (loop invariant)
+      axiom H : s[a_id] <= s[b_id]         (loop condition)
+      -- informally the loop condition implies the invariant
+      ------------------------------- Goal --------------------------------
+      s[a_id <- (s[a_id] + 1)][a_id] <= (s[a_id <- (s[a_id] + 1)][b_id] + 1)
+      
+      vc [3] vc for the loop body 
+      -- trivial no vc generated for assignments in loop body
+   *)
+    
+  goal loo: 
+  (* 
+      { a = 0 /\ b = 2 } 
+      [ while a <= b {a <= b + 1} do a := a + 1; ] 
+      { a = b + 1 } 
+  *)
+    let p = fun s -> s[a_id] = 0 /\ s[b_id] = 2 in  (* precondition        *)
+    let q = fun s -> s[a_id] = s[b_id] + 1 in       (* postcondition       *)
+    let i = fun s -> s[a_id] <= s[b_id] + 1 in      (* loop invariant      *)
+    let c = 
+      Cwhile (Ble (Avar a_id) (Avar b_id)) i (
+        Cassign a_id (Aadd (Avar a_id) (Anum 1))
+      ) in
+     
+    forall s. (vcg p c q) s                        (* prove p -> q and vcs *)
+    
+
+
+end
+

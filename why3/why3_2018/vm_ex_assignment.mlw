@@ -1,0 +1,91 @@
+module Vm_Ex
+
+  use vm.Vm
+  use option.Option
+  use int.Int
+  use list.List
+  use list.Length
+  use list.Append
+  use list.Nth
+  use list.NthLength
+  use state.State
+  use state.Reg
+  use bv_op.BV_OP
+
+  exception Err
+  exception Halt machine_state
+ 
+  lemma codeseq_at_zero:
+    forall c1 c2. length c1 = 0 -> 
+      codeseq_at (c1 ++ c2) 0 c2
+
+  let rec split_at p (c:code)   
+    raises   { Err ->  p >= length c }
+
+    requires { p >= 0 } (* well founded *)
+    variant  { p }      (* termination  *)
+
+    ensures  { 
+        let (hd, tl) = result in
+        hd ++ tl = c /\
+        codeseq_at c p tl /\
+        length tl > 0
+    }
+  = match (c, p = 0) with
+    | (Nil, _)       -> raise Err (* p >= length c *)
+    | (_, True)      -> (Nil, c)
+    | (Cons e c', _) -> 
+      let (hd, tl) = split_at (p - 1) c' in
+      (Cons e hd, tl)
+    end
+
+  let pop (s:stack) : (int, stack)
+    ensures {
+      let (rv, rs) = result in
+      Cons rv rs  = s (* original stack *)
+    }
+    raises { Err }
+  =
+    match s with
+    | Nil        -> raise Err
+    | Cons rv rs -> (rv, rs)
+    end
+
+  let instr_ex (c: code) (ms: machine_state): machine_state 
+    raises   { Err }
+    raises   { Halt (VMS p _ _ _) -> codeseq_at c p ihalt }
+    ensures  { transition c ms result } 
+  =
+    let VMS p r s m = ms in (* split machine state *)
+    
+    if p < 0 then raise Err;
+
+    try 
+      let (_, Cons instr _) = split_at p c in      
+      assert { codeseq_at c p (Cons instr Nil)};
+    
+      match instr with      
+      
+      | Iconst n    -> (*   push n on stack                               *)
+        VMS (p + 1) r (push n s) m 
+        
+    
+      | Ihalt -> raise (Halt ms)
+      
+      (* your code here *)
+    
+      | _ -> raise Err
+      end
+    with 
+      Err -> raise Err  
+    end
+          
+  let rec instr_iter_ex (c: code) (ms: machine_state): machine_state 
+    raises   { Err }
+    raises   { Halt (VMS p _ _ _) -> codeseq_at c p ihalt }
+    ensures  { transition_star c ms result } 
+    diverges
+  =
+    instr_iter_ex c (instr_ex c ms)   
+   
+end

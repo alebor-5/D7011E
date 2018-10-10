@@ -1,0 +1,45 @@
+
+module State
+
+  use int.Int
+  
+  type id = Id int
+  type state = id -> int
+
+  let function get (f: state) (x: id) = f x
+
+  let function set (f: state) (x: id) (v: int) : state =
+    fun (y: id) -> 
+      match (x, y) with
+      | (Id xv, Id yv) -> if xv = yv then v else (f y) 
+      end
+  meta rewrite_def function set
+
+  let function ([]) f x = f x
+  let function ([<-]) f x v = set f x v
+  
+  let function const (v: int) : state
+    ensures { forall x. result[x] = v }
+  = fun _ -> v
+
+end
+
+module Reg
+
+  use int.Int
+  
+  type idr = int
+  type regs = idr -> int
+
+  let function read (f: regs) (x: idr) = f x
+
+  let function write (f: regs) (x: idr) (v: int) : regs =
+    fun (y: idr) -> if x = y then v else (f y) 
+      
+  meta rewrite_def function write
+  
+  let function const (v: int) : regs
+    ensures { forall x. read result x = v }
+  = fun _ -> v
+
+end

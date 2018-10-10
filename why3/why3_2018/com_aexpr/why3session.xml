@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.0.0" timelimit="5" steplimit="0" memlimit="2000"/>
+<prover id="1" name="CVC4" version="1.6" alternative="counterexamples" timelimit="5" steplimit="0" memlimit="2000"/>
+<prover id="2" name="Alt-Ergo" version="2.2.0" timelimit="5" steplimit="0" memlimit="2000"/>
+<prover id="3" name="Eprover" version="2.1" timelimit="5" steplimit="0" memlimit="2000"/>
+<prover id="4" name="Z3" version="4.7.1" alternative="counterexamples" timelimit="5" steplimit="0" memlimit="2000"/>
+<file name="../com_aexpr.mlw">
+<theory name="Compile_aexpr_reg">
+ <goal name="VC compile_aexpr" expl="VC for compile_aexpr">
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr.0" expl="variant decrease">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.14" steps="162"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.1" expl="variant decrease">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.15" steps="172"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.2" expl="variant decrease">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.14" steps="162"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.3" expl="variant decrease">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.15" steps="172"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.4" expl="unreachable point">
+  </goal>
+  <goal name="VC compile_aexpr.5" expl="precondition">
+  <transf name="split_goal_right" >
+   <goal name="VC compile_aexpr.5.0" expl="precondition">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.5.0.0" expl="precondition">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.5.0.0.0" expl="precondition">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.5.0.0.0.0" expl="precondition">
+      <proof prover="0" obsolete="true"><result status="valid" time="0.27" steps="326"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.5.1" expl="precondition">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.5.1.0" expl="precondition">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.5.1.0.0" expl="precondition">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.5.1.0.0.0" expl="precondition">
+      <proof prover="0" obsolete="true"><result status="valid" time="0.27" steps="316"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.5.2" expl="precondition">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.5.2.0" expl="precondition">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.5.2.0.0" expl="precondition">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.5.2.0.0.0" expl="precondition">
+      <proof prover="0" obsolete="true"><result status="valid" time="0.81" steps="500"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.5.3" expl="precondition">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.5.3.0" expl="precondition">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.5.3.0.0" expl="precondition">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.5.3.0.0.0" expl="precondition">
+      <proof prover="0" obsolete="true"><result status="valid" time="0.78" steps="500"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC compile_aexpr.6" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.10" steps="81"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.7" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.09" steps="81"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC compile_aexpr_natural" expl="VC for compile_aexpr_natural">
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr_natural.0" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.09" steps="80"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.1" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.11" steps="81"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.2" expl="assertion">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.19" steps="172"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.3" expl="postcondition">
+  <proof prover="0" obsolete="true"><result status="valid" time="0.29" steps="309"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Compile_aexpr_reg_k">
+ <goal name="VC k">
+ <proof prover="0"><result status="valid" time="0.07" steps="78"/></proof>
+ </goal>
+ <goal name="VC compile_aexpr">
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr.0">
+  <proof prover="0"><result status="valid" time="0.15" steps="175"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.1">
+  <proof prover="0"><result status="valid" time="0.10" steps="88"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.2">
+  <proof prover="0"><result status="valid" time="0.20" steps="185"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.3">
+  <proof prover="0"><result status="valid" time="0.11" steps="92"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.4">
+  <proof prover="0"><result status="valid" time="0.16" steps="192"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.5">
+  <proof prover="0"><result status="valid" time="0.11" steps="93"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.6">
+  <proof prover="0"><result status="valid" time="0.16" steps="202"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.7">
+  <proof prover="0"><result status="valid" time="0.10" steps="97"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.8">
+  <proof prover="0"><result status="valid" time="0.22" steps="175"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.9">
+  <proof prover="0"><result status="valid" time="0.09" steps="88"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.10">
+  <proof prover="0"><result status="valid" time="0.20" steps="185"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.11">
+  <proof prover="0"><result status="valid" time="0.15" steps="92"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.12">
+  <proof prover="0"><result status="valid" time="0.13" steps="192"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.13">
+  <proof prover="0"><result status="valid" time="0.10" steps="93"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.14">
+  <proof prover="0"><result status="valid" time="0.14" steps="202"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.15">
+  <proof prover="0"><result status="valid" time="0.10" steps="97"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.16">
+  <transf name="split_goal_right" >
+   <goal name="VC compile_aexpr.16.0">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.0.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.0.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.0.0.0.0">
+      <proof prover="0"><result status="valid" time="0.32" steps="348"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.16.1">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.1.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.1.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.1.0.0.0">
+      <proof prover="0"><result status="valid" time="0.32" steps="338"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.16.2">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.2.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.2.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.2.0.0.0">
+      <proof prover="1" timelimit="10" memlimit="1000"><result status="valid" time="1.09"/></proof>
+      <proof prover="2" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.16.3">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.3.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.3.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.3.0.0.0">
+      <transf name="split_goal_right" >
+       <goal name="VC compile_aexpr.16.3.0.0.0.0">
+       <proof prover="0"><result status="valid" time="0.14" steps="141"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.1">
+       <proof prover="0"><result status="valid" time="0.16" steps="144"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.2">
+       <proof prover="0"><result status="valid" time="0.13" steps="116"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.3">
+       <proof prover="0"><result status="valid" time="0.12" steps="125"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.4">
+       <proof prover="0"><result status="valid" time="0.21" steps="204"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.5">
+       <proof prover="0"><result status="valid" time="0.13" steps="129"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.6">
+       <proof prover="0"><result status="valid" time="0.18" steps="180"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.7">
+       <proof prover="0"><result status="valid" time="2.53" steps="973"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.8">
+       <proof prover="0"><result status="valid" time="2.00" steps="754"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.9">
+       <proof prover="0"><result status="valid" time="0.23" steps="213"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.3.0.0.0.10">
+       <proof prover="0"><result status="valid" time="0.19" steps="183"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.16.4">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.4.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.4.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.4.0.0.0">
+      <transf name="split_goal_right" >
+       <goal name="VC compile_aexpr.16.4.0.0.0.0">
+       <proof prover="0"><result status="valid" time="0.13" steps="123"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.1">
+       <proof prover="0"><result status="valid" time="0.11" steps="104"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.2">
+       <proof prover="0"><result status="valid" time="0.12" steps="113"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.3">
+       <proof prover="0"><result status="valid" time="0.12" steps="116"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.4">
+       <proof prover="0"><result status="valid" time="0.15" steps="150"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.5">
+       <proof prover="0"><result status="valid" time="0.35" steps="204"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.6">
+       <proof prover="0"><result status="valid" time="0.18" steps="174"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.7">
+       <proof prover="0"><result status="valid" time="0.19" steps="149"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.4.0.0.0.8">
+       <proof prover="0"><result status="valid" time="0.16" steps="153"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.16.5">
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.16.5.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.16.5.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.16.5.0.0.0">
+      <transf name="split_goal_right" >
+       <goal name="VC compile_aexpr.16.5.0.0.0.0">
+       <proof prover="0"><result status="valid" time="0.14" steps="141"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.1">
+       <proof prover="0"><result status="valid" time="0.15" steps="144"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.2">
+       <proof prover="0"><result status="valid" time="0.12" steps="116"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.3">
+       <proof prover="0"><result status="valid" time="0.12" steps="125"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.4">
+       <proof prover="0"><result status="valid" time="0.35" steps="204"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.5">
+       <proof prover="0"><result status="valid" time="0.13" steps="129"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.6">
+       <proof prover="0"><result status="valid" time="0.19" steps="180"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.7">
+       <proof prover="0"><result status="valid" time="2.41" steps="963"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.8">
+       <proof prover="0"><result status="valid" time="2.02" steps="741"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.9">
+       <proof prover="0"><result status="valid" time="0.22" steps="213"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.16.5.0.0.0.10">
+       <proof prover="0"><result status="valid" time="0.22" steps="183"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC compile_aexpr.17">
+  <proof prover="0"><result status="valid" time="0.13" steps="84"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.18">
+  <proof prover="0"><result status="valid" time="0.12" steps="84"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC compile_aexpr_natural">
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr_natural.0">
+  <transf name="compute_specified" >
+   <goal name="VC compile_aexpr_natural.0.0">
+   <transf name="introduce_premises" >
+    <goal name="VC compile_aexpr_natural.0.0.0">
+    <proof prover="0"><result status="valid" time="0.09" steps="81"/></proof>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC compile_aexpr_natural.1">
+  <proof prover="0"><result status="valid" time="0.10" steps="83"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.2">
+  <proof prover="0"><result status="valid" time="0.14" steps="84"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.3">
+  <proof prover="0"><result status="valid" time="0.35" steps="212"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.4">
+  <proof prover="0"><result status="valid" time="0.94" steps="350"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+<theory name="Compile_aexpr_reg_k_optimal">
+ <goal name="VC k">
+ <proof prover="0"><result status="valid" time="0.09" steps="78"/></proof>
+ </goal>
+ <goal name="VC n">
+ <proof prover="0"><result status="valid" time="0.72" steps="460"/></proof>
+ </goal>
+ <goal name="measure_nonneg">
+ <transf name="induction_ty_lex" >
+  <goal name="measure_nonneg.0">
+  <proof prover="0"><result status="valid" time="0.14" steps="155"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC compile_aexpr">
+ <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr.0">
+  <proof prover="0"><result status="valid" time="0.18" steps="129"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.1">
+  <proof prover="0"><result status="valid" time="0.22" steps="250"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.2">
+  <proof prover="0"><result status="valid" time="0.15" steps="93"/></proof>
+  <proof prover="1"><result status="valid" time="0.25"/></proof>
+  <proof prover="4"><result status="valid" time="0.05"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.3">
+  <proof prover="0"><result status="valid" time="0.18" steps="138"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.4">
+  <proof prover="0"><result status="valid" time="0.10" steps="154"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.5">
+  <proof prover="0"><result status="valid" time="0.20" steps="97"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.6">
+  <proof prover="0"><result status="valid" time="0.10" steps="87"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.7">
+  <proof prover="0"><result status="valid" time="0.14" steps="139"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.8">
+  <proof prover="0"><result status="valid" time="0.15" steps="155"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.9">
+  <proof prover="0"><result status="valid" time="0.17" steps="99"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.10">
+  <proof prover="0"><result status="valid" time="0.21" steps="148"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.11">
+  <proof prover="0"><result status="valid" time="0.17" steps="164"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.12">
+  <proof prover="0"><result status="valid" time="0.17" steps="103"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.13">
+  <proof prover="0"><result status="valid" time="0.12" steps="120"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.14">
+  <proof prover="0"><result status="valid" time="0.14" steps="121"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.15">
+  <proof prover="0"><result status="valid" time="0.12" steps="87"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.16">
+  <proof prover="0"><result status="valid" time="0.20" steps="129"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.17">
+  <proof prover="0"><result status="valid" time="0.26" steps="250"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.18">
+  <proof prover="0"><result status="valid" time="0.11" steps="93"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.19">
+  <proof prover="0"><result status="valid" time="0.19" steps="138"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.20">
+  <proof prover="0"><result status="valid" time="0.16" steps="154"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.21">
+  <proof prover="0"><result status="valid" time="0.10" steps="97"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.22">
+  <proof prover="0"><result status="valid" time="0.14" steps="130"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.23">
+  <proof prover="0"><result status="valid" time="0.15" steps="166"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.24">
+  <proof prover="0"><result status="valid" time="0.12" steps="93"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.25">
+  <proof prover="0"><result status="valid" time="0.17" steps="139"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.26">
+  <proof prover="0"><result status="valid" time="0.17" steps="171"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.27">
+  <proof prover="0"><result status="valid" time="0.17" steps="97"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.28">
+  <proof prover="0"><result status="valid" time="0.17" steps="157"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.29">
+  <proof prover="0"><result status="valid" time="0.18" steps="215"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.30">
+  <proof prover="0"><result status="valid" time="0.15" steps="95"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.31">
+  <proof prover="0"><result status="valid" time="0.24" steps="169"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.32">
+  <proof prover="0"><result status="valid" time="0.18" steps="226"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.33">
+  <proof prover="0"><result status="valid" time="0.12" steps="99"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.34">
+  <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <transf name="split_goal_right" >
+   <goal name="VC compile_aexpr.34.0">
+   <proof prover="0"><result status="timeout" time="5.00"/></proof>
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.34.0.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.34.0.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.34.0.0.0.0">
+      <proof prover="0"><result status="valid" time="0.36" steps="476"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.34.1">
+   <proof prover="0"><result status="timeout" time="5.00"/></proof>
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.34.1.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.34.1.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.34.1.0.0.0">
+      <proof prover="0"><result status="valid" time="0.35" steps="493"/></proof>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.34.2">
+   <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+   <transf name="split_goal_right" >
+    <goal name="VC compile_aexpr.34.2.0">
+    <transf name="compute_specified" >
+     <goal name="VC compile_aexpr.34.2.0.0">
+     <transf name="introduce_premises" >
+      <goal name="VC compile_aexpr.34.2.0.0.0">
+      <transf name="compute_specified" >
+       <goal name="VC compile_aexpr.34.2.0.0.0.0">
+       <proof prover="0"><result status="valid" time="1.65" steps="1358"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="VC compile_aexpr.34.2.1">
+    <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+    <transf name="compute_specified" >
+     <goal name="VC compile_aexpr.34.2.1.0">
+     <transf name="introduce_premises" >
+      <goal name="VC compile_aexpr.34.2.1.0.0">
+      <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      <proof prover="3" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
+      <transf name="compute_specified" >
+       <goal name="VC compile_aexpr.34.2.1.0.0.0">
+       <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+       <proof prover="1" obsolete="true"><result status="timeout" time="5.00"/></proof>
+       <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
+       <transf name="split_goal_right" >
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.0">
+        <proof prover="0"><result status="valid" time="0.20" steps="173"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.1">
+        <proof prover="0"><result status="valid" time="0.20" steps="176"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.2">
+        <proof prover="0"><result status="valid" time="0.13" steps="117"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.3">
+        <proof prover="0"><result status="valid" time="0.13" steps="126"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.4">
+        <proof prover="0"><result status="valid" time="0.27" steps="247"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.5">
+        <proof prover="0"><result status="valid" time="0.16" steps="130"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.6">
+        <proof prover="0"><result status="valid" time="0.26" steps="212"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.7">
+        <proof prover="0"><result status="valid" time="2.36" steps="1115"/></proof>
+        <proof prover="1" obsolete="true"><result status="timeout" time="5.00"/></proof>
+        <proof prover="3" obsolete="true"><result status="timeout" time="5.00"/></proof>
+        <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.8">
+        <proof prover="0"><result status="valid" time="0.59" steps="398"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.9">
+        <proof prover="0"><result status="valid" time="0.33" steps="248"/></proof>
+        </goal>
+        <goal name="VC compile_aexpr.34.2.1.0.0.0.10">
+        <proof prover="0"><result status="valid" time="0.26" steps="217"/></proof>
+        </goal>
+       </transf>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="VC compile_aexpr.34.2.2">
+    <transf name="compute_specified" >
+     <goal name="VC compile_aexpr.34.2.2.0">
+     <transf name="introduce_premises" >
+      <goal name="VC compile_aexpr.34.2.2.0.0">
+      <transf name="compute_specified" >
+       <goal name="VC compile_aexpr.34.2.2.0.0.0">
+       <proof prover="0"><result status="valid" time="0.31" steps="344"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.34.3">
+   <proof prover="0"><result status="timeout" time="5.00"/></proof>
+   <transf name="split_goal_right" >
+    <goal name="VC compile_aexpr.34.3.0">
+    <transf name="compute_specified" >
+     <goal name="VC compile_aexpr.34.3.0.0">
+     <transf name="introduce_premises" >
+      <goal name="VC compile_aexpr.34.3.0.0.0">
+      <transf name="compute_specified" >
+       <goal name="VC compile_aexpr.34.3.0.0.0.0">
+       <proof prover="0"><result status="valid" time="1.75" steps="1332"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+    <goal name="VC compile_aexpr.34.3.1">
+    <transf name="compute_specified" >
+     <goal name="VC compile_aexpr.34.3.1.0">
+     <transf name="introduce_premises" >
+      <goal name="VC compile_aexpr.34.3.1.0.0">
+      <transf name="compute_specified" >
+       <goal name="VC compile_aexpr.34.3.1.0.0.0">
+       <proof prover="0"><result status="valid" time="1.97" steps="1522"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+   <goal name="VC compile_aexpr.34.4">
+   <proof prover="0"><result status="timeout" time="5.00"/></proof>
+   <transf name="compute_specified" >
+    <goal name="VC compile_aexpr.34.4.0">
+    <transf name="introduce_premises" >
+     <goal name="VC compile_aexpr.34.4.0.0">
+     <transf name="compute_specified" >
+      <goal name="VC compile_aexpr.34.4.0.0.0">
+      <proof prover="0"><result status="timeout" time="5.00"/></proof>
+      <transf name="split_goal_right" >
+       <goal name="VC compile_aexpr.34.4.0.0.0.0">
+       <proof prover="0"><result status="valid" time="0.16" steps="151"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.1">
+       <proof prover="0"><result status="valid" time="0.17" steps="154"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.2">
+       <proof prover="0"><result status="valid" time="0.13" steps="116"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.3">
+       <proof prover="0"><result status="valid" time="0.13" steps="125"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.4">
+       <proof prover="0"><result status="valid" time="0.27" steps="219"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.5">
+       <proof prover="0"><result status="valid" time="0.14" steps="129"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.6">
+       <proof prover="0"><result status="valid" time="0.22" steps="190"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.7">
+       <proof prover="0"><result status="valid" time="1.91" steps="1012"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.8">
+       <proof prover="0"><result status="valid" time="0.46" steps="330"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.9">
+       <proof prover="0"><result status="valid" time="0.26" steps="225"/></proof>
+       </goal>
+       <goal name="VC compile_aexpr.34.4.0.0.0.10">
+       <proof prover="0"><result status="valid" time="0.21" steps="195"/></proof>
+       </goal>
+      </transf>
+      </goal>
+     </transf>
+     </goal>
+    </transf>
+    </goal>
+   </transf>
+   </goal>
+  </transf>
+  </goal>
+  <goal name="VC compile_aexpr.35">
+  <proof prover="0"><result status="valid" time="0.12" steps="85"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr.36">
+  <proof prover="0"><result status="valid" time="0.10" steps="85"/></proof>
+  </goal>
+ </transf>
+ </goal>
+ <goal name="VC compile_aexpr_natural">
+ <transf name="split_goal_right" >
+  <goal name="VC compile_aexpr_natural.0">
+  <proof prover="0"><result status="valid" time="0.10" steps="82"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.1">
+  <proof prover="0"><result status="valid" time="0.10" steps="83"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.2">
+  <proof prover="0"><result status="valid" time="0.10" steps="84"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.3">
+  <proof prover="0"><result status="valid" time="0.10" steps="85"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.4">
+  <proof prover="0"><result status="valid" time="0.27" steps="216"/></proof>
+  </goal>
+  <goal name="VC compile_aexpr_natural.5">
+  <proof prover="0"><result status="valid" time="0.66" steps="354"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+<file name="../specs.mlw">
+<theory name="VM_instr_spec">
+ <goal name="VC ifunf" expl="VC for ifunf">
+ </goal>
+ <goal name="VC iimmf" expl="VC for iimmf">
+ </goal>
+ <goal name="VC iloadf" expl="VC for iloadf">
+ </goal>
+ <goal name="VC istoref" expl="VC for istoref">
+ </goal>
+ <goal name="VC ipushf" expl="VC for ipushf">
+ </goal>
+ <goal name="VC ipopf" expl="VC for ipopf">
+ </goal>
+ <goal name="VC iaddrf" expl="VC for iaddrf">
+ </goal>
+ <goal name="VC iaddurf" expl="VC for iaddurf">
+ </goal>
+ <goal name="VC isubrf" expl="VC for isubrf">
+ </goal>
+ <goal name="VC ibeqrf" expl="VC for ibeqrf">
+ </goal>
+ <goal name="VC ibnerf" expl="VC for ibnerf">
+ </goal>
+ <goal name="VC iblerf" expl="VC for iblerf">
+ </goal>
+ <goal name="VC ibgtrf" expl="VC for ibgtrf">
+ </goal>
+ <goal name="VC iconstf" expl="VC for iconstf">
+ </goal>
+ <goal name="VC ivarf" expl="VC for ivarf">
+ </goal>
+ <goal name="VC create_binop" expl="VC for create_binop">
+ </goal>
+ <goal name="VC iaddf" expl="VC for iaddf">
+ </goal>
+ <goal name="VC iadduf" expl="VC for iadduf">
+ </goal>
+ <goal name="VC isubf" expl="VC for isubf">
+ </goal>
+ <goal name="VC inil" expl="VC for inil">
+ </goal>
+ <goal name="VC ibranchf" expl="VC for ibranchf">
+ </goal>
+ <goal name="VC create_cjump" expl="VC for create_cjump">
+ </goal>
+ <goal name="VC ibeqf" expl="VC for ibeqf">
+ </goal>
+ <goal name="VC ibnef" expl="VC for ibnef">
+ </goal>
+ <goal name="VC iblef" expl="VC for iblef">
+ </goal>
+ <goal name="VC ibgtf" expl="VC for ibgtf">
+ </goal>
+ <goal name="VC isetvarf" expl="VC for isetvarf">
+ </goal>
+</theory>
+</file>
+<file name="../imp.mlw">
+<theory name="Imp">
+ <goal name="ceval_deterministic_aux">
+ </goal>
+ <goal name="ceval_deterministic">
+ </goal>
+</theory>
+</file>
+</why3session>
