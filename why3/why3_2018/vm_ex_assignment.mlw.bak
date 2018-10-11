@@ -88,17 +88,17 @@ module Vm_Ex
       | Isub -> let (rv1, rs1) = pop s in
         let (rv2, rs2) = pop rs1 in
           VMS (p + 1) r (push (rv2 - rv1) rs2) m
-      | Ibeq ofs -> let (n2, rs2) = pop s in
-        let (n1, rs1) = pop rs2 in
+      | Ibeq ofs -> let (n1, rs1) = pop s in
+        let (n2, rs2) = pop rs1 in
           match n1 = n2 with
-          | True -> VMS (p + 1 + ofs) r rs1 m
-          | False -> VMS (p + 1) r rs1 m 
+          | True -> VMS (p + 1 + ofs) r rs2 m
+          | False -> VMS (p + 1) r rs2 m 
           end
-      | Ibne ofs -> let (n2, rs2) = pop s in
-        let (n1, rs1) = pop rs2 in
-          match n2 <> n1 with
-          | True -> VMS (p + 1 + ofs) r rs1 m
-          | False -> VMS (p + 1) r rs1 m 
+      | Ibne ofs -> let (n1, rs1) = pop s in
+        let (n2, rs2) = pop rs1 in
+          match n1 <> n2 with
+          | True -> VMS (p + 1 + ofs) r rs2 m
+          | False -> VMS (p + 1) r rs2 m 
           end
       | Ible ofs -> let (n2, rs2) = pop s in
         let (n1, rs1) = pop rs2 in
@@ -106,11 +106,11 @@ module Vm_Ex
           | True -> VMS (p + 1 + ofs) r rs1 m
           | False -> VMS (p + 1) r rs1 m  
           end
-      | Ibgt ofs -> let (n2, rs2) = pop s in
-        let (n1, rs1) = pop rs2 in
+      | Ibgt ofs -> let (n1, rs1) = pop s in
+        let (n2, rs2) = pop rs1 in
           match n1 > n2 with
-          | True -> VMS (p + 1 + ofs) r rs1 m
-          | False -> VMS (p + 1) r rs1 m  
+          | True -> VMS (p + 1 + ofs) r rs2 m
+          | False -> VMS (p + 1) r rs2 m  
           end
       (* new instructions, register based *)
       | Iload idr id -> VMS (p + 1) (write r idr m[id]) s m

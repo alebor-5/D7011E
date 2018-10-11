@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.2.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<file name="../imp_ex_assignment.mlw" proved="true">
+<theory name="Imp_ex" proved="true">
+ <goal name="VC aeval_ex" expl="VC for aeval_ex" proved="true">
+ <proof prover="0"><result status="valid" time="0.19" steps="843"/></proof>
+ </goal>
+ <goal name="VC beval_ex" expl="VC for beval_ex" proved="true">
+ <proof prover="0"><result status="valid" time="0.15" steps="705"/></proof>
+ </goal>
+ <goal name="VC ceval_ex" expl="VC for ceval_ex" proved="true">
+ <proof prover="0"><result status="valid" time="0.09" steps="477"/></proof>
+ </goal>
+</theory>
+</file>
+</why3session>
