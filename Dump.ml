@@ -91,6 +91,19 @@ let of_instr b = function
   | Ible n          -> "Ible " ^ Z.to_string n
   | Ibgt n          -> "Ibgt " ^ Z.to_string n
   | Ihalt           -> "Ihalt"
+  (*New instruction*)
+  | Iimm (idr,n)    -> "Iimm " ^ Z.to_string idr ^ " " ^  Z.to_string n
+  | Iload (idr, id) -> "Iload " ^ Z.to_string idr ^ " " ^ of_id id
+  | Istore (idr, id)-> "Istore " ^  Z.to_string idr ^ " " ^  of_id id
+  | Ipushr idr      -> "Ipushr " ^  Z.to_string idr 
+  | Ipopr idr       -> "Ipopr " ^  Z.to_string idr 
+  | Iaddr (idr1, idr2, idr3) -> "Iaddr " ^ Z.to_string idr1 ^ " " ^ Z.to_string idr2 ^ " "^ Z.to_string idr3
+  | Iaddur (idr1, idr2, idr3) -> "Iaddur " ^ Z.to_string idr1 ^ " " ^ Z.to_string idr2 ^ " "^ Z.to_string idr3
+  | Isubr (idr1, idr2, idr3) -> "Isubr " ^ Z.to_string idr1 ^ " " ^ Z.to_string idr2 ^ " "^ Z.to_string idr3
+  | Ibeqr (idr1, idr2, ofs)  -> "Ibeqr" ^ Z.to_string idr1 ^ " " ^ Z.to_string idr2 ^ " " ^ Z.to_string ofs
+  | Ibner (idr1, idr2, ofs)  -> "Ibner" ^ Z.to_string idr1 ^ " " ^  Z.to_string idr2 ^ " " ^ Z.to_string ofs
+  | Ibler (idr1, idr2, ofs)  -> "Ibler" ^ Z.to_string idr1 ^ " " ^  Z.to_string idr2 ^ " " ^ Z.to_string ofs
+  | Ibgtr (idr1, idr2, ofs)  -> "Ibgtr" ^ Z.to_string idr1 ^ " " ^  Z.to_string idr2 ^ " " ^ Z.to_string ofs
 
 let rec of_code b = function
   | [] -> ""

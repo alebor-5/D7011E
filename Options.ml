@@ -17,6 +17,7 @@ type options =
     mutable d_pcode:     bool;
     mutable imp_ex:      bool;
     mutable vm_ex:       bool;
+    mutable reg:         bool;
   }
 
 let opt =
@@ -31,6 +32,7 @@ let opt =
     d_pcode   = false;
     imp_ex    = false;
     vm_ex     = false;
+    reg       = false;
   }
 
 let string_of_opt opt =
@@ -44,4 +46,5 @@ let string_of_opt opt =
   "d_code       : " ^ string_of_bool opt.d_code ^ nl ^
   "d_pcode      : " ^ string_of_bool opt.d_pcode ^ nl ^
   "imp_ex       : " ^ string_of_bool opt.imp_ex ^ nl ^
-  "vm_ex        : " ^ string_of_bool opt.vm_ex ^ nl
+  "vm_ex        : " ^ string_of_bool opt.vm_ex ^ nl ^
+  "reg          : " ^ string_of_bool opt.reg ^ nl

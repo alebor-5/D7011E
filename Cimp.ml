@@ -6,9 +6,11 @@ open Common
 
 (* extracted code (/extract) *)
 module Compile = Compiler__Compile_com
-module Vm_Ex = Vm_ex__Vm_Ex
-module Imp_Ex = Imp_ex__Imp_Ex
+module Compile_Reg = Compiler__Compile_com_reg
+module Vm_Ex = Vm_ex_assignment__Vm_Ex
+module Imp_Ex = Imp_ex_assignment__Imp_ex
 module State = State__State
+module Reg = State__Reg
 
 module Imp = Imp__Imp
 
@@ -33,11 +35,16 @@ let () =
       if Options.opt.d_past then
         p_stderr ("Pretty AST:" ^ nl ^ Dump.pretty_of_com 0 com ^ nl);
 
-      let code = Compile.compile_program com in
-      if Options.opt.d_code then
-        p_stderr ("Raw Code : \n" ^ Dump.of_code false code ^ nl);
-      if Options.opt.d_pcode then
-        p_stderr ("Pretty Code : \n" ^ Dump.of_code true code ^ nl);
+      (*if reg *)
+      if Options.opt.reg then        
+        let code = Compile_Reg.compile_program com in
+          (*p_stderr ("Reg Code : \n" ^ Dump.of_code true code ^ nl);   THIS IS FOR REG UNCOMMENT WHEN FINISHED*)
+      else
+        let code = Compile.compile_program com in
+        if Options.opt.d_code then
+          p_stderr ("Raw Code : \n" ^ Dump.of_code false code ^ nl);
+        if Options.opt.d_pcode then
+          p_stderr ("Pretty Code : \n" ^ Dump.of_code true code ^ nl);
 
       let st_0 = State.const (Z.of_int 0) in (* assume all variables 0 *)
 
@@ -53,12 +60,13 @@ let () =
 
       (* vm_ex execution *)
       if Options.opt.vm_ex then (
+        let reg_0 = Reg.const (Z.of_int 0) in
         try
-          let _ = Vm_Ex.instr_iter_ex code (VMS (Z.of_int 0, [], st_0)) in
+          let _ = Vm_Ex.instr_iter_ex code (VMS (Z.of_int 0,reg_0, [], st_0)) in
           ()
         with
         | Vm_Ex.Err -> p_stderr ("execution error")
-        | Vm_Ex.Halt (VMS (pos, stack, st_halt)) ->
+        | Vm_Ex.Halt (VMS (pos, _ ,stack, st_halt)) ->
           p_stdout ("execution halted");
           p_stdout ("instr_iter_ex" ^ nl ^ Env.to_string st_halt ^ nl);
           ()

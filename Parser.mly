@@ -4,10 +4,10 @@
 (* cimp/Parser.mly *)
 
 
-%right ASSIGN 
+(*%right ASSIGN never usefull*)  
 %left AND
-%left  NOT BEQ 
-%left BLE BGE BG BL   
+%left  NOT (*BEQ nu*) 
+(*%left BLE BGE BG BL nu*)  
 %left PLUS MINUS PLUSU
 %left SC
 
@@ -61,6 +61,7 @@ com:
   | IF bexpr_span THEN com_span END   { Cif ($2, $4, (Cskip, (0, 0))) }
   | WHILE bexpr_span DO com_span DONE { Cwhile ($2, $4) }
   | com_span SC EOF                   { Cseq($1, (Cskip, (0,0)))}
+  
 
 bexpr_span:
   | bexpr                          { ($1, ($startofs, $endofs)) }

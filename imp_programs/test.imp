@@ -1,8 +1,12 @@
 
 a : SINT;
-b :UINT32;
+b : SINT;
 b := 2;
 a := b + 4;
+WHILE a < 10 DO
+a := a + 1
+DONE;
+
 
 
 
