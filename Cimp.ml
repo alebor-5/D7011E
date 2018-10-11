@@ -39,6 +39,7 @@ let () =
       if Options.opt.reg then        
         let code = Compile_Reg.compile_program com in
           (*p_stderr ("Reg Code : \n" ^ Dump.of_code true code ^ nl);   THIS IS FOR REG UNCOMMENT WHEN FINISHED*)
+          p_stderr ("Reg Code : \n" ^ Tomips.of_code true code ^ nl);
       else
         let code = Compile.compile_program com in
         if Options.opt.d_code then

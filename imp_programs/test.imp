@@ -1,11 +1,10 @@
 
 a : SINT;
 b : SINT;
-b := 2;
-a := b + 4;
-WHILE a < 10 DO
-a := a + 1
-DONE;
+c : SINT;
+d : SINT;
+a := 1+2+3+4+5+6+7+8+9+10;
+
 
 
 
