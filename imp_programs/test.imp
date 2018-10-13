@@ -3,7 +3,7 @@ a : SINT;
 b : SINT;
 a := 1;
 b := 2;
-IF a = 1 THEN b := 1 END;
+IF a < 19 THEN b := 1 ELSE b:=3 END;
 b := 2+3;
 b := 1+1
 

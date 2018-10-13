@@ -38,14 +38,21 @@ let () =
       (*if reg *)
       if Options.opt.reg then        
         let code = Compile_Reg.compile_program com in
-          (*p_stderr ("Reg Code : \n" ^ Dump.of_code true code ^ nl);   THIS IS FOR REG UNCOMMENT WHEN FINISHED*)
-          p_stderr ("Reg Code : \n" ^ Tomips.of_code true code ^ nl);
+          p_stderr ("Reg Code : \n" ^ Dump.of_code true code ^ nl);  
+         (*  p_stderr ("Reg Code : \n" ^ Tomips.of_code true code ^ nl); *)
+
+         let oc = open_out  Options.opt.outfile in 
+          Printf.fprintf oc "%s" (Tomips.of_code true code ^ nl);
+         close_out oc;
       else
         let code = Compile.compile_program com in
         if Options.opt.d_code then
           p_stderr ("Raw Code : \n" ^ Dump.of_code false code ^ nl);
         if Options.opt.d_pcode then
           p_stderr ("Pretty Code : \n" ^ Dump.of_code true code ^ nl);
+        let oc = open_out  Options.opt.outfile in 
+        Printf.fprintf oc "%s" (Tomips.of_code true code ^ nl);
+        close_out oc;
 
       let st_0 = State.const (Z.of_int 0) in (* assume all variables 0 *)
 
