@@ -1,0 +1,126 @@
+
+a.out:     file format elf32-tradbigmips
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000b0  00000000  00000000  00000054  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00001000  00001000  00001054  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00001000  00001000  00001054  2**0
+                  ALLOC
+  3 .reginfo      00000018  00000000  00000000  00001054  2**2
+                  CONTENTS, READONLY, LINK_ONCE_SAME_SIZE
+  4 .pdr          00000000  00000000  00000000  0000106c  2**2
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+00000000 l    d  .text	00000000 .text
+00001000 l    d  .data	00000000 .data
+00001000 l    d  .bss	00000000 .bss
+00000000 l    d  .reginfo	00000000 .reginfo
+00000000 l    d  .pdr	00000000 .pdr
+00000000 l    d  *ABS*	00000000 .shstrtab
+00000000 l    d  *ABS*	00000000 .symtab
+00000000 l    d  *ABS*	00000000 .strtab
+00000000 l       .text	00000000 Label_1
+0000000c l       .text	00000000 Label_2
+00000018 l       .text	00000000 Label_3
+00000024 l       .text	00000000 Label_4
+00000030 l       .text	00000000 Label_5
+0000003c l       .text	00000000 Label_6
+00000048 l       .text	00000000 Label_7
+00000054 l       .text	00000000 Label_8
+00000060 l       .text	00000000 Label_9
+00000078 l       .text	00000000 Label_10
+00000084 l       .text	00000000 Label_11
+0000009c l       .text	00000000 Label_12
+000000a8 l       .text	00000000 Label_13
+00000000 g       *ABS*	00000000 __start
+
+
+Contents of section .text:
+ 0000 2001ffff 23bdfffc afa10000 8fa10000   ...#...........
+ 0010 23bd0004 af810004 2001ffff 23bdfffc  #....... ...#...
+ 0020 afa10000 8fa10000 23bd0004 af810008  ........#.......
+ 0030 2001ffff 23bdfffc afa10000 8fa10000   ...#...........
+ 0040 23bd0004 af81000c 8f810004 23bdfffc  #...........#...
+ 0050 afa10000 8f810008 23bdfffc afa10000  ........#.......
+ 0060 8fb00000 8fb10004 00000000 02118020  ............... 
+ 0070 23bd0004 afb00000 8f81000c 23bdfffc  #...........#...
+ 0080 afa10000 8fb00000 8fb10004 00000000  ................
+ 0090 02118020 23bd0004 afb00000 8fa10000  ... #...........
+ 00a0 23bd0004 af810004 0800002a 00000000  #..........*....
+Contents of section .reginfo:
+ 0000 30030002 00000000 00000000 00000000  0...............
+ 0010 00000000 00000000                    ........        
+Disassembly of section .text:
+
+00000000 <Label_1>:
+   0:	2001ffff 	addi	at,zero,-1
+   4:	23bdfffc 	addi	sp,sp,-4
+   8:	afa10000 	sw	at,0(sp)
+
+0000000c <Label_2>:
+   c:	8fa10000 	lw	at,0(sp)
+  10:	23bd0004 	addi	sp,sp,4
+  14:	af810004 	sw	at,4(gp)
+
+00000018 <Label_3>:
+  18:	2001ffff 	addi	at,zero,-1
+  1c:	23bdfffc 	addi	sp,sp,-4
+  20:	afa10000 	sw	at,0(sp)
+
+00000024 <Label_4>:
+  24:	8fa10000 	lw	at,0(sp)
+  28:	23bd0004 	addi	sp,sp,4
+  2c:	af810008 	sw	at,8(gp)
+
+00000030 <Label_5>:
+  30:	2001ffff 	addi	at,zero,-1
+  34:	23bdfffc 	addi	sp,sp,-4
+  38:	afa10000 	sw	at,0(sp)
+
+0000003c <Label_6>:
+  3c:	8fa10000 	lw	at,0(sp)
+  40:	23bd0004 	addi	sp,sp,4
+  44:	af81000c 	sw	at,12(gp)
+
+00000048 <Label_7>:
+  48:	8f810004 	lw	at,4(gp)
+  4c:	23bdfffc 	addi	sp,sp,-4
+  50:	afa10000 	sw	at,0(sp)
+
+00000054 <Label_8>:
+  54:	8f810008 	lw	at,8(gp)
+  58:	23bdfffc 	addi	sp,sp,-4
+  5c:	afa10000 	sw	at,0(sp)
+
+00000060 <Label_9>:
+  60:	8fb00000 	lw	s0,0(sp)
+  64:	8fb10004 	lw	s1,4(sp)
+  68:	00000000 	nop
+  6c:	02118020 	add	s0,s0,s1
+  70:	23bd0004 	addi	sp,sp,4
+  74:	afb00000 	sw	s0,0(sp)
+
+00000078 <Label_10>:
+  78:	8f81000c 	lw	at,12(gp)
+  7c:	23bdfffc 	addi	sp,sp,-4
+  80:	afa10000 	sw	at,0(sp)
+
+00000084 <Label_11>:
+  84:	8fb00000 	lw	s0,0(sp)
+  88:	8fb10004 	lw	s1,4(sp)
+  8c:	00000000 	nop
+  90:	02118020 	add	s0,s0,s1
+  94:	23bd0004 	addi	sp,sp,4
+  98:	afb00000 	sw	s0,0(sp)
+
+0000009c <Label_12>:
+  9c:	8fa10000 	lw	at,0(sp)
+  a0:	23bd0004 	addi	sp,sp,4
+  a4:	af810004 	sw	at,4(gp)
+
+000000a8 <Label_13>:
+  a8:	0800002a 	j	a8 <Label_13>
+  ac:	00000000 	nop
