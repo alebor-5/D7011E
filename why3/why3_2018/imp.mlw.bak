@@ -12,7 +12,6 @@ theory Imp
     | Aadd aexpr aexpr 
     | Asub aexpr aexpr
     | Aaddu aexpr aexpr
-    | Asubu aexpr aexpr
 
   type bexpr =
     | Btrue
@@ -38,7 +37,6 @@ theory Imp
       | Aadd e1 e2  -> aeval st e1 + aeval st e2
       | Asub e1 e2  -> aeval st e1 - aeval st e2
       | Aaddu e1 e2 -> bv_add (aeval st e1) (aeval st e2)
-      | Asubu e1 e2 -> bv_add (aeval st e1) (aeval st e2)
     end
 
   function beval (st:state) (b:bexpr) : bool =

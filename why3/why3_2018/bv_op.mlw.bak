@@ -14,7 +14,7 @@ module BV_OP
   
   meta rewrite_def function bv_add
   
-  let function bv_sub i1 i2:int 
+  let function bv_sub i1 i2:int (* Added live *)
     ensures { 
       result = BV32.to_int (BV32.sub(BV32.of_int i1) (BV32.of_int i2))
     }
