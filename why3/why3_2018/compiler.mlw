@@ -32,7 +32,7 @@ module Compile_aexpr
       | Aadd a1 a2  -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ iaddf ()
       | Aaddu a1 a2 -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ iadduf ()
       | Asub a1 a2  -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ isubf ()
-      | Asubu a1 a2 -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ isubuf () (* Added live *)
+      | Asubu a1 a2 -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ isubuf ()(* Added live *)
      (* | Amul a1 a2 -> $ compile_aexpr a1 -- $ compile_aexpr a2 --  $ imulf () *)
       end in
       hoare trivial_pre c (aexpr_post a c.wcode.length)
@@ -148,7 +148,7 @@ module Compile_aexpr_reg
       | Asub a1 a2  -> $ 
         compile_aexpr a2 idr -- $ compile_aexpr a1 (idr + 1) -- $ isubrf (idr + 1) idr idr
       | Asubu a1 a2 -> $ 
-        compile_aexpr a1 idr -- $ compile_aexpr a2 (idr + 1) -- $ isuburf (idr + 1) idr idr 
+        compile_aexpr a2 idr -- $ compile_aexpr a1 (idr + 1) -- $ isuburf (idr + 1) idr idr
       end in
       hoare trivial_pre c (aexpr_post a c.wcode.length idr)
 
