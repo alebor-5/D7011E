@@ -46,7 +46,10 @@ module Imp_ex
       | True -> ceval_ex st c1
       | False -> ceval_ex st c2
       end
-     
-   (* | Cwhile bexpr com -> while beval_ex st bexpr do let m = ceval_ex st com in ceval_ex m com done *)
+    | Cwhile bexpr com -> 
+      match beval_ex st bexpr with
+      | True -> let m = ceval_ex st com in ceval_ex m (Cwhile bexpr com)
+      | False -> st
+      end
     end
 end

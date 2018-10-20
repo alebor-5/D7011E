@@ -55,6 +55,7 @@ rule lex = parse
   | '+'                  { PLUS }
   | "+u"                 { PLUSU }
   | '-'                  { MINUS }
+  | "-u"                 { MINUSU }
 
   | digits as i          { INTVAL (int_of_string i) }           (* literals/values *)
   | strings as t         { STRINGVAL ( t) }

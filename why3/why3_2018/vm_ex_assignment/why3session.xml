@@ -2,139 +2,148 @@
 <!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
 "http://why3.lri.fr/why3session.dtd">
 <why3session shape_version="5">
-<prover id="1" name="Eprover" version="2.0" timelimit="10" steplimit="0" memlimit="1000"/>
-<prover id="2" name="Alt-Ergo" version="2.0.0" timelimit="10" steplimit="0" memlimit="1000"/>
+<prover id="0" name="Z3" version="4.7.1" alternative="counterexamples" timelimit="5" steplimit="0" memlimit="1000"/>
 <prover id="3" name="Alt-Ergo" version="2.2.0" timelimit="5" steplimit="0" memlimit="1000"/>
 <prover id="4" name="Z3" version="4.4.1" timelimit="5" steplimit="0" memlimit="1000"/>
 <prover id="5" name="CVC3" version="2.4.1" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="6" name="CVC4" version="1.6" alternative="counterexamples" timelimit="5" steplimit="0" memlimit="1000"/>
+<prover id="7" name="Eprover" version="2.1" timelimit="10" steplimit="0" memlimit="1000"/>
 <file name="../vm_ex_assignment.mlw" proved="true">
 <theory name="Vm_Ex" proved="true">
  <goal name="codeseq_at_zero" proved="true">
- <proof prover="1"><result status="valid" time="0.19"/></proof>
+ <proof prover="7"><result status="valid" time="0.19"/></proof>
  </goal>
  <goal name="VC split_at" expl="VC for split_at" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="VC split_at.0" expl="exceptional postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.03" steps="76"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.03" steps="151"/></proof>
   </goal>
   <goal name="VC split_at.1" expl="postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.04" steps="86"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.04" steps="412"/></proof>
   </goal>
   <goal name="VC split_at.2" expl="exceptional postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.03" steps="154"/></proof>
   </goal>
   <goal name="VC split_at.3" expl="variant decrease" proved="true">
-  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.03" steps="152"/></proof>
   </goal>
   <goal name="VC split_at.4" expl="precondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.03" steps="77"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.03" steps="152"/></proof>
   </goal>
   <goal name="VC split_at.5" expl="postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.14" steps="348"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.14" steps="773"/></proof>
   </goal>
   <goal name="VC split_at.6" expl="exceptional postcondition" proved="true">
-  <proof prover="2"><result status="valid" time="0.03" steps="82"/></proof>
+  <proof prover="3" timelimit="10"><result status="valid" time="0.03" steps="156"/></proof>
   </goal>
  </transf>
  </goal>
  <goal name="VC pop" expl="VC for pop" proved="true">
- <proof prover="2"><result status="valid" time="0.04" steps="74"/></proof>
+ <proof prover="3" timelimit="10"><result status="valid" time="0.04" steps="148"/></proof>
  </goal>
  <goal name="VC instr_ex" expl="VC for instr_ex" proved="true">
  <transf name="split_vc" proved="true" >
   <goal name="VC instr_ex.0" expl="precondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.03" steps="150"/></proof>
-  <proof prover="4"><result status="valid" time="0.00"/></proof>
+  <proof prover="0"><result status="valid" time="0.00"/></proof>
+  <proof prover="3"><result status="valid" time="0.03" steps="152"/></proof>
   </goal>
   <goal name="VC instr_ex.1" expl="assertion" proved="true">
-  <proof prover="4"><result status="valid" time="0.05"/></proof>
+  <proof prover="0"><result status="valid" time="0.05"/></proof>
   </goal>
   <goal name="VC instr_ex.2" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.3" expl="exceptional postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.4" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.5" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.6" expl="postcondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.10" steps="428"/></proof>
-  <proof prover="4"><result status="timeout" time="5.00"/></proof>
-  </goal>
-  <goal name="VC instr_ex.7" expl="postcondition" proved="true">
-  <proof prover="3"><result status="timeout" time="5.00"/></proof>
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
-  </goal>
-  <goal name="VC instr_ex.8" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
-  </goal>
-  <goal name="VC instr_ex.9" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
-  </goal>
-  <goal name="VC instr_ex.10" expl="postcondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.12" steps="568"/></proof>
+  <proof prover="3"><result status="valid" time="0.10" steps="426"/></proof>
   <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
   </goal>
+  <goal name="VC instr_ex.7" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
+  <proof prover="3" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  </goal>
+  <goal name="VC instr_ex.8" expl="postcondition" proved="true">
+  <proof prover="0"><result status="timeout" time="5.00"/></proof>
+  <proof prover="6"><result status="valid" time="0.30"/></proof>
+  </goal>
+  <goal name="VC instr_ex.9" expl="postcondition" proved="true">
+  <proof prover="0"><result status="outofmemory" time="19.55"/></proof>
+  <proof prover="3"><result status="valid" time="0.11" steps="444"/></proof>
+  </goal>
+  <goal name="VC instr_ex.10" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.12" steps="453"/></proof>
+  </goal>
   <goal name="VC instr_ex.11" expl="postcondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.13" steps="599"/></proof>
-  <proof prover="4"><result status="timeout" time="5.00"/></proof>
+  <proof prover="3"><result status="valid" time="0.12" steps="558"/></proof>
+  <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
   </goal>
   <goal name="VC instr_ex.12" expl="postcondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.11" steps="566"/></proof>
+  <proof prover="3"><result status="valid" time="0.13" steps="599"/></proof>
+  <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  </goal>
+  <goal name="VC instr_ex.13" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.11" steps="556"/></proof>
   <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
   <proof prover="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
   </goal>
-  <goal name="VC instr_ex.13" expl="postcondition" proved="true">
-  <proof prover="3"><result status="valid" time="0.11" steps="597"/></proof>
+  <goal name="VC instr_ex.14" expl="postcondition" proved="true">
+  <proof prover="3"><result status="valid" time="0.11" steps="585"/></proof>
   <proof prover="4" obsolete="true"><result status="timeout" time="5.00"/></proof>
   </goal>
-  <goal name="VC instr_ex.14" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
-  </goal>
   <goal name="VC instr_ex.15" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.02"/></proof>
   </goal>
   <goal name="VC instr_ex.16" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.17" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.05"/></proof>
+  <proof prover="0"><result status="valid" time="0.02"/></proof>
   </goal>
   <goal name="VC instr_ex.18" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
+  <proof prover="0"><result status="valid" time="0.05"/></proof>
   </goal>
   <goal name="VC instr_ex.19" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.03"/></proof>
+  <proof prover="0"><result status="valid" time="0.02"/></proof>
   </goal>
   <goal name="VC instr_ex.20" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.04"/></proof>
+  <proof prover="0"><result status="valid" time="0.03"/></proof>
   </goal>
   <goal name="VC instr_ex.21" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.04"/></proof>
+  <proof prover="0"><result status="valid" time="0.04"/></proof>
   </goal>
   <goal name="VC instr_ex.22" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.07"/></proof>
+  <proof prover="0"><result status="valid" time="0.04"/></proof>
   </goal>
   <goal name="VC instr_ex.23" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.08"/></proof>
+  <proof prover="3"><result status="valid" time="0.14" steps="519"/></proof>
   </goal>
   <goal name="VC instr_ex.24" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.07"/></proof>
+  <proof prover="0"><result status="valid" time="0.07"/></proof>
   </goal>
   <goal name="VC instr_ex.25" expl="postcondition" proved="true">
-  <proof prover="4"><result status="valid" time="0.05"/></proof>
+  <proof prover="0"><result status="valid" time="0.08"/></proof>
   </goal>
-  <goal name="VC instr_ex.26" expl="unreachable point" proved="true">
-  <proof prover="4"><result status="valid" time="0.02"/></proof>
+  <goal name="VC instr_ex.26" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.07"/></proof>
+  </goal>
+  <goal name="VC instr_ex.27" expl="postcondition" proved="true">
+  <proof prover="0"><result status="valid" time="0.05"/></proof>
+  </goal>
+  <goal name="VC instr_ex.28" expl="unreachable point" proved="true">
+  <proof prover="0"><result status="valid" time="0.02"/></proof>
   </goal>
  </transf>
  </goal>
  <goal name="VC instr_iter_ex" expl="VC for instr_iter_ex" proved="true">
- <proof prover="2"><result status="valid" time="0.06" steps="114"/></proof>
+ <proof prover="3" timelimit="10"><result status="valid" time="0.06" steps="425"/></proof>
  </goal>
 </theory>
 </file>

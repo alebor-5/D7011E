@@ -14,6 +14,7 @@ type aexpr =
   | Aadd of aexpr_span * aexpr_span
   | Aaddu of aexpr_span * aexpr_span
   | Asub of aexpr_span * aexpr_span
+  | Asubu of aexpr_span * aexpr_span
   | Acast of State__State.id * types
 and
   aexpr_span = aexpr * span
@@ -49,6 +50,7 @@ let rec imp_of_aexpr = function
   | Aadd (a1, a2) -> Imp.Aadd(imp_of_aexpr_span a1, imp_of_aexpr_span a2) 
   | Aaddu (a1, a2) -> Imp.Aaddu(imp_of_aexpr_span a1, imp_of_aexpr_span a2) 
   | Asub (a1, a2) -> Imp.Asub(imp_of_aexpr_span a1, imp_of_aexpr_span a2) 
+  | Asubu (a1, a2) -> Imp.Asubu(imp_of_aexpr_span a1, imp_of_aexpr_span a2) 
 and
   imp_of_aexpr_span (a, _) = imp_of_aexpr a
 

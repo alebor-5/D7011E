@@ -8,7 +8,7 @@
 %left AND
 %left  NOT (*BEQ nu*) 
 (*%left BLE BGE BG BL nu*)  
-%left PLUS MINUS PLUSU
+%left PLUS MINUS PLUSU MINUSU
 %left SC
 
 
@@ -16,7 +16,7 @@
 %token <int> INTVAL
 %token IF THEN ELSE END WHILE DO DONE
 %token TRUE FALSE AND NOT BEQ BLE BGE BG BL
-%token SC C LP RP ASSIGN PLUS PLUSU MINUS 
+%token SC C LP RP ASSIGN PLUS PLUSU MINUS MINUSU
 
 %token SINT UINT32
 
@@ -88,6 +88,7 @@ aexpr:
   | aexpr_span PLUS aexpr_span     { Aadd ($1, $3) }
   | aexpr_span PLUSU aexpr_span    { Aaddu ($1, $3) }
   | aexpr_span MINUS aexpr_span    { Asub ($1, $3) }
+  | aexpr_span MINUSU aexpr_span   { Asubu ($1, $3) }
   | LP MINUS aexpr_span RP         {Asub((Anum(Z.zero),($startofs, $endofs)),$3)}
   | LP primtype RP ID              { Acast($4,$2)}
  

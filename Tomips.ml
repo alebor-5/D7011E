@@ -42,6 +42,7 @@ let to_mips b = function
 | Iaddr (rs, rt, rd) -> let lab = printlbl 1 in lab ^ "add $t" ^ of_reg rd ^ ", $t" ^ of_reg rs ^ ", $t" ^ of_reg rt
 | Iaddur (rs, rt, rd) -> let lab = printlbl 1 in lab ^"addu $t" ^ of_reg rd ^ ", $t" ^ of_reg rs ^ ", $t" ^ of_reg rt
 | Isubr (rs, rt, rd) -> let lab = printlbl 1 in lab ^"sub $t" ^ of_reg rd ^ ", $t" ^ of_reg rs ^ ", $t" ^ of_reg rt
+| Isubur (rs, rt, rd) -> let lab = printlbl 1 in lab ^"subu $t" ^ of_reg rd ^ ", $t" ^ of_reg rs ^ ", $t" ^ of_reg rt
 | Ibeqr (idr1, idr2, ofs) -> let lab = printlbl 1 in lab ^"beq $t" ^ of_reg idr1 ^ ", $t" ^ of_reg idr2 ^ ", Label_" ^ string_of_int (!(labelnumber)+Z.to_int ofs + 1)
 | Ibner (idr1, idr2, ofs) -> let lab = printlbl 1 in lab ^ "bne $t" ^ of_reg idr1 ^ ", $t" ^ of_reg idr2 ^  ", Label_" ^ string_of_int (!(labelnumber)+Z.to_int ofs + 1)
 | Ibler (idr1, idr2, ofs) -> let lab = printlbl 1 in lab ^  "addi $t" ^ of_reg idr2 ^ ", $t" ^ of_reg idr2 ^ ", 1 \n" ^ (*Because a <= b and not a < b *)
@@ -76,6 +77,11 @@ let to_mips b = function
 | Isub -> let lab = printlbl 1 in lab ^ "lw $s0, 0($sp) \n
   lw $s1, 4($sp) \n
   sub $s0, $s1, $s0 \n
+  addi $sp, $sp, 4 \n
+  sw $s0, 0($sp)"
+| Isubu -> let lab = printlbl 1 in lab ^ "lw $s0, 0($sp) \n
+  lw $s1, 4($sp) \n
+  subu $s0, $s1, $s0 \n
   addi $sp, $sp, 4 \n
   sw $s0, 0($sp)"
 | Ibeq ofs -> let lab = printlbl 1 in lab ^ "lw $s0, 0($sp) \n

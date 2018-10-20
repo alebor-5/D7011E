@@ -109,7 +109,17 @@ let rec tc_aexpr ch itl (a, span) : Imp.aexpr * types =
     let (ai2, t2) = tc_aexpr ch itl (a2, a2_span) in
     let _ = tc_unify ch Tsint t2 a2_span in
 
-    (Imp.Asub(ai1, ai2), t1)  
+    (Imp.Asub(ai1, ai2), t1) 
+  | Asubu ((a1, a1_span), (a2, a2_span)) -> 
+    (* type check a1 against Tuint32 *)
+    let (ai1, t1) = tc_aexpr ch itl (a1, a1_span) in
+    let _ = tc_unify ch Tuint32 t1 a1_span in
+
+    (* type check a2 against Tuint32 *)
+    let (ai2, t2) = tc_aexpr ch itl (a2, a2_span) in
+    let _ = tc_unify ch Tuint32 t2 a2_span in
+
+    (Imp.Asubu(ai1, ai2), t1) 
 (* with
    | TypeError msg -> raise (TypeError (msg ^ nl ^ "in expression:" ^ of_span ch span )) *)
 
