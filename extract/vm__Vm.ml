@@ -38,7 +38,7 @@ type instr =
 
 type code = instr list
 
-let push (n: Z.t) (s: (Z.t) list) : (Z.t) list = n :: s
+let push (n: Z.t) (s1: (Z.t) list) : (Z.t) list = n :: s1
 
 let iimm (x: Z.t) (n: Z.t) : instr list = (Iimm (x, n)) :: []
 

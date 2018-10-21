@@ -11,6 +11,7 @@ module Vm_Ex = Vm_ex_assignment__Vm_Ex
 module Imp_Ex = Imp_ex_assignment__Imp_ex
 module State = State__State
 module Reg = State__Reg
+module Ast_Opt = Ast_opt__Ast_opt
 
 module Imp = Imp__Imp
 
@@ -28,7 +29,9 @@ let () =
          p_stdout ("Decl:" ^ nl ^ T_Dump.of_prog p);  
       *)
 
-      let com = T_Check.tc_prog inBuffer p in
+      let com = if Options.opt.ast_opt then Ast_Opt.ceval_opt (T_Check.tc_prog inBuffer p)
+       else T_Check.tc_prog inBuffer p in
+      
 
       if Options.opt.d_ast then
         p_stderr ("Raw AST:" ^ nl ^ Dump.of_com com ^ nl);

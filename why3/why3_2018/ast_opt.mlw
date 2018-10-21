@@ -5,6 +5,9 @@
   use int.Int
   use bv_op.BV_OP 
 
+
+
+
   let rec aeval_opt (e:aexpr) : aexpr
     variant { e }
     ensures {forall st. aeval st result = aeval st e }
@@ -16,8 +19,72 @@
       | Aaddu e1 e2 -> match aeval_opt e1, aeval_opt e2 with
                                   | Anum oe1, Anum oe2 -> Anum (bv_add oe1 oe2)
                                   | oe1, oe2 -> Aaddu oe1 oe2
-                                  end
-      |_ -> e
+                       end
+      | Asub e1 e2 -> Asub (aeval_opt e1) (aeval_opt e2)
+      | Asubu e1 e2 -> match aeval_opt e1, aeval_opt e2 with
+                                  | Anum oe1, Anum oe2 -> match oe1 = oe2 with 
+                                                          | True -> Anum 0   (*ex 2 - 2 = 0 *)
+                                                          | False -> Anum (bv_sub oe1 oe2)
+                                                          end
+                                  | Avar _, Avar _ -> match eq e1 e2 with
+                                                          | True -> Anum 0 (*ex a - a = 0 *)
+                                                          | False -> Asubu (aeval_opt e1) (aeval_opt e2) (* may not be the best way.... *)
+                                                          end
+                                  | oe1, oe2 -> Asubu oe1 oe2
+                                                
+                       end
     end
+    
+    let rec beval_opt (b:bexpr) : bexpr 
+    variant { b }
+    ensures {forall st. beval st result = beval st b  }
+  =
+    match b with
+      | Btrue      -> Btrue
+      | Bfalse     -> Bfalse
+      | Beq a1 a2  -> Beq (aeval_opt a1) (aeval_opt a2)
+      | Ble a1 a2  -> Ble (aeval_opt a1) (aeval_opt a2)
+      | Bnot b'    -> Bnot (beval_opt b')(*match beval_opt b' with
+                      | Bnot _ ->  b'
+                      | _ -> Bnot b'
+                      end *)
+      | Band b1 b2 -> match eq_b b1 b2 with
+                      | True -> beval_opt b1
+                      | False -> match beval_opt b1, beval_opt b2 with
+                         | Btrue, Btrue -> Btrue
+                         | Bfalse, Bfalse -> Bfalse
+                         | ob1, Btrue -> ob1
+                         | _, Bfalse -> Bfalse
+                         | Btrue, ob2 -> ob2
+                         | Bfalse, _ -> Bfalse
+                         | ob1, ob2 ->  Band ob1 ob2
+                         end 
+                                  
+                       end
+
+  end
+  
+  let rec ceval_opt (c:com): com
+    
+    diverges
+    ensures { forall st st'. ceval st result st' = ceval st c st' }
+    =
+    match c with
+    | Cskip -> Cskip
+    | Cassign id aexpr -> Cassign id (aeval_opt aexpr)
+    | Cseq c1 c2 -> Cseq (ceval_opt c1) (ceval_opt c2)
+    | Cif bexpr c1 c2 ->
+      match beval_opt bexpr with
+      | Btrue -> ceval_opt c1
+      | Bfalse -> ceval_opt c2
+      | _ -> Cif (beval_opt bexpr) (ceval_opt c1) (ceval_opt c2)
+      end
+    | Cwhile bexpr com1 -> 
+      match beval_opt bexpr with
+      | Bfalse -> Cskip
+      | _ -> Cwhile (beval_opt bexpr) (ceval_opt com1)
+      end
+end
+  
 
 end
