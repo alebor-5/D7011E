@@ -20,6 +20,7 @@ let d_pcode     = ref false
 let imp_ex      = ref false
 let vm_ex       = ref false
 let reg         = ref false
+let ast_opt     = ref false
 
 
 let speclist =
@@ -37,6 +38,7 @@ let speclist =
     ("-imp_ex", Arg.Set imp_ex,   "\t: imp_ex evaluation");
     ("-vm_ex", Arg.Set vm_ex,     "\t: vm_ex virtual machine execution");
     ("-reg",  Arg.Set reg,         "\t: Use registers");
+    ("-O", Arg.Set ast_opt,        "\t: Optimize")
   ]
 
 (* check if e is a file extension of s *)
@@ -80,6 +82,7 @@ let cmd =
     opt.imp_ex    <- ! imp_ex;
     opt.vm_ex     <- ! vm_ex;
     opt.reg       <- ! reg;
+    opt.ast_opt   <- ! ast_opt;
   with
   | Arg.Bad msg -> p_stderr ("Command line error: " ^ msg); exit (-1);
 

@@ -7,98 +7,6 @@
 <prover id="2" name="Alt-Ergo" version="2.2.0" timelimit="5" steplimit="0" memlimit="1000"/>
 <prover id="3" name="Eprover" version="2.1" timelimit="5" steplimit="0" memlimit="2000"/>
 <prover id="4" name="Z3" version="4.7.1" alternative="counterexamples" timelimit="5" steplimit="0" memlimit="2000"/>
-<prover id="5" name="CVC3" version="2.4.1" timelimit="5" steplimit="0" memlimit="1000"/>
-<file name="../specs.mlw">
-<theory name="VM_instr_spec">
- <goal name="VC ifunf" expl="VC for ifunf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iimmf" expl="VC for iimmf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iloadf" expl="VC for iloadf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC istoref" expl="VC for istoref">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ipushf" expl="VC for ipushf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ipopf" expl="VC for ipopf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iaddrf" expl="VC for iaddrf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iaddurf" expl="VC for iaddurf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC isubrf" expl="VC for isubrf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC isuburf" expl="VC for isuburf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibeqrf" expl="VC for ibeqrf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibnerf" expl="VC for ibnerf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iblerf" expl="VC for iblerf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibgtrf" expl="VC for ibgtrf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iconstf" expl="VC for iconstf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ivarf" expl="VC for ivarf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC create_binop" expl="VC for create_binop">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iaddf" expl="VC for iaddf" proved="true">
- <proof prover="2"><result status="valid" time="0.14" steps="513"/></proof>
- </goal>
- <goal name="VC iadduf" expl="VC for iadduf" proved="true">
- <proof prover="2"><result status="valid" time="0.14" steps="516"/></proof>
- </goal>
- <goal name="VC isubf" expl="VC for isubf" proved="true">
- <proof prover="2"><result status="valid" time="0.14" steps="513"/></proof>
- </goal>
- <goal name="VC isubuf" expl="VC for isubuf" proved="true">
- <proof prover="2"><result status="valid" time="0.15" steps="516"/></proof>
- </goal>
- <goal name="VC inil" expl="VC for inil">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibranchf" expl="VC for ibranchf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC create_cjump" expl="VC for create_cjump" proved="true">
- <proof prover="2"><result status="valid" time="0.36" steps="1092"/></proof>
- </goal>
- <goal name="VC ibeqf" expl="VC for ibeqf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibnef" expl="VC for ibnef">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC iblef" expl="VC for iblef">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC ibgtf" expl="VC for ibgtf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
- <goal name="VC isetvarf" expl="VC for isetvarf">
- <proof prover="2"><result status="timeout" time="5.00"/></proof>
- </goal>
-</theory>
-</file>
 <file name="../com_aexpr.mlw">
 <theory name="Compile_aexpr_reg">
  <goal name="VC compile_aexpr" expl="VC for compile_aexpr">
@@ -125,21 +33,18 @@
   <proof prover="0" obsolete="true"><result status="valid" time="0.15" steps="172"/></proof>
   <proof prover="2"><result status="valid" time="0.16" steps="560"/></proof>
   </goal>
-  <goal name="VC compile_aexpr.6" expl="variant decrease" proved="true">
-  <proof prover="2"><result status="valid" time="0.14" steps="516"/></proof>
+  <goal name="VC compile_aexpr.6" expl="unreachable point">
+  <proof prover="2"><result status="timeout" time="5.00"/></proof>
   </goal>
-  <goal name="VC compile_aexpr.7" expl="variant decrease" proved="true">
-  <proof prover="2"><result status="valid" time="0.14" steps="561"/></proof>
-  </goal>
-  <goal name="VC compile_aexpr.8" expl="precondition">
+  <goal name="VC compile_aexpr.7" expl="precondition">
   <transf name="split_goal_right" >
-   <goal name="VC compile_aexpr.8.0" expl="precondition" proved="true">
+   <goal name="VC compile_aexpr.7.0" expl="precondition" proved="true">
    <transf name="compute_specified" proved="true" >
-    <goal name="VC compile_aexpr.8.0.0" expl="precondition" proved="true">
+    <goal name="VC compile_aexpr.7.0.0" expl="precondition" proved="true">
     <transf name="introduce_premises" proved="true" >
-     <goal name="VC compile_aexpr.8.0.0.0" expl="precondition" proved="true">
+     <goal name="VC compile_aexpr.7.0.0.0" expl="precondition" proved="true">
      <transf name="compute_specified" proved="true" >
-      <goal name="VC compile_aexpr.8.0.0.0.0" expl="precondition" proved="true">
+      <goal name="VC compile_aexpr.7.0.0.0.0" expl="precondition" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="0.27" steps="326"/></proof>
       <proof prover="2"><result status="valid" time="0.18" steps="587"/></proof>
       </goal>
@@ -149,13 +54,13 @@
     </goal>
    </transf>
    </goal>
-   <goal name="VC compile_aexpr.8.1" expl="precondition" proved="true">
+   <goal name="VC compile_aexpr.7.1" expl="precondition" proved="true">
    <transf name="compute_specified" proved="true" >
-    <goal name="VC compile_aexpr.8.1.0" expl="precondition" proved="true">
+    <goal name="VC compile_aexpr.7.1.0" expl="precondition" proved="true">
     <transf name="introduce_premises" proved="true" >
-     <goal name="VC compile_aexpr.8.1.0.0" expl="precondition" proved="true">
+     <goal name="VC compile_aexpr.7.1.0.0" expl="precondition" proved="true">
      <transf name="compute_specified" proved="true" >
-      <goal name="VC compile_aexpr.8.1.0.0.0" expl="precondition" proved="true">
+      <goal name="VC compile_aexpr.7.1.0.0.0" expl="precondition" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="0.27" steps="316"/></proof>
       <proof prover="2"><result status="valid" time="0.16" steps="515"/></proof>
       </goal>
@@ -165,13 +70,13 @@
     </goal>
    </transf>
    </goal>
-   <goal name="VC compile_aexpr.8.2" expl="precondition" proved="true">
+   <goal name="VC compile_aexpr.7.2" expl="precondition" proved="true">
    <transf name="compute_specified" proved="true" >
-    <goal name="VC compile_aexpr.8.2.0" expl="precondition" proved="true">
+    <goal name="VC compile_aexpr.7.2.0" expl="precondition" proved="true">
     <transf name="introduce_premises" proved="true" >
-     <goal name="VC compile_aexpr.8.2.0.0" expl="precondition" proved="true">
+     <goal name="VC compile_aexpr.7.2.0.0" expl="precondition" proved="true">
      <transf name="compute_specified" proved="true" >
-      <goal name="VC compile_aexpr.8.2.0.0.0" expl="precondition" proved="true">
+      <goal name="VC compile_aexpr.7.2.0.0.0" expl="precondition" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="0.81" steps="500"/></proof>
       <proof prover="2"><result status="valid" time="0.80" steps="1930"/></proof>
       </goal>
@@ -181,19 +86,16 @@
     </goal>
    </transf>
    </goal>
-   <goal name="VC compile_aexpr.8.3" expl="precondition">
+   <goal name="VC compile_aexpr.7.3" expl="precondition">
    <proof prover="2"><result status="timeout" time="5.00"/></proof>
-   <proof prover="3" memlimit="1000"><result status="timeout" time="5.00"/></proof>
-   <proof prover="4" memlimit="1000"><result status="timeout" time="5.00"/></proof>
-   <proof prover="5"><result status="timeout" time="5.00"/></proof>
    </goal>
-   <goal name="VC compile_aexpr.8.4" expl="precondition" proved="true">
+   <goal name="VC compile_aexpr.7.4" expl="precondition" proved="true">
    <transf name="compute_specified" proved="true" >
-    <goal name="VC compile_aexpr.8.4.0" expl="precondition" proved="true">
+    <goal name="VC compile_aexpr.7.4.0" expl="precondition" proved="true">
     <transf name="introduce_premises" proved="true" >
-     <goal name="VC compile_aexpr.8.4.0.0" expl="precondition" proved="true">
+     <goal name="VC compile_aexpr.7.4.0.0" expl="precondition" proved="true">
      <transf name="compute_specified" proved="true" >
-      <goal name="VC compile_aexpr.8.4.0.0.0" expl="precondition" proved="true">
+      <goal name="VC compile_aexpr.7.4.0.0.0" expl="precondition" proved="true">
       <proof prover="0" obsolete="true"><result status="valid" time="0.78" steps="500"/></proof>
       <proof prover="2"><result status="valid" time="0.77" steps="1930"/></proof>
       </goal>
@@ -203,18 +105,15 @@
     </goal>
    </transf>
    </goal>
-   <goal name="VC compile_aexpr.8.5" expl="precondition">
-   <proof prover="2"><result status="timeout" time="5.00"/></proof>
-   </goal>
   </transf>
   </goal>
-  <goal name="VC compile_aexpr.9" expl="postcondition">
+  <goal name="VC compile_aexpr.8" expl="postcondition" proved="true">
   <proof prover="0" obsolete="true"><result status="valid" time="0.10" steps="81"/></proof>
-  <proof prover="2" obsolete="true"><result status="valid" time="0.08" steps="160"/></proof>
+  <proof prover="2"><result status="valid" time="0.08" steps="160"/></proof>
   </goal>
-  <goal name="VC compile_aexpr.10" expl="postcondition">
+  <goal name="VC compile_aexpr.9" expl="postcondition" proved="true">
   <proof prover="0" obsolete="true"><result status="valid" time="0.09" steps="81"/></proof>
-  <proof prover="2" obsolete="true"><result status="valid" time="0.08" steps="160"/></proof>
+  <proof prover="2"><result status="valid" time="0.08" steps="160"/></proof>
   </goal>
  </transf>
  </goal>
@@ -1017,6 +916,68 @@
   <proof prover="2"><undone/></proof>
   </goal>
  </transf>
+ </goal>
+</theory>
+</file>
+<file name="../specs.mlw">
+<theory name="VM_instr_spec">
+ <goal name="VC ifunf" expl="VC for ifunf">
+ </goal>
+ <goal name="VC iimmf" expl="VC for iimmf">
+ </goal>
+ <goal name="VC iloadf" expl="VC for iloadf">
+ </goal>
+ <goal name="VC istoref" expl="VC for istoref">
+ </goal>
+ <goal name="VC ipushf" expl="VC for ipushf">
+ </goal>
+ <goal name="VC ipopf" expl="VC for ipopf">
+ </goal>
+ <goal name="VC iaddrf" expl="VC for iaddrf">
+ </goal>
+ <goal name="VC iaddurf" expl="VC for iaddurf">
+ </goal>
+ <goal name="VC isubrf" expl="VC for isubrf">
+ </goal>
+ <goal name="VC isuburf" expl="VC for isuburf">
+ </goal>
+ <goal name="VC ibeqrf" expl="VC for ibeqrf">
+ </goal>
+ <goal name="VC ibnerf" expl="VC for ibnerf">
+ </goal>
+ <goal name="VC iblerf" expl="VC for iblerf">
+ </goal>
+ <goal name="VC ibgtrf" expl="VC for ibgtrf">
+ </goal>
+ <goal name="VC iconstf" expl="VC for iconstf">
+ </goal>
+ <goal name="VC ivarf" expl="VC for ivarf">
+ </goal>
+ <goal name="VC create_binop" expl="VC for create_binop">
+ </goal>
+ <goal name="VC iaddf" expl="VC for iaddf">
+ </goal>
+ <goal name="VC iadduf" expl="VC for iadduf">
+ </goal>
+ <goal name="VC isubf" expl="VC for isubf">
+ </goal>
+ <goal name="VC isubuf" expl="VC for isubuf">
+ </goal>
+ <goal name="VC inil" expl="VC for inil">
+ </goal>
+ <goal name="VC ibranchf" expl="VC for ibranchf">
+ </goal>
+ <goal name="VC create_cjump" expl="VC for create_cjump">
+ </goal>
+ <goal name="VC ibeqf" expl="VC for ibeqf">
+ </goal>
+ <goal name="VC ibnef" expl="VC for ibnef">
+ </goal>
+ <goal name="VC iblef" expl="VC for iblef">
+ </goal>
+ <goal name="VC ibgtf" expl="VC for ibgtf">
+ </goal>
+ <goal name="VC isetvarf" expl="VC for isetvarf">
  </goal>
 </theory>
 </file>

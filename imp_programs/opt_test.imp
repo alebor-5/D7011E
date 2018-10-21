@@ -1,0 +1,14 @@
+a : UINT32;
+b : UINT32;
+c : UINT32;
+d : SINT;
+e : SINT;
+f : SINT;
+
+a := 1 +u ( 4 -u 4) +u 10 -u 10 +u 3 -u (2 +u 1);
+b := 4 +u 4 +u 1 +u 1;
+
+e := 5;
+IF FALSE && TRUE THEN c := 1 ELSE c := 2 END;
+IF TRUE && TRUE THEN c := 3 ELSE c := 4 END;
+IF e <= 10 && e <= 10 THEN c := 5 END
