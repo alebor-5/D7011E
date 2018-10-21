@@ -38,7 +38,7 @@ theory Imp
       | Aadd e1 e2  -> aeval st e1 + aeval st e2
       | Asub e1 e2  -> aeval st e1 - aeval st e2
       | Aaddu e1 e2 -> bv_add (aeval st e1) (aeval st e2)
-      | Asubu e1 e2 -> bv_add (aeval st e1) (aeval st e2)
+      | Asubu e1 e2 -> bv_sub (aeval st e1) (aeval st e2)
     end
 
   function beval (st:state) (b:bexpr) : bool =
@@ -78,7 +78,34 @@ theory Imp
         ceval mi body mj -> ceval mj (Cwhile cond body) mf ->
           ceval mi (Cwhile cond body) mf
 
+   let rec eq(a b:aexpr) = (* Equality *)
+    variant { a, b }
+    ensures { result = (a = b) }
+    match (a, b) with
+    | (Anum i1, Anum i2) -> i1 = i2
+    | (Avar (Id id1), Avar (Id id2)) -> id1 = id2
+    | (Aadd a1 a2, Aadd b1 b2) -> eq a1 b1 && eq a2 b2
+    | (Asub a1 a2, Asub b1 b2) -> eq a1 b1 && eq a2 b2  
+    | (Aaddu a1 a2, Aaddu b1 b2) -> eq a1 b1 && eq a2 b2  
+    | (Asubu a1 a2, Asubu b1 b2) -> eq a1 b1 && eq a2 b2
+    | _ -> false
+    end
+    
+   let rec eq_b(a b:bexpr) = (* Equality for bexprs *)
+    variant { a, b }
+    ensures { result = (a = b) }
+    match (a, b) with
+      | Btrue, Btrue      -> true
+      | Bfalse, Bfalse     -> true
+      | (Bnot b', Bnot b1')   -> eq_b b' b1'
+      | (Beq a1 a2, Beq b1 b2) -> eq a1 b1 && eq a2 b2
+      | (Ble a1 a2, Ble b1 b2)  -> eq a1 b1 && eq a2 b2 
+      | (Band a1 a2, Ble b1 b2) -> eq_b a1 b1 && eq_b a2 b2
+      | _ -> false
+    end
+    
 
+  
   (* Determinstic semantics *)
   lemma ceval_deterministic_aux : forall c mi mf1. ceval mi c mf1 ->
       forall mf2. ([@inversion] ceval mi c mf2) -> mf1 = mf2
