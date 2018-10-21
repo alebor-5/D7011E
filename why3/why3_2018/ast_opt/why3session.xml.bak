@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE why3session PUBLIC "-//Why3//proof session v5//EN"
+"http://why3.lri.fr/why3session.dtd">
+<why3session shape_version="5">
+<prover id="0" name="Alt-Ergo" version="2.2.0" timelimit="5" steplimit="0" memlimit="1000"/>
+<file name="../ast_opt.mlw">
+<theory name="Ast_opt">
+ <goal name="VC aeval_opt" expl="VC for aeval_opt">
+ <transf name="split_vc" >
+  <goal name="VC aeval_opt.0" expl="variant decrease" proved="true">
+  <proof prover="0"><result status="valid" time="0.23" steps="432"/></proof>
+  </goal>
+  <goal name="VC aeval_opt.1" expl="variant decrease" proved="true">
+  <proof prover="0"><result status="valid" time="0.23" steps="432"/></proof>
+  </goal>
+  <goal name="VC aeval_opt.2" expl="postcondition">
+  <proof prover="0"><result status="timeout" time="5.00"/></proof>
+  </goal>
+ </transf>
+ </goal>
+</theory>
+</file>
+</why3session>

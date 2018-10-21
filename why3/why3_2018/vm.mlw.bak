@@ -204,11 +204,6 @@ theory Vm
         forall s m r. transition c
           (VMS p r s m)
           (VMS (p + 1) (write r x3 (read r x1 - read r x2)) s m)
-     
-    | trans_subur : forall c p x1 x2 x3. codeseq_at c p (isubur x1 x2 x3) ->
-        forall s m r. transition c
-          (VMS p r s m)
-          (VMS (p + 1) (write r x3 (bv_sub (read r x1) (read r x2))) s m)
 
     | trans_beqr: forall c p x1 x2 r ofs. codeseq_at c p (ibeqr x1 x2 ofs) ->
         forall s m. transition c
