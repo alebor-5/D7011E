@@ -16,6 +16,7 @@ module Imp_ex
       | Aadd e1 e2  -> aeval_ex st e1 + aeval_ex st e2
       | Aaddu e1 e2 -> bv_add (aeval_ex st e1) (aeval_ex st e2)
       | Asub e1 e2  -> aeval_ex st e1 - aeval_ex st e2
+      | Asubu e1 e2  -> bv_sub (aeval_ex st e1) (aeval_ex st e2)
     end
 
 

@@ -1,0 +1,25 @@
+  module Ast_opt 
+  use imp.Imp
+  use state.State
+  use bool.Bool
+  use int.Int
+  use bv_op.BV_OP 
+
+  let rec aeval_opt (e:aexpr) : aexpr
+    variant { e }
+    ensures {forall st. aeval st result = aeval st e }
+  =
+    match e with
+      | Anum n      -> Anum n
+      | Avar x      -> Avar x
+      | Aadd e1 e2  -> Aadd (aeval_opt e1) (aeval_opt e2)
+      | Aaddu e1 e2 -> let oe1 = aeval_opt e1 in
+                           let oe2 = aeval_opt e2 in
+                                match oe1, oe1 with
+                                  | Anum oe1, Anum oe2 -> Anum (bv_add oe1 oe2)
+                                  | oe1, oe2 -> Aaddu oe1 oe2
+                                  end
+      |_ -> e
+    end
+
+end

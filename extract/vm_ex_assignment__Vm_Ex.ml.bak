@@ -50,33 +50,29 @@ let instr_ex (c: Vm__Vm.instr list) (ms: Vm__Vm.machine_state) : Vm__Vm.machine_
           let (rv12, rs12) = pop s in let (rv22, rs22) = pop rs12 in
           Vm__Vm.VMS ((Z.add p Z.one), r,
             (Vm__Vm.push (Z.sub rv22 rv12) rs22), m)
-        | Vm__Vm.Isubu ->
-          let (rv13, rs13) = pop s in let (rv23, rs23) = pop rs13 in
-          Vm__Vm.VMS ((Z.add p Z.one), r,
-            (Vm__Vm.push (Bv_op__BV_OP.bv_sub rv23 rv13) rs23), m)
         | Vm__Vm.Ibeq ofs ->
-          let (n2, rs24) = pop s in let (n1, rs14) = pop rs24 in
+          let (n2, rs23) = pop s in let (n1, rs13) = pop rs23 in
           begin match Z.equal n1 n2 with
+          | true -> Vm__Vm.VMS ((Z.add (Z.add p Z.one) ofs), r, rs13, m)
+          | false -> Vm__Vm.VMS ((Z.add p Z.one), r, rs13, m)
+          end
+        | Vm__Vm.Ibne ofs ->
+          let (n21, rs24) = pop s in let (n11, rs14) = pop rs24 in
+          begin match not (Z.equal n21 n11) with
           | true -> Vm__Vm.VMS ((Z.add (Z.add p Z.one) ofs), r, rs14, m)
           | false -> Vm__Vm.VMS ((Z.add p Z.one), r, rs14, m)
           end
-        | Vm__Vm.Ibne ofs ->
-          let (n21, rs25) = pop s in let (n11, rs15) = pop rs25 in
-          begin match not (Z.equal n21 n11) with
+        | Vm__Vm.Ible ofs ->
+          let (n22, rs25) = pop s in let (n12, rs15) = pop rs25 in
+          begin match Z.leq n12 n22 with
           | true -> Vm__Vm.VMS ((Z.add (Z.add p Z.one) ofs), r, rs15, m)
           | false -> Vm__Vm.VMS ((Z.add p Z.one), r, rs15, m)
           end
-        | Vm__Vm.Ible ofs ->
-          let (n22, rs26) = pop s in let (n12, rs16) = pop rs26 in
-          begin match Z.leq n12 n22 with
+        | Vm__Vm.Ibgt ofs ->
+          let (n23, rs26) = pop s in let (n13, rs16) = pop rs26 in
+          begin match Z.gt n13 n23 with
           | true -> Vm__Vm.VMS ((Z.add (Z.add p Z.one) ofs), r, rs16, m)
           | false -> Vm__Vm.VMS ((Z.add p Z.one), r, rs16, m)
-          end
-        | Vm__Vm.Ibgt ofs ->
-          let (n23, rs27) = pop s in let (n13, rs17) = pop rs27 in
-          begin match Z.gt n13 n23 with
-          | true -> Vm__Vm.VMS ((Z.add (Z.add p Z.one) ofs), r, rs17, m)
-          | false -> Vm__Vm.VMS ((Z.add p Z.one), r, rs17, m)
           end
         | Vm__Vm.Iload (idr, id) ->
           Vm__Vm.VMS ((Z.add p Z.one),
@@ -107,11 +103,6 @@ let instr_ex (c: Vm__Vm.instr list) (ms: Vm__Vm.machine_state) : Vm__Vm.machine_
             (State__Reg.write r idr3
                (Z.sub (State__Reg.read r idr1) (State__Reg.read r idr2))), s,
             m)
-        | Vm__Vm.Isubur (idr1, idr2, idr3) ->
-          Vm__Vm.VMS ((Z.add p Z.one),
-            (State__Reg.write r idr3
-               (Bv_op__BV_OP.bv_sub (State__Reg.read r idr1)
-                  (State__Reg.read r idr2))), s, m)
         | Vm__Vm.Ibeqr (idr1, idr2, ofs) ->
           begin match Z.equal (State__Reg.read r idr1) (State__Reg.read r
                                                           idr2) with

@@ -14,16 +14,16 @@
  <goal name="VC const" expl="VC for const" proved="true">
  <proof prover="1" timelimit="10"><result status="valid" time="0.00" steps="2"/></proof>
  </goal>
- <goal name="VC mixfix [&lt;-]">
- <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
- </goal>
- <goal name="VC set">
+ <goal name="VC get">
  <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
  </goal>
  <goal name="VC mixfix []">
  <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
  </goal>
- <goal name="VC get">
+ <goal name="VC set">
+ <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
+ </goal>
+ <goal name="VC mixfix [&lt;-]">
  <proof prover="1"><result status="valid" time="0.00" steps="1"/></proof>
  </goal>
 </theory>
@@ -31,10 +31,10 @@
  <goal name="VC const" expl="VC for const" proved="true">
  <proof prover="0" memlimit="2000"><result status="valid" time="0.00" steps="2"/></proof>
  </goal>
- <goal name="VC read">
+ <goal name="VC write">
  <proof prover="0" memlimit="2000"><result status="valid" time="0.00" steps="0"/></proof>
  </goal>
- <goal name="VC write">
+ <goal name="VC read">
  <proof prover="0" memlimit="2000"><result status="valid" time="0.00" steps="0"/></proof>
  </goal>
 </theory>
@@ -169,7 +169,7 @@
     <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
     <proof prover="2" timelimit="10" obsolete="true"><result status="timeout" time="10.00"/></proof>
     <proof prover="5" obsolete="true"><result status="timeout" time="5.00"/></proof>
-    <proof prover="6" timelimit="5"><result status="valid" time="3.19"/></proof>
+    <proof prover="6" timelimit="5"><result status="valid" time="2.80"/></proof>
     <proof prover="7"><result status="valid" time="0.19"/></proof>
     </goal>
    </transf>
@@ -502,7 +502,7 @@
   <proof prover="0"><result status="valid" time="0.06" steps="164"/></proof>
   </goal>
   <goal name="VC ibranchf.3" expl="postcondition" proved="true">
-  <proof prover="0"><result status="valid" time="0.06" steps="164"/></proof>
+  <proof prover="0"><result status="valid" time="0.18" steps="164"/></proof>
   </goal>
   <goal name="VC ibranchf.4" expl="postcondition" proved="true">
   <proof prover="0"><result status="valid" time="0.14" steps="392"/></proof>
@@ -1558,7 +1558,7 @@
    <proof prover="0" timelimit="10"><result status="valid" time="0.11" steps="164"/></proof>
    </goal>
    <goal name="loop_variant_acc.2.2" proved="true">
-   <proof prover="0" timelimit="10"><result status="valid" time="0.12" steps="170"/></proof>
+   <proof prover="0" timelimit="10"><result status="valid" time="0.25" steps="170"/></proof>
    </goal>
    <goal name="loop_variant_acc.2.3" proved="true">
    <proof prover="0" timelimit="10"><result status="valid" time="0.24" steps="169"/></proof>
@@ -1957,7 +1957,7 @@
  <proof prover="0" timelimit="10" memlimit="2000"><result status="valid" time="0.13" steps="400"/></proof>
  </goal>
  <goal name="VC hoare" expl="VC for hoare" proved="true">
- <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
+ <proof prover="0"><result status="timeout" time="5.00"/></proof>
  <proof prover="2"><result status="valid" time="0.03"/></proof>
  </goal>
  <goal name="pconj_lemma" proved="true">
@@ -2114,7 +2114,7 @@
   </goal>
   <goal name="trans_deterministic_aux.8" proved="true">
   <proof prover="0"><result status="valid" time="1.11" steps="4407"/></proof>
-  <proof prover="7" obsolete="true"><result status="timeout" time="5.00"/></proof>
+  <proof prover="7"><result status="timeout" time="5.00"/></proof>
   </goal>
   <goal name="trans_deterministic_aux.9" proved="true">
   <proof prover="0"><result status="valid" time="2.27" steps="4001"/></proof>
@@ -2172,54 +2172,25 @@
  <goal name="trans_deterministic_star" proved="true">
  <proof prover="0"><result status="valid" time="0.10" steps="154"/></proof>
  </goal>
- <goal name="VC isetvar">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC iaddr">
- <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
- </goal>
- <goal name="VC ible">
+ <goal name="VC ibranch">
  <proof prover="0" obsolete="true"><result status="valid" time="0.01" steps="148"/></proof>
  </goal>
- <goal name="VC isubur">
- </goal>
- <goal name="VC iconst">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC istore">
- <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
- </goal>
- <goal name="VC ibne">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC ibner">
- <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
- </goal>
- <goal name="VC isubu">
- <proof prover="0" obsolete="true"><result status="valid" time="0.08" steps="148"/></proof>
- </goal>
- <goal name="VC iadd">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC iaddu">
- <proof prover="0" obsolete="true"><result status="valid" time="0.01" steps="148"/></proof>
- </goal>
- <goal name="VC ibeqr">
- <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
- </goal>
- <goal name="VC ibeq">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC iload">
- <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
- </goal>
- <goal name="VC ipushr">
+ <goal name="VC iaddur">
  <proof prover="0" obsolete="true"><result status="valid" time="0.03" steps="148"/></proof>
  </goal>
- <goal name="VC ivar">
+ <goal name="VC ibgt">
  <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
  </goal>
- <goal name="VC ibler">
+ <goal name="VC push">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC ipopr">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.03" steps="148"/></proof>
+ </goal>
+ <goal name="VC iimm">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
+ </goal>
+ <goal name="VC ibgtr">
  <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
  </goal>
  <goal name="VC ihalt">
@@ -2231,26 +2202,55 @@
  <goal name="VC isub">
  <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
  </goal>
- <goal name="VC ibgtr">
+ <goal name="VC ibler">
  <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
  </goal>
- <goal name="VC iimm">
+ <goal name="VC ipushr">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.03" steps="148"/></proof>
+ </goal>
+ <goal name="VC ivar">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC iload">
  <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
  </goal>
- <goal name="VC ipopr">
- <proof prover="0" obsolete="true"><result status="valid" time="0.03" steps="148"/></proof>
- </goal>
- <goal name="VC ibgt">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC push">
- <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
- </goal>
- <goal name="VC iaddur">
- <proof prover="0" obsolete="true"><result status="valid" time="0.03" steps="148"/></proof>
- </goal>
- <goal name="VC ibranch">
+ <goal name="VC iaddu">
  <proof prover="0" obsolete="true"><result status="valid" time="0.01" steps="148"/></proof>
+ </goal>
+ <goal name="VC ibeqr">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
+ </goal>
+ <goal name="VC ibeq">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC iadd">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC isubu">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.08" steps="148"/></proof>
+ </goal>
+ <goal name="VC ibner">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
+ </goal>
+ <goal name="VC ibne">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC iconst">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
+ </goal>
+ <goal name="VC istore">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
+ </goal>
+ <goal name="VC isubur">
+ </goal>
+ <goal name="VC iaddr">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.02" steps="148"/></proof>
+ </goal>
+ <goal name="VC ible">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.01" steps="148"/></proof>
+ </goal>
+ <goal name="VC isetvar">
+ <proof prover="0" obsolete="true"><result status="valid" time="0.00" steps="148"/></proof>
  </goal>
 </theory>
 </file>

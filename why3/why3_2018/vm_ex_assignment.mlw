@@ -88,6 +88,9 @@ module Vm_Ex
       | Isub -> let (rv1, rs1) = pop s in
         let (rv2, rs2) = pop rs1 in
           VMS (p + 1) r (push (rv2 - rv1) rs2) m
+      | Isubu -> let (rv1, rs1) = pop s in
+        let (rv2, rs2) = pop rs1 in
+          VMS (p + 1) r (push (bv_sub rv2 rv1) rs2) m
       | Ibeq ofs -> let (n2, rs2) = pop s in
         let (n1, rs1) = pop rs2 in
           match n1 = n2 with
@@ -122,6 +125,7 @@ module Vm_Ex
       | Iaddr idr1 idr2 idr3 -> VMS (p + 1) (write r idr3 (read r idr1 + read r idr2)) s m
       | Iaddur idr1 idr2 idr3 -> VMS (p + 1) (write r idr3 (bv_add (read r idr1) (read r idr2))) s m
       | Isubr idr1 idr2 idr3 -> VMS (p + 1) (write r idr3 ((read r idr1)-(read r idr2))) s m
+      | Isubur idr1 idr2 idr3 -> VMS (p + 1) (write r idr3 (bv_sub (read r idr1) (read r idr2))) s m
       | Ibeqr idr1 idr2 ofs -> match (read r idr1) = (read r idr2) with
         |True -> VMS (p + 1 + ofs) r s m
         |False -> VMS (p + 1) r s m
