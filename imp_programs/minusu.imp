@@ -4,4 +4,4 @@ c : UINT32;
 a := 4;
 b := 2;
 a := a -u b;
-c := a - b
+c := a -u b
