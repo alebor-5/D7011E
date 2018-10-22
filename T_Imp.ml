@@ -15,7 +15,7 @@ type aexpr =
   | Aaddu of aexpr_span * aexpr_span
   | Asub of aexpr_span * aexpr_span
   | Asubu of aexpr_span * aexpr_span
-  | Acast of State__State.id * types
+  | Acast of aexpr_span * types
 and
   aexpr_span = aexpr * span
 

@@ -73,8 +73,9 @@ let get_id_type itl (id : id) : types * span =
 let rec tc_aexpr ch itl (a, span) : Imp.aexpr * types =  
   (* try *)
   match a with
-  | Acast (id,t) ->
-    (Imp.Avar id, t)
+  | Acast (aexpr,t) ->
+    let (ai1, t1) = tc_aexpr ch itl aexpr in
+    (ai1, t)
   | Anum n -> (Imp.Anum n, Tint)
   | Avar id -> 
     let (t, _ ) = get_id_type itl id in
