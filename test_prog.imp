@@ -2,8 +2,9 @@ a : SINT;
 b : SINT;
 c : SINT;
 d : UINT32;
-a := 65535;
-b := 65535;
-c := 65535;
-a := a + b + c 
+a := 1;
+b := 2;
+c := a - b;
+d := 3;
+c := a - d
 

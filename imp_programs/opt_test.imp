@@ -11,4 +11,6 @@ b := 4 +u 4 +u 1 +u 1;
 e := 5;
 IF FALSE && TRUE THEN c := 1 ELSE c := 2 END;
 IF TRUE && TRUE THEN c := 3 ELSE c := 4 END;
-IF e <= 10 && e <= 10 THEN c := 5 END
+IF e <= 10 && e <= 10 THEN c := 5 END;
+
+f := 4 + 4 + 4

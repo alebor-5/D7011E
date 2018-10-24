@@ -50,5 +50,35 @@ Label_15: lw $at, 0($sp)
 addi $sp, $sp, 4 
 sw $at, 12($gp) 
 Label_16: j Label_17
-Label_17: j Label_17
+Label_17: addi $at, $zero, 4
+addi $sp, $sp, -4 
+sw $at, 0($sp)
+Label_18: addi $at, $zero, 4
+addi $sp, $sp, -4 
+sw $at, 0($sp)
+Label_19: lw $s0, 0($sp) 
+
+  lw $s1, 4($sp) 
+
+  add $s0, $s0, $s1 
+
+  addi $sp, $sp, 4 
+
+  sw $s0, 0($sp)
+Label_20: addi $at, $zero, 4
+addi $sp, $sp, -4 
+sw $at, 0($sp)
+Label_21: lw $s0, 0($sp) 
+
+  lw $s1, 4($sp) 
+
+  add $s0, $s0, $s1 
+
+  addi $sp, $sp, 4 
+
+  sw $s0, 0($sp)
+Label_22: lw $at, 0($sp) 
+addi $sp, $sp, 4 
+sw $at, 24($gp) 
+Label_23: j Label_23
 
