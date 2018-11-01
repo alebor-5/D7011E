@@ -16,7 +16,7 @@ module BV_OP
   
   let function bv_sub i1 i2:int 
     ensures { 
-      result = BV32.to_int (BV32.sub(BV32.of_int i1) (BV32.of_int i2))
+      result = BV32.to_int (BV32.sub (BV32.of_int i1) (BV32.of_int i2))
     }
   =
     let v1: BV32.t = BV32.of_int i1 in

@@ -1,0 +1,9 @@
+a : UINT32;
+b : UINT32;
+c : UINT32;
+a := (1 +u 2) +u 2;
+a := ( 1 +u 2) -u 3;
+b := a -u a;
+b := (a +u (1 +u 1)) -u (a +u 2);
+c := (a +u (1 +u 1)) +u (a +u 2);
+

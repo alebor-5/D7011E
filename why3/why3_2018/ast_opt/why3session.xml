@@ -11,7 +11,7 @@
 <file name="../ast_opt.mlw" proved="true">
 <theory name="Ast_opt" proved="true">
  <goal name="VC aeval_opt" expl="VC for aeval_opt" proved="true">
- <proof prover="0"><result status="valid" time="0.62" steps="2421"/></proof>
+ <proof prover="0"><result status="valid" time="0.41" steps="1878"/></proof>
  <transf name="split_vc" proved="true" >
   <goal name="VC aeval_opt.0" expl="variant decrease" proved="true">
   <proof prover="0"><result status="valid" time="0.02" steps="144"/></proof>
@@ -37,67 +37,67 @@
   <goal name="VC aeval_opt.7" expl="variant decrease" proved="true">
   <proof prover="0"><result status="valid" time="0.02" steps="144"/></proof>
   </goal>
-  <goal name="VC aeval_opt.8" expl="variant decrease" proved="true">
-  <proof prover="0"><result status="valid" time="0.02" steps="146"/></proof>
-  </goal>
-  <goal name="VC aeval_opt.9" expl="variant decrease" proved="true">
-  <proof prover="0"><result status="valid" time="0.02" steps="146"/></proof>
-  </goal>
-  <goal name="VC aeval_opt.10" expl="postcondition" proved="true">
+  <goal name="VC aeval_opt.8" expl="postcondition" proved="true">
   <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
   <transf name="split_vc" proved="true" >
-   <goal name="VC aeval_opt.10.0" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.0" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.02" steps="144"/></proof>
    </goal>
-   <goal name="VC aeval_opt.10.1" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.1" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.02" steps="144"/></proof>
    </goal>
-   <goal name="VC aeval_opt.10.2" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.2" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.08" steps="376"/></proof>
    </goal>
-   <goal name="VC aeval_opt.10.3" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.3" expl="postcondition" proved="true">
    <proof prover="0" obsolete="true"><result status="timeout" time="5.00"/></proof>
    <transf name="split_vc" proved="true" >
-    <goal name="VC aeval_opt.10.3.0" expl="postcondition" proved="true">
+    <goal name="VC aeval_opt.8.3.0" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.09" steps="431"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.3.1" expl="postcondition" proved="true">
+    <goal name="VC aeval_opt.8.3.1" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.08" steps="382"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.3.2" expl="postcondition" proved="true">
+    <goal name="VC aeval_opt.8.3.2" expl="postcondition" proved="true">
     <proof prover="0"><result status="valid" time="0.07" steps="378"/></proof>
     </goal>
    </transf>
    </goal>
-   <goal name="VC aeval_opt.10.4" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.4" expl="postcondition" proved="true">
    <proof prover="0"><result status="valid" time="0.08" steps="376"/></proof>
    </goal>
-   <goal name="VC aeval_opt.10.5" expl="postcondition" proved="true">
+   <goal name="VC aeval_opt.8.5" expl="postcondition" proved="true">
    <transf name="split_vc" proved="true" >
-    <goal name="VC aeval_opt.10.5.0" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.11" steps="509"/></proof>
+    <goal name="VC aeval_opt.8.5.0" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.09" steps="430"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.5.1" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.09" steps="432"/></proof>
+    <goal name="VC aeval_opt.8.5.1" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.11" steps="477"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.5.2" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.07" steps="382"/></proof>
+    <goal name="VC aeval_opt.8.5.2" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.07" steps="384"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.5.3" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.10" steps="507"/></proof>
+    <goal name="VC aeval_opt.8.5.3" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.10" steps="514"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.5.4" expl="postcondition" proved="true">
+    <goal name="VC aeval_opt.8.5.4" expl="postcondition" proved="true">
+    <proof prover="0"><result status="valid" time="0.07" steps="380"/></proof>
+    </goal>
+    <goal name="VC aeval_opt.10.5.6">
     <proof prover="0"><result status="valid" time="0.07" steps="378"/></proof>
     </goal>
-    <goal name="VC aeval_opt.10.5.5" expl="postcondition" proved="true">
+    <goal name="VC aeval_opt.10.5.5">
     <proof prover="0"><result status="valid" time="0.08" steps="382"/></proof>
-    </goal>
-    <goal name="VC aeval_opt.10.5.6" expl="postcondition" proved="true">
-    <proof prover="0"><result status="valid" time="0.07" steps="378"/></proof>
     </goal>
    </transf>
    </goal>
   </transf>
+  </goal>
+  <goal name="VC aeval_opt.9">
+  <proof prover="0"><result status="valid" time="0.02" steps="146"/></proof>
+  </goal>
+  <goal name="VC aeval_opt.8">
+  <proof prover="0"><result status="valid" time="0.02" steps="146"/></proof>
   </goal>
  </transf>
  </goal>

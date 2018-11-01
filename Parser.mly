@@ -3,13 +3,11 @@
 
 (* cimp/Parser.mly *)
 
-
-(*%right ASSIGN never usefull*)  
+%left SC (*Lowest precedence according to Java*)
 %left AND
-%left  NOT (*BEQ nu*) 
-(*%left BLE BGE BG BL nu*)  
 %left PLUS MINUS PLUSU MINUSU
-%left SC
+%left NOT (*Higest precedence *)
+
 
 
 %token <State__State.id> ID

@@ -43,7 +43,7 @@ let rec pretty_of_aexpr = function
   | Aadd (e1, e2)   -> "(" ^ pretty_of_aexpr e1 ^ " + " ^ pretty_of_aexpr e2 ^")"
   | Aaddu (e1, e2)  -> "(" ^ pretty_of_aexpr e1 ^ " +u " ^ pretty_of_aexpr e2 ^")"
   | Asub (e1, e2)   -> "(" ^ pretty_of_aexpr e1 ^ " - " ^ pretty_of_aexpr e2 ^")"
-  | Asubu (e1, e2)  -> "(" ^ pretty_of_aexpr e1 ^ " - " ^ pretty_of_aexpr e2 ^")"
+  | Asubu (e1, e2)  -> "(" ^ pretty_of_aexpr e1 ^ " -u " ^ pretty_of_aexpr e2 ^")"
 
 let rec pretty_of_bexpr = function
   | Btrue           -> "TRUE"
@@ -88,7 +88,7 @@ let of_instr b = function
   | Iadd            -> "Iadd"
   | Iaddu           -> "Iaddu"
   | Isub            -> "Isub"
-  | Isubu            -> "Isub"
+  | Isubu            -> "Isubu"
   | Ibeq n          -> "Ibeq " ^ Z.to_string n
   | Ibne n          -> "Ibne " ^ Z.to_string n
   | Ible n          -> "Ible " ^ Z.to_string n

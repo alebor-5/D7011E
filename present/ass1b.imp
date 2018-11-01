@@ -1,0 +1,10 @@
+a : SINT;
+b : SINT;
+c : UINT32;
+d : UINT32;
+
+a := 1+2+3;
+b := 1+2-3;
+c := 1 +u 2 +u 3;
+d:= 1 +u 2 -u 3;
+IF NOT 3 <= 0  && FALSE && TRUE  THEN a := 1 END

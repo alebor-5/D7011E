@@ -22,15 +22,12 @@
                        end
       | Asub e1 e2 -> Asub (aeval_opt e1) (aeval_opt e2)
       | Asubu e1 e2 -> match aeval_opt e1, aeval_opt e2 with
-                                  | Anum oe1, Anum oe2 -> match oe1 = oe2 with 
-                                                          | True -> Anum 0   (*ex 2 - 2 = 0 *)
-                                                          | False -> Anum (bv_sub oe1 oe2)
-                                                          end
-                                  | Avar _, Avar _ -> match eq e1 e2 with
+                                  | Anum oe1, Anum oe2 ->  Anum (bv_sub oe1 oe2) (* ex 3-2=1 or 3-3 = 0*)
+                                  | oe1, oe2 -> match eq oe1 oe2 with
                                                           | True -> Anum 0 (*ex a - a = 0 *)
-                                                          | False -> Asubu (aeval_opt e1) (aeval_opt e2) (* may not be the best way.... *)
+                                                          | False -> Asubu  oe1 oe2 (* may not be the best way.... *)
                                                           end
-                                  | oe1, oe2 -> Asubu oe1 oe2
+
                                                 
                        end
     end

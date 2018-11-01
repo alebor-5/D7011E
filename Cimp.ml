@@ -53,9 +53,9 @@ let () =
           p_stderr ("Raw Code : \n" ^ Dump.of_code false code ^ nl);
         if Options.opt.d_pcode then
           p_stderr ("Pretty Code : \n" ^ Dump.of_code true code ^ nl);
-        let oc = open_out  Options.opt.outfile in 
-        Printf.fprintf oc "%s" (Tomips.of_code true code ^ nl);
-        close_out oc;
+          let oc = open_out  Options.opt.outfile in 
+          Printf.fprintf oc "%s" (Tomips.of_code true code ^ nl);
+          close_out oc;
 
       let st_0 = State.const (Z.of_int 0) in (* assume all variables 0 *)
 

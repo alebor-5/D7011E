@@ -13,16 +13,12 @@ let rec aeval_opt (e: Imp__Imp.aexpr) : Imp__Imp.aexpr =
   | Imp__Imp.Asubu (e1, e2) ->
     begin match (aeval_opt e1, aeval_opt e2) with
     | (Imp__Imp.Anum oe1, Imp__Imp.Anum oe2) ->
-      begin match Z.equal oe1 oe2 with
+      Imp__Imp.Anum (Bv_op__BV_OP.bv_sub oe1 oe2)
+    | (oe1, oe2) ->
+      begin match Imp__Imp.eq oe1 oe2 with
       | true -> Imp__Imp.Anum Z.zero
-      | false -> Imp__Imp.Anum (Bv_op__BV_OP.bv_sub oe1 oe2)
+      | false -> Imp__Imp.Asubu (oe1, oe2)
       end
-    | (Imp__Imp.Avar _, Imp__Imp.Avar _) ->
-      begin match Imp__Imp.eq e1 e2 with
-      | true -> Imp__Imp.Anum Z.zero
-      | false -> Imp__Imp.Asubu ((aeval_opt e1), (aeval_opt e2))
-      end
-    | (oe1, oe2) -> Imp__Imp.Asubu (oe1, oe2)
     end
   end
 
