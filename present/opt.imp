@@ -1,9 +1,19 @@
 a : UINT32;
 b : UINT32;
 c : UINT32;
-a := (1 +u 2) +u 2;
-a := ( 1 +u 2) -u 3;
-b := a -u a;
-b := (a +u (1 +u 1)) -u (a +u 2);
-c := (a +u (1 +u 1)) +u (a +u 2);
+a := (1 +u 2) +u 2; //5
+a := ( 1 +u 2) -u 3; //0
+b := a -u a; //0
+b := (a +u (1 +u 1)) -u (a +u 2); //0
+IF TRUE && FALSE THEN a:=0 ELSE a := 1 END;
+IF TRUE && (TRUE && TRUE) THEN a:=0 ELSE a := 1 END;
+IF a=12 && FALSE THEN a:=0 ELSE a := 1 END;
+IF a=12 && TRUE THEN a:=0 ELSE a := 1 END;
+IF a=12 && a=12 THEN a:=0 ELSE a := 1 END;
+
+WHILE FALSE DO a := 1 DONE;
+
+WHILE TRUE DO a := 1 DONE;
+
+
 
