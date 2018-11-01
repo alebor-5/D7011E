@@ -15,7 +15,7 @@ module Imp = Imp__Imp
 let of_span inb (start, stop) = 
   let _ = seek_in inb start in
   let s = really_input_string inb (stop - start) in
-  "<" ^ string_of_int start ^ ".." ^ string_of_int stop  ^ s
+  "<" ^ string_of_int start ^ ".." ^ string_of_int stop  ^ ">" ^ s
 
 (* report a duplicate definition *)
 let unique_id chan (id1, (t1, s1)) (id2, (t2, s2)) = 
