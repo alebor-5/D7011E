@@ -58,7 +58,7 @@ rule lex = parse
   | "-u"                 { MINUSU }
 
   | digits as i          { INTVAL (int_of_string i) }           (* literals/values *)
-  | strings as t         { STRINGVAL ( t) }
+  | strings as t         { STRINGVAL ( t ) }
 
   | id as s              { ID (add_id s) }
   | white                { lex lexbuf }                         (* white space *)

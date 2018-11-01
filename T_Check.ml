@@ -6,6 +6,7 @@ open T_Imp
 open T_Dump
 open Common
 open State__State
+open Lexing
 
 
 module Imp = Imp__Imp
@@ -14,7 +15,7 @@ module Imp = Imp__Imp
 let of_span inb (start, stop) = 
   let _ = seek_in inb start in
   let s = really_input_string inb (stop - start) in
-  "<" ^ string_of_int start ^ ".." ^ string_of_int stop ^ "> " ^ s
+  "<" ^ string_of_int start ^ ".." ^ string_of_int stop  ^ s
 
 (* report a duplicate definition *)
 let unique_id chan (id1, (t1, s1)) (id2, (t2, s2)) = 
@@ -165,6 +166,9 @@ let rec tc_com ch itl span com =
 
   with
   | TypeError msg -> raise (CompilerError (msg ^ nl ^ "in command: " ^ of_span ch span ))
+
+
+
 and
   tc_com_span ch itl (com, span)  = tc_com ch itl span com
 

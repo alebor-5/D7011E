@@ -30,7 +30,7 @@ let () =
       *)
 
       let com = if Options.opt.ast_opt then Ast_Opt.ceval_opt (T_Check.tc_prog inBuffer p)
-       else T_Check.tc_prog inBuffer p in
+       else T_Check.tc_prog inBuffer p  in
       
 
       if Options.opt.d_ast then
