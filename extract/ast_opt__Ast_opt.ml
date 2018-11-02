@@ -1,5 +1,15 @@
 let rec aeval_opt (e: Imp__Imp.aexpr) : Imp__Imp.aexpr =
   begin match e with
+  | Imp__Imp.Asubu (e1, e2) ->
+    begin match (aeval_opt e1, aeval_opt e2) with
+    | (oe1, oe2) ->
+      begin match Imp__Imp.eq oe1 oe2 with
+      | false -> Imp__Imp.Asubu (oe1, oe2)
+      | true -> Imp__Imp.Anum Z.zero
+      end
+    | (Imp__Imp.Anum oe1, Imp__Imp.Anum oe2) ->
+      Imp__Imp.Anum (Bv_op__BV_OP.bv_sub oe1 oe2)
+    end
   | Imp__Imp.Anum n -> Imp__Imp.Anum n
   | Imp__Imp.Avar x -> Imp__Imp.Avar x
   | Imp__Imp.Aadd (e1, e2) -> Imp__Imp.Aadd ((aeval_opt e1), (aeval_opt e2))
@@ -10,16 +20,6 @@ let rec aeval_opt (e: Imp__Imp.aexpr) : Imp__Imp.aexpr =
     | (oe1, oe2) -> Imp__Imp.Aaddu (oe1, oe2)
     end
   | Imp__Imp.Asub (e1, e2) -> Imp__Imp.Asub ((aeval_opt e1), (aeval_opt e2))
-  | Imp__Imp.Asubu (e1, e2) ->
-    begin match (aeval_opt e1, aeval_opt e2) with
-    | (Imp__Imp.Anum oe1, Imp__Imp.Anum oe2) ->
-      Imp__Imp.Anum (Bv_op__BV_OP.bv_sub oe1 oe2)
-    | (oe1, oe2) ->
-      begin match Imp__Imp.eq oe1 oe2 with
-      | true -> Imp__Imp.Anum Z.zero
-      | false -> Imp__Imp.Asubu (oe1, oe2)
-      end
-    end
   end
 
 let rec beval_opt (b: Imp__Imp.bexpr) : Imp__Imp.bexpr =

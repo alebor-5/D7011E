@@ -1,0 +1,7 @@
+(* test if1 *)
+a:SINT;
+b:UINT32;
+a := 3;
+IF (TRUE && (0 <= a) && (a <= 7)) THEN
+    a := 10
+END
