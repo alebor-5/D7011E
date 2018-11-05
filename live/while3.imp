@@ -1,0 +1,8 @@
+a : SINT;
+b : SINT;
+a := 0;
+b := 0;
+WHILE a <= 30 && (NOT b = 1) DO
+  a := a + 1;
+  IF a = 20 THEN b := 1 END
+DONE

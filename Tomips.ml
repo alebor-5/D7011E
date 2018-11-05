@@ -36,7 +36,7 @@ let to_mips b = function
 (*new instructions, register based*)
 | Iload (idr, id) -> let lab = printlbl 1 in lab ^"lw $t" ^ of_reg idr ^ ", " ^ string_of_int ((of_id_int id)*4) ^ "($gp) "
 | Iimm (idr,n)     -> let lab = printlbl 1 in lab ^ "li $t" ^ of_reg idr ^ ", " ^ Z.to_string n 
-| Istore (idr, id) -> let lab = printlbl 1 in lab ^"add $at, $zero, $t" ^ of_reg idr ^ "\nsw $at, " ^  string_of_int ((of_id_int id)*4) ^ "($gp) " 
+| Istore (idr, id) -> let lab = printlbl 1 in lab ^"sw $t"^of_reg idr ^ "," ^ string_of_int ((of_id_int id)*4) ^ "($gp)"
 | Ipushr idr        -> let lab = printlbl 1 in lab ^"addi $sp, $sp, -4 \n sw $t" ^ of_reg idr ^ ", 0($sp)"
 | Ipopr idr         -> let lab = printlbl 1 in lab ^"lw $t" ^ of_reg idr ^ ", 0($sp) \n addi $sp, $sp, 4"
 | Iaddr (rs, rt, rd) -> let lab = printlbl 1 in lab ^ "add $t" ^ of_reg rd ^ ", $t" ^ of_reg rs ^ ", $t" ^ of_reg rt
